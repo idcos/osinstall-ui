@@ -1,19 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-	deviceSrv: Ember.inject.service('api/device/service'),
 	osConfigSrv: Ember.inject.service('api/os-config/service'),
 	hardwareSrv: Ember.inject.service('api/hardware/service'),
 	systemConfigSrv: Ember.inject.service('api/system-config/service'),
 	vmInstallSrv: Ember.inject.service('api/vmInstall/service'),
 	model: function(params) {
         return Ember.RSVP.hash({
-			status:params.status,
+			deviceId:params.deviceId !== "all" ? params.deviceId : null,
 			osConfigData:this.get('osConfigSrv').list(10000,0).then(function(data){return data.Content.list;}),
-			hardwareData:this.get('hardwareSrv').list(10000,0).then(function(data){return data.Content.list;}),
-			systemConfigData:this.get('systemConfigSrv').list(10000,0).then(function(data){return data.Content.list;}),
-			//locationTree:this.get("locationSrv").tree(0,0).then(function(data) {return data.Content;}),
-			statusData:[{ID:"pre_install",Name:"等待安装"},{ID:"installing",Name:"正在安装"},{ID:"success",Name:"安装成功"},{ID:"failure",Name:"安装失败"}],
+			statusData:[{ID:"pre_install",Name:"等待安装"},{ID:"installing",Name:"正在安装"},{ID:"success",Name:"安装成功"},{ID:"failure",Name:"安装失败"}],	
 			
 			displayTypeData:[{id:"serialPorts",name:"串口"},{id:"vnc",name:"VNC"},{id:"spice",name:"Spice"}],
             osData:[{id:"centos_x86_6",name:"centos_x86_6"},{id:"sles11sp4-x86_64",name:"sles11sp4-x86_64"}],
@@ -40,25 +36,9 @@ export default Ember.Route.extend({
             }
         model.vmInfo = model.vmInfoTpl = vmInfo;
 
-        var batchVmInfo = {
-            VmNumber:1,
-            OsID:null,
-            isShowMore:false,
-            CpuCoresNumber:1,
-            MemoryCurrent:1024,
-            DiskSize:60,
-        };
-        model.batchVmInfo = model.batchVmInfoTpl = batchVmInfo;
-
     	controller.set("model",model);
-    	var status = model.status === "all" ? null : model.status;
-    	var form = {Status:status,OsID:null,HardwareID:null,SystemID:null,Keyword:null};
+    	var deviceId = model.deviceId === "all" ? null : model.deviceId;
+    	var form = {DeviceID:parseInt(deviceId),OsID:null,Keyword:null};
     	controller.send("queryAction",form);
     },
-   	deactivate: function() {
-   		clearInterval(this.get('controller').get('autoRefreshTimer'));
-		this.get('controller').set("autoRefreshTimer",null);
-        this.get('controller').set("isShowingModal",false);
-        this.get('controller').set("isShowingModal2",false);
-	}
 });

@@ -136,6 +136,17 @@ Router.map(function() {
         });
         });
     });
+
+    this.route('vm', function() {
+      this.route('list', {
+        path: 'list/:deviceId',
+      });
+      this.route('detail', {
+          path: 'detail/:id'
+        });
+      this.route('new');
+      this.route('guideNew');
+    });
   });
   this.route('login');
 });

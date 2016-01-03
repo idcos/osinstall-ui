@@ -99,6 +99,16 @@
 					</td>
 				</tr>
 
+				<tr>
+					<td class="active" align="right"><label class="required">是否支持安装虚拟机</label></td>
+					<td>
+						<div class="col-md-5">
+							{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.whetherData value=item.IsSupportVm optionValuePath="content.id" optionLabelPath="content.name" }}
+						</div>
+					</td>
+				</tr>
+
 			</tbody>
 		</table>
 		{{/each}}

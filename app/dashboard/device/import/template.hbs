@@ -18,11 +18,24 @@
 				<tr>
 					<td class="active" align="right" width="20%"><b>上传文件</b></td>
 					<td width="80%">
-						<div class="col-md-6">
-						{{#common/io-file-upload upload="upload" autoUpload=false showUploadButton=false multiple=false}}{{/common/io-file-upload}}
+						<div class="block">
+							<div class="col-md-6">
+							{{#common/io-file-upload upload="upload" autoUpload=false showUploadButton=false multiple=false}}{{/common/io-file-upload}}
+							</div>
+							<div class="col-md-4" style="margin-top: 5px;">
+								<a href="idcos-osinstall-device-import.csv" target="_blank">下载导入模板</a>
+							</div>
 						</div>
-						<div class="col-md-4" style="margin-top: 5px;">
-							<a href="idcos-osinstall-device-import.csv" target="_blank">下载导入模板</a>
+						<div class="block" style="padding-top: 30px; padding-left: 13px;">
+						<div>
+						<b>温馨提示：</b> <br />
+						<span style="font-size: 13px;">
+						1、SN已存在的情况下，会覆盖以前的信息 <br />
+						2、SN，主机名，财编最大长度为255字符 <br />
+						3、位置栏请填写完整的位置名，各级位置间请用"-"连接，如：机房名-楼层-房间号-机架位 <br />
+						4、填写的信息里不允许出现","，您可以将其替换为";"
+						</span>
+						</div>
 						</div>
 					</td>
 				</tr>

@@ -24,4 +24,106 @@ export default Ember.Service.extend({
         });
     },
 
+    batchAdd : function(data) {
+        var url = "/api/osinstall/v1/vm/batchAdd";
+        //生成发请求数据对象
+
+        //发送ajax请求
+        return ajax({
+            'method': 'POST',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+            'data': JSON.stringify(data),
+        });
+    },
+
+    /*
+    * 重装操作系统
+    */
+    batchReInstall : function(form) {
+        var url = "/api/osinstall/v1/vm/batchReInstallVm";
+        //生成发请求数据对象
+        var data = {};
+        data = form;
+
+        //发送ajax请求
+        return ajax({
+            'method': 'POST',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+            'data': JSON.stringify(data),
+        });
+    },
+
+    /*
+    * 批量删除
+    */
+    batchDelete : function(form) {
+        var url = "/api/osinstall/v1/vm/batchDeleteVm";
+        //生成发请求数据对象
+        var data = {};
+        data = form;
+
+        //发送ajax请求
+        return ajax({
+            'method': 'POST',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+            'data': JSON.stringify(data),
+        });
+    },
+
+
+    create : function(form) {
+        var url = "/api/osinstall/v1/vm/create";
+        //生成发请求数据对象
+        var data = {};
+        data = form;
+
+        //发送ajax请求
+        return ajax({
+            'method': 'POST',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+            'data': JSON.stringify(data),
+        });
+    },
+
+    /*
+    * 获取列表
+    */
+    list : function(limit,offset,form) {
+        var url = "/api/osinstall/v1/vm/list";
+        //生成发请求数据对象
+        var data = form;
+        data.Limit = limit;
+        data.Offset = offset;
+
+        //发送ajax请求
+        return ajax({
+            'method': 'POST',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+            'data': JSON.stringify(data),
+        });
+    },
+
+    /*
+    * 获取具体信息
+    */
+    get : function(id) {
+        var url = "/api/osinstall/v1/vm/viewFull";
+        //生成发请求数据对象
+        var data = {};
+        data.ID = parseInt(id);
+
+        //发送ajax请求
+        return ajax({
+            'method': 'POST',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+            'data': JSON.stringify(data),
+        });
+    },
+
 });

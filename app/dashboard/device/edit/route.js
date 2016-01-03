@@ -13,6 +13,7 @@ export default Ember.Route.extend({
 			hardwareData:this.get('hardwareSrv').list(10000,0).then(function(data){return data.Content.list;}),
 			systemConfigData:this.get('systemConfigSrv').list(10000,0).then(function(data){return data.Content.list;}),
 			locationTree:this.get("locationSrv").tree(0,0).then(function(data) {return data.Content;}),
+			whetherData:[{id:"Yes",name:"是"},{id:"No",name:"否"}],
 		});
     },
 

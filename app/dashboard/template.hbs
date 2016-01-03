@@ -46,7 +46,7 @@
 	        <li class="active">
 	            <a href="javascript:void(0);">
 	            	<i class="fa fa-server"></i>
-	                <label>装机管理</label>
+	                <label>物理机管理</label>
 	                <span class="pull-right toggle"> <i class="fa fa-angle-down"></i> </span>
 	            </a>
 	            <ul class="nav nav-sub">
@@ -65,6 +65,19 @@
 	                 </li>
 	            </ul>
 	        </li>
+
+			<li>
+	            <a href="javascript:void(0);">
+	            	<i class="fa fa-server"></i>
+	                <label>虚拟机管理</label>
+	                <span class="pull-right toggle"> <i class="fa fa-angle-down"></i> </span>
+	            </a>
+	            <ul class="nav nav-sub">
+	                <li> {{#link-to "dashboard.vm.list" "all"  }}虚拟机列表{{/link-to}} </li>
+	                <li> {{#link-to "dashboard.vm.new"  }}申请虚拟机{{/link-to}} </li>
+	            </ul>
+	        </li>
+
 	        <li class="">
 	            <a href="javascript:void(0);">
 	            	<i class="fa fa-line-chart"></i>

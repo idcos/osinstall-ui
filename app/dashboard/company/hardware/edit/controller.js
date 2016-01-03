@@ -93,12 +93,14 @@ export default Ember.Controller.extend({
 		      		//currentRow.data = rows[j]["data"];
 		      		var rows2 = rows[j]["data"];
 		      		var datas2 = [];
-		      		for(var k=0;k<rows2.length;k++){
-		      			var currentRow2 = {};
-		      			currentRow2.name = rows2[k]["name"];
-			      		currentRow2.value = rows2[k]["value"];
-			      		datas2.pushObject(currentRow2);
-		      		}
+		      		if(!Ember.isEmpty(rows2)){
+			      		for(var k=0;k<rows2.length;k++){
+			      			var currentRow2 = {};
+			      			currentRow2.name = rows2[k]["name"];
+				      		currentRow2.value = rows2[k]["value"];
+				      		datas2.pushObject(currentRow2);
+			      		}
+			      	}
 		      		currentRow.data = datas2;
 
 

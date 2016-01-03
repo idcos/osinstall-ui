@@ -6,6 +6,20 @@ export default Ember.Controller.extend({
 		saveAction:function(){
 			var self = this;
 			var files = $('.file-uploader')[0].files;
+               if(files.length <= 0){
+                    Ember.$.notify({
+                              title: "<strong>上传失败:</strong>",
+                              message: "请选择上传文件！"
+                         }, {
+                              animate: {
+                                   enter: 'animated fadeInRight',
+                                   exit: 'animated fadeOutRight'
+                              },
+                              type: 'danger'
+                         });
+                    return ;
+               }
+
 			uploadFn(files, '/api/osinstall/v1/device/upload', 'json').then(function(data) {
                     //console.log(data);
      			if(data.Status === "success"){

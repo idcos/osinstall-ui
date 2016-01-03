@@ -66,7 +66,7 @@
                     <th>服务器厂商</th>
                     <th>产品名称</th>
                     <th>服务器型号</th>
-                    <th class="text-center" style="width: 200px">操作</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,11 +76,10 @@
 					<td>{{item.Company}}</td>
 					<td>{{item.Product}}</td>
 					<td>{{item.ModelName}}</td>
-					<td class="text-center">
+					<td>
 						{{#link-to "dashboard.company.hardware.new" item.ID}}<button type="button" class="btn btn-default btn-xs">克隆</button>{{/link-to}}
 						{{#link-to "dashboard.company.hardware.edit" item.ID}}<button type="button" class="btn btn-default btn-xs">修改</button>{{/link-to}}
 						<button type="button" {{action "deleteAction" item.ID}} class="btn btn-default btn-xs">删除</button>
-						
 					</td>
 				</tr>
 				{{/each}}

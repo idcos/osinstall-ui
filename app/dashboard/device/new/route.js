@@ -13,12 +13,13 @@ export default Ember.Route.extend({
 			systemConfigData:this.get('systemConfigSrv').list(10000,0).then(function(data){return data.Content.list;}),
 			//locationData:this.get("locationSrv").list(10000,0,0).then(function(data) {return data.Content.list;}),
 			locationTree:this.get("locationSrv").tree(0,0).then(function(data) {return data.Content;}),
+			whetherData:[{id:"Yes",name:"是"},{id:"No",name:"否"}],
 		});
     },
 
 	setupController: function(controller, model) {
 		controller.set("model",model);
-		var data = [{id:0,LocationID:null}];
+		var data = [{id:0,LocationID:null,IsSupportVm:"Yes"}];
 		controller.set('rows', data);
 	}
 });

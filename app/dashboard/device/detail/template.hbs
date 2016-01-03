@@ -158,6 +158,21 @@
 					</td>
 				</tr>
 
+				<tr>
+					<td class="active" align="right"><label>是否支持安装虚拟机</label></td>
+					<td>
+						<div class="col-md-5">
+							{{#if (eq "Yes" item.IsSupportVm)}}
+								是
+							{{/if}}
+
+							{{#if (eq "No" item.IsSupportVm)}}
+								否
+							{{/if}}
+						</div>
+					</td>
+				</tr>
+
 
 
 

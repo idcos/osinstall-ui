@@ -1,11 +1,27 @@
 <div class="panel panel-default">
 	
-    <div class="panel-heading">
+   <div class="panel-heading paddingtop0">
+    	<!--
         <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
         	<li>装机管理</li>
-            <li class="active">设备列表</li>
+            <li class="active">虚拟机列表</li>
         </ol>
+        -->
+        <div class="breadcrumb paddingtop3">
+        	<div style="float: left;">
+	        	<h5>装机管理/虚拟机列表</h5>
+	        </div>
+	        <!--
+	        {{#if model.deviceId}}
+	        <div style="float:right; position: relative; top: 7px; left: 16px;">
+	        	<button {{action "installVmAction" model.deviceId}} type="button" class="btn btn-primary btn-xs"> <i class="fa fa-plus"></i> 安装虚拟机</button> &nbsp;&nbsp;
+	        	<button onclick="javascript:history.go(-1);" type="button" class="btn btn-default btn-sm">返回</button>
+	        </div>
+	        {{/if}}
+	        -->
+	    </div>
     </div>
+    
     <!--
     <ul class="nav nav-tabs"> 
 		<li class="active">{{#link-to "dashboard.device.list"}}所有设备列表{{/link-to}}</li>
@@ -24,13 +40,15 @@
 					<td width="85%">
 						<div class="block">
 							<div class="col-md-6">
-							{{textarea placeholder="可输入批次号、SN、主机名、IP等进行查询
+							{{textarea placeholder="可输入Mac、主机名、IP等进行查询
 多条信息间可通过换行、逗号、分号分隔" value=form.Keyword rows="4" class="form-control input-md"}}
 							</div>
 							<div class="col-md-6">
 								<button type="submit" class="btn btn-primary">搜 索</button>
+								<!--
 								&nbsp;&nbsp;
 								{{input type="checkbox" checked=autoRefresh}}自动刷新
+								-->
 								{{#if (eq false isShowMultiSearchBlock)}}
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<a {{action "showMultiSearchBlockAction"}} href="javascript::void(0);">展开更多条件</a>
@@ -51,33 +69,7 @@
 					</td>
 				</tr>
 
-				<tr>
-					<td width="15%" class="active" align="right"><b>硬件配置模板</b></td>
-					<td width="85%">
-						<div class="col-md-5">
-							{{view "select" class="form-control" prompt="请选择硬件配置模板"
- content=model.hardwareData value=form.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
-						</div>
-					</td>
-				</tr>
-
-				<tr>
-					<td width="15%" class="active" align="right"><b>系统安装模板</b></td>
-					<td width="85%">
-						<div class="col-md-5">
-							{{view "select" class="form-control" prompt="请选择系统安装模板" content=model.systemConfigData value=form.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
-						</div>
-						{{#if (not-eq "all" model.status)}}
-							{{#if (eq true isShowMultiSearchBlock)}}
-							<div class="col-md-2">
-								<a {{action "hideMultiSearchBlockAction"}} href="javascript::void(0);">收起</a>
-							</div>
-							{{/if}}
-						{{/if}}
-					</td>
-				</tr>
-
-				{{#if (eq "all" model.status)}}
+				
 				<tr>
 					<td width="15%" class="active" align="right"><b>状态</b></td>
 					<td width="85%">
@@ -92,7 +84,6 @@
 					</td>
 				</tr>
 				{{/if}}
-				{{/if}}
 			</tbody>
 			</table>
 			</form>
@@ -104,36 +95,26 @@
             <thead>
                 <tr>
                 	<th>{{input type="checkbox" checked=selectAll}}</th>
-                    <th>SN</th>
 					<th>主机名</th>
-					<th>批次号</th>
+					<th>物理机</th>
+					<th>Mac</th>
 					<th>IP</th>
 					<th>操作系统</th>
-					<th>硬件配置模板</th>
-					<th>系统安装模板</th>
 					<th>状态</th>
-					{{#if isShowInstallInfoCol}}
-					<th width="8%">安装进度</th>
-					<th>安装日志</th>
-					{{/if}}
-					<!--
-					<th>虚拟机</th>
-					-->
                 </tr>
             </thead>
             <tbody>
             	{{#each rowList as |item index|}}
                 <tr>
                 	<td>{{input type="checkbox" checked=item.checked}}</td>
-					<td>{{#link-to "dashboard.device.detail" item.ID}}{{item.Sn}}{{/link-to}}</td>
-					<td>{{#link-to "dashboard.device.detail" item.ID}}{{item.Hostname}}{{/link-to}}</td>
-					<td><a href="javascript:void(0);" {{action "searchBatchNumberAction" item.BatchNumber}}>{{item.BatchNumber}}</a></td>
+					<td>{{#link-to "dashboard.vm.detail" item.ID}}{{item.Hostname}}{{/link-to}}</td>
+					<td>{{#link-to "dashboard.device.detail" item.DeviceID}}{{item.DeviceSn}}{{/link-to}}</td>
+					<td>{{#link-to "dashboard.vm.detail" item.ID}}{{item.Mac}}{{/link-to}}</td>
 					<td>{{#link-to "dashboard.network.detail" item.NetworkID}}{{item.Ip}}{{/link-to}}</td>
 					<td>{{#link-to "dashboard.os.detail" item.OsID}}{{item.OsName}}{{/link-to}}</td>
-					<td>{{#link-to "dashboard.hardware.detail" item.HardwareID}}{{item.HardwareName}}{{/link-to}}</td>
-					<td>{{#link-to "dashboard.systemTpl.detail" item.SystemID}}{{item.SystemName}}{{/link-to}}</td>
+					
 					<td>
-						{{#link-to "dashboard.log.detail" item.ID "install"}}
+						
 						{{#if (eq "pre_install" item.Status)}}
 							<span class="text-muted">等待安装</span>
 						{{/if}}
@@ -149,31 +130,8 @@
 						{{#if (eq "failure" item.Status)}}
 							<span class="text-danger">安装失败</span>
 						{{/if}}
-						{{/link-to}}
+						
 					</td>
-					{{#if isShowInstallInfoCol}}
-						<td>
-							{{#link-to "dashboard.log.detail" item.ID "install"}}
-							<div class="progress progress-striped active" title="{{item.InstallLog}}" style="height: 17px;">
-							   <div title="{{item.InstallLog}}" class="progress-bar progress-bar-success" role="progressbar" 
-							      aria-valuemin="0" aria-valuemax="100" 
-							      style="width: {{percentage item.InstallProgress}};">
-							      <span class="sr-only">{{item.InstallLog}}</span>
-							   </div>
-							</div>
-							{{/link-to}}
-
-
-						</td>
-						<td>{{#link-to "dashboard.log.detail" item.ID "install"}}详情{{/link-to}}</td>
-					{{/if}}
-					<!--
-					<td>
-						{{#if (eq "success" item.Status)}}
-						{{#link-to "dashboard.vm.list" item.ID}}管理{{/link-to}}
-						{{/if}}
-					</td>
-					-->
 				</tr>
 				{{/each}}
             </tbody>
@@ -182,12 +140,6 @@
 					<div class="col-sm-6">
 						
 			       		<button {{action "reInstallAction"}} type="button" class="btn btn-default btn-sm">重新安装</button>
-
-			       		<!--
-						&nbsp;&nbsp;
-						<button {{action "batchInstallVmAction"}} type="button" class="btn btn-default btn-sm">批量安装虚拟机</button>
-						-->
-
 						&nbsp;&nbsp;
 			       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
 			       	
@@ -198,187 +150,6 @@
 				</div>
     </div>
 </div>
-
-
-{{#common/io-modal show=isShowingModal2 close="toggleModal2"}}
-<div class="modal fade modal-vs-install" data-backdrop="static">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" {{action "toggleModal2"}}>×</button>
-				<h4 class="modal-title">批量安装虚拟机</h4>
-			</div>
-			<div class="block align-items-stretch content-body">
-				<!--
-				 <div class="block content shrink steps-navigator">
-				 	<ul>
-				 		{{#if (eq 1 currentStep)}}
-							<li class="active" {{action "goToStep" 1}}>填写主机列表</li>
-				 		{{/if}}
-				 		{{#if (not-eq 1 currentStep)}}
-							<li class="disable" {{action "goToStep" 1}}>填写主机列表</li>
-				 		{{/if}}
-				 	</ul>
-				 </div>
-				 -->
-				 <div class="block vertical" style="background: whitesmoke;">
-					<div class="block content main-content">
-						<!--<h2>虚拟机</h2>-->
-						<!--
-						<h3>cpus</h3>
-						-->
-						<div class="section">
-							<!--
-							<div class="form-group">
-								<label for="">当前处理机总核数: 24</label>
-							</div>
-							-->
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top:6px;">
-										<label for="">虚拟机个数: </label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-										{{input class="form-control" type="number" value=model.batchVmInfo.VmNumber}}
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;margin-top:6px;">
-										<label for="">操作系统: </label>
-									</div>
-									<div class="col-md-3" style="padding-left: 0px;">
-										{{view "select" required=true class="form-control" prompt="请选择操作系统"
- content=model.osConfigData value=model.batchVmInfo.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
-									</div>
-									
-									<div class="col-md-5" style="padding-right: 0px;margin-top:6px;">
-										{{input type="checkbox" checked=model.batchVmInfo.isShowMore}}
-										<label>高级设置</label>									
-									</div>
-								</div>
-							</div>
-
-				
-							{{#if model.batchVmInfo.isShowMore}}
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;margin-top:6px;">
-										<label for="">CPU核数: </label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
-										{{input class="form-control" type="number" value=model.batchVmInfo.CpuCoresNumber}}
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top:6px;">
-										<label for="">分配内存: </label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-										{{input class="form-control" type="number" value=model.batchVmInfo.MemoryCurrent}}
-									</div>
-									<div class="col-md-1" style="padding-right: 0px;margin-top:6px;">
-										MB
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top:6px;">
-										<label for="">磁盘大小: </label>
-									</div>
-									
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-									{{input class="form-control" type="number" value=model.batchVmInfo.DiskSize}}
-									</div>
-									<div class="col-md-1" style="padding-right: 0px;margin-top:6px;">
-										GB
-									</div>
-								</div>
-							</div>
-							{{/if}}
-						
-
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;margin-top:6px;">
-										<label for="">温馨提示: </label>
-									</div>
-									<div class="col-md-5" style="padding-left: 0px;margin-top:6px;">
-										1、虚拟机个数和操作系统必填 <br />
-										2、IP、Mac等会自动从资源池分配
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;margin-top:6px;">
-										<label for=""> </label>
-									</div>
-									<div class="col-md-5" style="padding-left: 0px;margin-top:6px;">
-										<button type="button" {{action "saveBatchVmInstallAction"}} class="btn btn-default">提交</button>
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;margin-top:6px;">
-										<label for=""> </label>
-									</div>
-									<div class="col-md-5" style="padding-left: 0px;margin-top:6px;">
-										{{html-safe model.batchVmInfo.Message}}
-									</div>
-								</div>
-							</div>
-							
-							<!--
-							{{#if model.vmInfo.Memory.isShowMemoryMore}}
-							<div class="form-group">
-								<div class="block">
-								{{input type="checkbox" class="form-group" checked=model.vmInfo.Memory.Ksm}}
-								&nbsp;
-								<label for="">内存压缩</label>
-								&nbsp;
-										{{#common/io-tooltip}}
-											<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-										{{/common/io-tooltip}}
-								</div>
-							</div>
-							{{/if}}
-							-->
-						</div>
-
-
-						
-
-
-						
-
-						
-
-					</div>
-					
-					<!--
-					<div class="block content shrink content-footer main-content">
-						<div class="block pull-right">
-						<button type="button" {{action "saveBatchVmInstallAction"}} class="btn btn-default">提交</button>
-						</div>
-					</div>
-					-->
-				 </div>
-			</div>
-		</div>
-	</div>
-</div>
-{{/common/io-modal}}
 
 
 
@@ -965,8 +736,9 @@
 						<button class="btn btn-default" {{action "goToStep" nextStep}}>下一步</button>
 						{{/if}}
 
-						
+						{{#if (eq 6 currentStep)}}
 						<button type="button" {{action "saveVmInstallAction"}} class="btn btn-default">提交</button>
+						{{/if}}
 						
 						</div>
 					</div>

@@ -135,4 +135,19 @@ export default Ember.Service.extend({
         });
     },
 
+    getNotUsedIPListByNetworkId : function(network_id) {
+        var url = "/api/osinstall/v1/network/getNotUsedIPListByNetworkId";
+		//生成发请求数据对象
+		var data = {};
+		data.NetworkID = parseInt(network_id);
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
 });
