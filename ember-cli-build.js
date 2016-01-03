@@ -10,8 +10,5 @@ module.exports = function(defaults) {
     // Add options here
   });
 
-
-  app.import('bower_components/bootstrap-validator/dist/validator.min.js');
-
   return app.toTree();
 };

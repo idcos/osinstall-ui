@@ -45,7 +45,8 @@
   "ember-addon": {
     "paths": [
       "lib/bootstrap",
-      "lib/remarkable-bootstrap-notify"
+      "lib/remarkable-bootstrap-notify",
+      "lib/bootstrap-validator"
     ]
   }
 }
