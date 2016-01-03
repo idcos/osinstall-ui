@@ -47,7 +47,8 @@
       "lib/bootstrap",
       "lib/remarkable-bootstrap-notify",
       "lib/bootstrap-validator",
-      "lib/ace"
+      "lib/ace",
+      "lib/echarts"
     ]
   }
 }
