@@ -12,7 +12,6 @@ module.exports = function(defaults) {
 
 
   app.import('bower_components/bootstrap-validator/dist/validator.min.js');
-  app.import('bower_components/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js');
 
   return app.toTree();
 };
