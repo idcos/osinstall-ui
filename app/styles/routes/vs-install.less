@@ -1,0 +1,62 @@
+/**
+ * 虚拟机安装 
+ */
+
+.modal-vs-install {
+	.modal-title {
+		color: #333;
+	}
+	.content-body {
+		position: relative;
+		height: 500px;
+		.content-footer {
+			padding: 5px 15px;
+			width: 100%;
+		}
+		.main-content {
+			overflow-y: scroll;
+			padding: 15px;
+			h2 {
+				margin-top: 0;
+				font-size: 18px;
+				color: #333;
+				padding-bottom: 6px;
+				border-bottom: solid 2px #ddd;
+			}
+			h3 {
+				font-size: 15px;
+				color: #333;
+				font-weight: bold;
+				margin: 0 0 10px 0;
+			}
+			.section {
+				margin-left: 20px;
+				margin-bottom: 10px;
+				.from-group {
+					margin-bottom: 5px;
+				}
+			}
+		}
+	}
+	.steps-navigator {
+		width: 180px;
+		ul {
+			li {
+				cursor: pointer;
+				padding: 16px 6px;
+				padding-left: 40px;
+				&:hover {
+					background: whitesmoke;
+				}
+				&.active {
+					background: @brand-primary;
+					color: white;
+				}
+				&.disable {
+					opacity: 0.5;
+					cursor: no-drop;
+				}
+			}
+		}
+	}
+}

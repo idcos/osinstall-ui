@@ -1,0 +1,168 @@
+<div class="panel panel-default">
+	
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>装机管理</li>
+            <li class="active">正在安装的设备列表</li>
+        </ol>
+    </div>
+    
+    <!--
+    <ul class="nav nav-tabs"> 
+		<li>{{#link-to "dashboard.device.list"}}所有设备列表{{/link-to}}</li>
+	    <li>{{#link-to "dashboard.device.preInstall"}}待安装{{/link-to}}</li>
+	    <li class="active">{{#link-to "dashboard.device.installing"}}正在安装{{/link-to}}</li>
+	</ul>
+	-->
+    <div class="panel-body">
+		
+		<div style="margin-bottom: 10px;">
+			<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td width="15%" class="active" align="right"><b>搜索</b></td>
+					<td width="85%" colspan=3>
+						<div class="col-md-6">
+						{{textarea placeholder="可输入批次号、SN、主机名、IP等进行查询
+多条信息间可通过换行、逗号、分号分隔" value="" rows="4" class="form-control input-md"}}
+						</div>
+						<div class="col-md-6">
+							<button type="button" class="btn btn-primary">搜 索</button>
+							&nbsp;&nbsp;
+							<input type="checkbox" checked="checked" />自动刷新
+							{{#if (eq false isShowMultiSearchBlock)}}
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a {{action "showMultiSearchBlockAction"}} href="javascript::void(0);">展开更多条件</a>
+							{{/if}}
+						</div>
+					</td>
+				</tr>
+
+				{{#if isShowMultiSearchBlock}}
+				<tr>
+					<td width="25%" class="active" align="right"><b>操作系统</b></td>
+					<td width="75%">
+						<div class="col-md-5">
+							<select class="form-control">
+								<option>--请选择--</option>
+								<option>centos5u7-x86_64</option>
+								<option>centos6u7-x86_64</option>
+								<option>centos7u1-x86_64</option>
+							</select>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="25%" class="active" align="right"><b>硬件配置模板</b></td>
+					<td width="75%">
+						<div class="col-md-5">
+							<select class="form-control">
+								<option>--请选择--</option>
+								<option>dell_r420</option>
+								<option>dell_r730</option>
+							</select>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="25%" class="active" align="right"><b>系统安装模板</b></td>
+					<td width="75%">
+						<div class="col-md-5">
+							<select class="form-control">
+								<option>--请选择--</option>
+								<option>kvm_server</option>
+							</select>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="25%" class="active" align="right"><b>状态</b></td>
+					<td width="75%">
+						<div class="col-md-5">
+							<select class="form-control">
+								<option>--请选择--</option>
+								<option>等待安装</option>
+								<option>正在安装</option>
+								<option>安装成功</option>
+								<option>安装失败</option>
+							</select>
+						</div>
+						{{#if (eq true isShowMultiSearchBlock)}}
+						<div class="col-md-2">
+							<a {{action "hideMultiSearchBlockAction"}} href="javascript::void(0);">收起</a>
+						</div>
+						{{/if}}
+					</td>
+				</tr>
+				{{/if}}
+			</tbody>
+			</table>
+			
+		</div>
+
+
+        <table class="table  big">
+            <thead>
+                <tr class=" ">
+                	<th>
+                		{{input type="checkbox" name="selAll"}}
+                	</th>
+                	<th>批次号</th>
+                    <th>SN</th>
+					<th>主机名</th>
+					<th>IP</th>
+					<th>操作系统</th>
+					<th>硬件配置模板</th>
+					<th>系统安装模板</th>
+					<th>状态</th>
+					<th>安装进度</th>
+					<th>安装日志</th>
+					<!--
+					<th>操作</th>
+					-->
+                </tr>
+            </thead>
+            <tbody>
+                
+						<tr>
+							<td>{{input type="checkbox" name="selObj"}}</td>
+							<td>20151112001</td>
+							<td>980D128</td>
+							<td>idcos-db-08</td>
+							<td>10.0.0.8</td>
+							<td>centos6u7-x86_64</td>
+							<td>默认模板</td>
+							<td>默认模板</td>
+							<td class="text-danger">安装失败</td>
+							<td>0%</td>
+							<td>失败原因</td>
+							
+						</tr>
+            </tbody>
+        </table>
+	
+				<div class="row padding0">
+					<div class="col-sm-6">
+					{{#link-to "dashboard.device.installing"}}
+			       		 <button type="button" class="btn btn-primary btn-sm">重装选择项</button>
+			       	{{/link-to}}
+			       		 
+			       	
+					</div>
+					<div class="col-sm-6">
+						<ul class="pagination">
+							<li><a href="#">&laquo;</a></li>
+							<li class="active"><a href="#">1</a></li>
+							<li class="disabled"><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li><a href="#">&raquo;</a></li>
+						</ul>
+					</div>
+				</div>
+    </div>
+</div>

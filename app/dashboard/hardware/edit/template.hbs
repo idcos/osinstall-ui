@@ -1,0 +1,94 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>硬件配置管理</li>
+            <li class="active">编辑硬件配置</li>
+        </ol>
+    </div>
+    {{#common/io-form-validator submitForm="saveAction"}}
+	<form class="form-horizontal">
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right"><label class="required">服务器厂商</label></td>
+					<td>
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择厂商"
+			 content=model.companyData required=true value=model.info.Company optionValuePath="content.name" optionLabelPath="content.name" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label class="required">产品名称</label></td>
+					<td>
+						<div class="col-md-5">
+							{{input required=true type="text" value=model.info.Product class="form-control input-md"}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label class="required">服务器型号</label></td>
+					<td>
+						<div class="col-md-5">
+							{{input required=true type="text" value=model.info.ModelName class="form-control input-md"}}
+						</div>
+					</td>
+				</tr>
+				
+			
+				{{#each model.info.FormatTpl as |item index|}}
+				<tr>
+					<td class="active" align="right"><label>{{item.name}}</label></td>
+					<td colspan=3>
+						<table class="table table-hover">
+		                    <thead>
+			                    <tr>
+			                      <th width="30%">配置项</th>
+			                      <th width="30%">选择</th>
+			                      <th width="40%">配置信息</th>
+			                    </tr>
+		                    </thead>
+		                    <tbody>
+								{{#each item.data as |item2 index2|}}
+								<tr>
+									<td>
+										{{item2.name}}
+									</td>
+									<td>
+										{{#if (eq "select" item2.type)}}
+			 								{{view "select" class="form-control" prompt="请选择" content=item2.data value=item2.default required=true optionValuePath="content.value" optionLabelPath="content.name"}}
+			 							{{/if}}
+
+
+
+			 							{{#if (eq "input" item2.type)}}
+										{{input placeholder="请填写" value=item2.input key-up="inputChangeAction" class="form-control input-md"}}
+			 							{{/if}}
+									</td>
+
+									<td>
+										{{input placeholder="请填写" value=item2.default class="form-control input-md"}}
+									</td>
+								</tr>
+								{{/each}}
+		                    </tbody>
+	                    </table>
+	                
+					</td>
+				</tr>
+				{{/each}}
+				
+				
+			</tbody>
+		</table>
+		<div class="text-center">
+	        <button type="submit" class="btn btn-primary">提 交</button>
+	        {{#link-to "dashboard.hardware.list"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
+		</div>
+    </div>
+    </form>
+	{{/common/io-form-validator}}
+</div>

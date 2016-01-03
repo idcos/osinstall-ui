@@ -1,0 +1,153 @@
+/**
+ * app side nav
+ */
+.page-body-nav {
+    @background-color: aliceblue;
+    @background-color-d1: #E5F3FF;
+    @background-color-hover: darken(@background-color-d1, 3%);
+    @border-color: darken(@background-color, 3%);
+    @font-color: #666;
+    overflow-y: scroll;
+    background: @background-color;
+    transition: width 0.3s ease-in-out;
+    a.list-group-item:hover,
+    a.list-group-item:focus {
+        background-color: inherit
+    }
+    >.nav {
+      > li {
+        border-bottom: solid 1px #0C305C;
+      }  
+    }
+
+    .nav li {
+        position: relative;
+        display: block;
+        .toggle {
+            transform: rotate(-90deg);
+        }
+
+        li {
+            a {
+                padding-left: 55px
+            }
+            ul {
+                display: none;
+            }
+           
+            &.active>ul {
+                display: block
+            }
+        }
+
+
+        &.active .toggle {
+            transform: rotate(0);
+        }
+
+        a {
+            position: relative;
+            display: block;
+            padding: 18px 20px;
+            font-weight: normal;
+            text-transform: none;
+            -webkit-transition: background-color .2s ease-in-out 0s;
+            transition: background-color .2s ease-in-out 0s;
+            >i {
+                position: relative;
+                float: left;
+                width: 40px;
+                margin: -10px -10px;
+                margin-right: 5px;
+                overflow: hidden;
+                line-height: 40px;
+                text-align: center;
+                &:before {
+                    position: relative;
+                    z-index: 2
+                }
+            }
+        }
+
+    }
+
+    .nav {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+
+        >li {
+            position: relative;
+            display: block;
+            >a {
+                position: relative;
+                display: block;
+                padding: 14px 15px;
+                color: @font-color;
+                &:hover, &:focus {
+                    text-decoration: none;
+                    background-color: @background-color-hover !important;
+                }
+                >i{
+                    color: @brand-color;
+                }
+                
+                .toggle i.fa {
+                    font-size: 18px;
+                    font-weight: bold;
+                }
+            }
+
+            &.active {
+                a {
+                    background-color: @background-color-d1;
+                }
+                > a {
+                    background: @background-color;
+                }
+            }
+
+            &.disabled>a {
+                color: #777;
+                &:hover, &:focus {
+                    color: #777;
+                    text-decoration: none;
+                    cursor: not-allowed;
+                    background-color: transparent;
+                }
+            }
+        }
+
+        .nav-divider {
+            height: 1px;
+            margin: 9px 0;
+            overflow: hidden;
+            background-color: #e5e5e5;
+        }
+    }
+
+    .nav-sub {
+        height: 0;
+        margin-left: -20px;
+        overflow: hidden;
+        opacity: 0;
+        -webkit-transition: all .2s ease-in-out 0s;
+        transition: all .2s ease-in-out 0s;
+        li.active a {
+            color: @brand-primary;
+            border-left: solid 3px;
+            background-color: @background-color-hover;
+        }
+    }
+
+    .active .nav-sub {
+        height: auto;
+        margin-left: 0;
+        overflow: auto;
+        opacity: 1;
+    }
+
+}
+.page-body-nav ::-webkit-scrollbar {
+    background-color: transparent;
+}

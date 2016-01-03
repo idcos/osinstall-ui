@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>系统模板管理</li>
+            <li class="active">系统模板详情</li>
+        </ol>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="20%"><label for="Network">ID</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{model.info.ID}}</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="active" align="right" width="20%"><label for="Name">模板名</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{model.info.Name}}</div>
+					</td>
+				</tr>
+				
+				
+				<tr>
+					<td class="active" align="right"><label class="required" for="Content">内容</label></td>
+					<td colspan=3>
+						<div class="col-md-12">
+							{{common/io-editor height="400px" data=model.info key='Content' editable=false}}
+						</div>
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		<div class="text-center">
+			<button type="button" onclick="javascript:history.go(-1);" class="btn btn-default">返 回</button>
+		</div>
+    </div>
+</div>

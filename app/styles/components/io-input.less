@@ -1,0 +1,57 @@
+
+.input-circle {
+    border-radius: 25px;
+}
+
+.input-inline {
+	display: inline-block;
+	width: auto;
+	vertical-align: middle;
+	position: relative;
+	margin-right: 10px;
+	&.input-icon {
+		&.right {
+			input {
+			    padding-right: 33px;
+			    padding-left: 12px;
+			}
+			i {
+				right: 8px;
+				bottom: 5px;
+			}
+		}
+		i {
+		    color: #ccc;
+		    display: block;
+		    position: absolute;
+		    margin: 11px 2px 4px 10px;
+		    z-index: 3;
+		    width: 16px;
+		    font-size: 16px;
+		    text-align: center;
+		}
+	}
+}
+
+// http://tympanus.net/Development/TextInputEffects/index2.html
+// td.form-group {
+// 	position: relative;
+// 	>i {
+// 		position: absolute;
+// 		top: 15px;
+// 		right: 13px;
+// 	}
+// 	.form-control {
+// 		border: none;
+// 		border-bottom: solid 2px #ccc;
+// 		padding-left: 2px;
+// 		box-shadow: none !important;
+// 		&:focus, &:active {
+// 			border-bottom-color: @brand-color;
+// 			~ i {
+// 				// color: ;
+// 				display: none;
+// 			}
+// 		}
+// 	}
+// }

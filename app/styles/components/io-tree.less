@@ -1,0 +1,55 @@
+.io-tree {
+	@background-color: aliceblue;
+	@border-color: darken(@background-color, 3%);
+	@active-color: darken(@background-color, 5%);
+	@padding: 20px;
+	> ul {
+		li {
+			// padding: 5px 0;
+			line-height: 40px;
+			>div {
+				padding-left: @padding;
+				&:hover {
+					background: darken(@background-color, 3%)
+				}
+			}
+			border-bottom: solid 1px @border-color;
+			.toggle {
+				display: inline-block;
+				width: 13px;
+				height: 100%;
+				text-align: center;
+				cursor: pointer;
+			}
+
+			a:hover, a {
+				text-decoration: none;
+				color: #666;
+			}
+
+			&.active > div {
+			
+				background: @active-color;
+			}
+			span.text {
+				display: inline-block;
+				width: 80%;
+				text-overflow: ellipse;
+				cursor: pointer;
+			}
+		}
+	}
+	.io-tree-node > ul {
+		>li {
+			&:first-child {
+				border-top: solid 1px @border-color;
+			}
+			&:last-child {
+				border-bottom: none;
+			}
+			>div {
+				padding-left: @padding + 19px;
+			}
+		}
+	}
+}

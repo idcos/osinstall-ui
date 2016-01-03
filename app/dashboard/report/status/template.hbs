@@ -1,0 +1,63 @@
+<div>
+	<div class="panel-body">
+		<div>
+			<div id="div_chart" style="height:400px"></div>
+			<script type="text/javascript">
+			        var myChart = echarts.init(document.getElementById("div_chart"));
+			        var option = {
+					    title : {
+					        text: 'IDCOS 物理机装机平台数据统计',
+					        subtext: '总计：{{model.SumDeviceNum}}',
+					        x:'center'
+					    },
+					    tooltip : {
+					        trigger: 'item',
+					        formatter: "{a} <br/>{b} : {c} ({d}%)"
+					    },
+					    legend: {
+					        orient : 'vertical',
+					        x : 'left',
+					        data:['安装失败({{model.failureDeviceNum}})','等待安装({{model.preInstallDeviceNum}})','正在安装({{model.installingDeviceNum}})','安装成功({{model.successDeviceNum}})']
+					    },
+					    toolbox: {
+					        show : true,
+					        feature : {
+					            mark : {show: true},
+					            dataView : {show: true, readOnly: false},
+					            magicType : {
+					                show: true, 
+					                type: ['pie', 'funnel'],
+					                option: {
+					                    funnel: {
+					                        x: '25%',
+					                        width: '50%',
+					                        funnelAlign: 'left',
+					                        max: 1548
+					                    }
+					                }
+					            },
+					            restore : {show: true},
+					            saveAsImage : {show: true}
+					        }
+					    },
+					    calculable : true,
+					    series : [
+					        {
+					            name:'',
+					            type:'pie',
+					            radius : '55%',
+					            center: ['50%', '60%'],
+					            data:[
+					            	{value:{{model.failureDeviceNum}}, name:'安装失败({{model.failureDeviceNum}})'},
+					                {value:{{model.installingDeviceNum}}, name:'正在安装({{model.installingDeviceNum}})'},
+					                {value:{{model.successDeviceNum}}, name:'安装成功({{model.successDeviceNum}})'},
+					                {value:{{model.preInstallDeviceNum}}, name:'等待安装({{model.preInstallDeviceNum}})'}
+					            ]
+					        }
+					    ]
+					};           
+			        myChart.setOption(option);
+			    </script>
+			</div>
+	</div>
+</div>

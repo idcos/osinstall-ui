@@ -1,0 +1,60 @@
+<div class="panel panel-default">
+    <div class="panel-heading paddingtop0">
+    	<!--
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>模板管理</li>
+            <li class="active">网段管理</li>
+        </ol>
+        -->
+        <div class="breadcrumb paddingtop3">
+	        <div style="float: left;">
+	        	<h5>模板管理/网段管理</h5>
+	        </div>
+	        <div style="float:right; position: relative; top: 7px; left: 16px;">
+	        	{{#link-to "dashboard.network.new" "new"}}<button type="button" class="btn btn-primary btn-xs">添加网段</button>{{/link-to}}
+	        </div>
+        </div>
+        
+    </div>
+    <div class="panel-body">
+		<!--
+			<div class="text-right paddingbottom10">{{#link-to "dashboard.network.new"}}<button type="button" class="btn btn-primary">添加网段</button>{{/link-to}}</div>
+		-->
+		
+        <table class="table big">
+            <thead>
+                <tr>
+                	<th>ID</th>
+                    <th>IP/掩码位</th>
+                    <th>掩码</th>
+					<th>网关</th>
+					<th>vlan</th>
+					<th>trunk</th>
+					<th>bonding</th>
+					<th class="text-center">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            	{{#each rowList as |item index|}}
+                <tr>
+                	<td>{{#link-to "dashboard.network.detail" item.ID}}{{item.ID}}{{/link-to}}</td>
+					<td>{{item.Network}}</td>
+					<td>{{item.Netmask}}</td>
+					<td>{{item.Gateway}}</td>
+					<td>{{item.Vlan}}</td>
+					<td>{{item.Trunk}}</td>
+					<td>{{item.Bonding}}</td>
+					<td class="text-center">
+					{{#link-to "dashboard.network.new" item.ID}}<button type="button" class="btn btn-default btn-xs">克隆</button>{{/link-to}}
+					{{#link-to "dashboard.network.edit" item.ID}}<button type="button" class="btn btn-default btn-xs">修改</button>{{/link-to}}
+					<button {{action "deleteAction" item.ID}}  type="button" class="btn btn-default btn-xs">删除</button>
+					</td>
+				</tr>
+				{{/each}}
+            </tbody>
+        </table>
+        <div class="padding10">
+        	{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+    	<!--
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>模板管理</li>
+            <li class="active">网段管理</li>
+        </ol>
+        -->
+        <div class="breadcrumb">
+	        <div style="float: left;">
+	        	<h5>模板管理/PXE安装模板管理</h5>
+	        </div>
+	        <div style="float:right">
+	        	{{#link-to "dashboard.pxeTpl.new"}}<button type="button" class="btn btn-primary">添加新PXE安装模板</button>{{/link-to}}
+	        </div>
+        </div>
+        
+    </div>
+    <div class="panel-body">
+		<!--
+			<div class="text-right paddingbottom10">{{#link-to "dashboard.network.new"}}<button type="button" class="btn btn-primary">添加网段</button>{{/link-to}}</div>
+		-->
+		
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="info">
+                    <th>模板名称</th>
+                    <th>内容</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+					<td>默认模板</td>
+					<td>xxxxx</td>
+					<td>
+					{{#link-to "dashboard.pxeTpl.new"}}<button type="button" class="btn btn-default">克隆</button>{{/link-to}}
+					{{#link-to "dashboard.pxeTpl.new"}}<button type="button" class="btn btn-default">修改</button>{{/link-to}}
+					{{#link-to "dashboard.pxeTpl.list"}}<button type="button" class="btn btn-default">删除</button>{{/link-to}}
+					</td>
+				</tr>
+				
+            </tbody>
+        </table>
+        <div class="padding10">
+            <ul class="pagination">
+				<li><a href="#">&laquo;</a></li>
+				<li class="active"><a href="#">1</a></li>
+				<li class="disabled"><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+				<li><a href="#">&raquo;</a></li>
+			</ul>
+        </div>
+    </div>
+</div>

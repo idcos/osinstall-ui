@@ -1,0 +1,43 @@
+<!--
+<div class="navbar-static-top navbar-inverse" id="topDiv">
+	<div class="container-fluid">
+		<div class="navbar-header navbar-brand">{{#link-to "dashboard"}}IDCOS 物理机装机平台{{/link-to}}</div>
+	</div>
+</div>
+-->
+
+<div style="width: 500px; margin-left: 300px; margin-top: 100px;">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">用户登录</h3>
+		</div>
+		<div class="panel-body">
+			<div class="col-md-10">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="textinput">用户名：</label>
+						<div class="form-group col-md-9">
+							{{input type="text" class="form-control input-md" name="name" id="name"}}
+							<div class="help-block with-errors"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="textinput">密码：</label>
+						<div class="form-group col-md-9">
+							{{input type="password" class="form-control input-md" name="password" id="password"}}
+							<div class="help-block with-errors"/>
+						</div>
+					</div>	
+
+					<div class="text-center">
+						{{#link-to "dashboard.main"}}
+						<button type="button" class="btn btn-primary">登 录</button>
+						{{/link-to}}
+					</div>
+
+				</form>	
+			</div>
+		</div>
+	</div>
+</div>

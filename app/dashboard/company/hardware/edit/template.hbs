@@ -1,0 +1,161 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>设备型号管理</li>
+            <li class="active">编辑设备型号</li>
+        </ol>
+    </div>
+    {{#common/io-form-validator submitForm="saveAction"}}
+	<form class="form-horizontal">
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="18%"><label class="required">服务器厂商</label></td>
+					<td width="82%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择厂商"
+			 content=model.companyData required=true value=model.info.Company optionValuePath="content.name" optionLabelPath="content.name" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label class="required">产品名称</label></td>
+					<td>
+						<div class="col-md-5">
+							{{input required=true type="text" value=model.info.Product class="form-control input-md"}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label class="required">服务器型号</label></td>
+					<td>
+						<div class="col-md-5">
+							{{input required=true type="text" value=model.info.ModelName class="form-control input-md"}}
+						</div>
+					</td>
+				</tr>
+				
+			
+				{{#each model.info.FormatTpl as |item index|}}
+				<tr>
+					<td class="active" align="left">
+					<div class="col-md-11">
+						<div class="block"><label>配置名称：</label></div>
+						<div class="block">
+						{{input required=true placeholder="请填写配置名称" value=item.name class="form-control input-md"}}
+						</div>
+						<div class="block" style="margin-top: 10px;">
+							<button type="button" {{action "copyAction" index}} class="btn btn-default btn-xs"><i class="fa fa-plus"></i></button>
+	                       	&nbsp;						
+	                        <button type="button" {{action "cancelAction" index}} class="btn btn-default btn-xs"><i class="fa fa-minus"></i></button>
+						</div>
+					</div>
+					
+					</td>
+					<td colspan=3>
+						<table class="table table-hover">
+		                    <thead>
+			                    <tr>
+			                      <th width="20%">配置项</th>
+			                      <th width="15%">类型</th>
+			                      <th width="50%">配置信息</th>
+			                      <th width="10%">操作</th>
+			                    </tr>
+		                    </thead>
+		                    <tbody>
+								{{#each item.data as |item2 index2|}}
+								<tr>
+									<td>
+										{{input required=true placeholder="请填写配置项名称" value=item2.name class="form-control input-md"}}
+									</td>
+									<td>
+										{{view "select" class="form-control" prompt="请选择类型"
+			 content=model.typeData required=true value=item2.type optionValuePath="content.value" optionLabelPath="content.name"}}
+									</td>
+
+									<td>
+										
+										{{#if (eq "select" item2.type)}}
+											<table class="table table-hover">
+							                    <thead>
+								                    <tr>
+								                      <th width="15%">默认</th>
+								                      <th width="25%">名称</th>
+								                      <th width="40%">执行脚本</th>
+								                      <th width="20%">操作</th>
+								                    </tr>
+							                    </thead>
+							                    <tbody>
+			 									{{#each item2.data as |item3 index3|}}
+							                	<tr>
+							                		<td>
+							                			{{common/io-radio required=true name=(str-concat index index2) value=item3.value checked=item2.default}}
+							                		</td>
+								                	<td>
+								                		{{input required=true placeholder="请填写子项名称" value=item3.name class="form-control input-md"}}
+													</td>
+													<td>
+														{{input required=true placeholder="请填写子项内容" value=item3.value class="form-control input-md"}}
+													</td>
+													<td>
+														<button type="button" {{action "copyKeyItemAction" index index2 index3}} class="btn btn-default btn-xs"><i class="fa fa-plus"></i></button>
+	                          							
+	                          							<button type="button" {{action "cancelKeyItemAction" index index2 index3}} class="btn btn-default btn-xs"><i class="fa fa-minus"></i></button>
+													</td>
+												</tr>
+			 								{{/each}}
+			 								</tbody>
+			 								</table>
+			 							{{/if}}
+
+							
+			 							{{#if (eq "input" item2.type)}}
+			 								<table class="table table-hover">
+							                    <thead>
+								                    <tr>
+								                      <th width="70%">执行脚本</th>
+								                      <th width="30%">占位符默认值</th>
+								                    </tr>
+							                    </thead>
+							                    <tbody>
+							                	<tr>
+							                		<td>
+							                			{{input required=true placeholder="请填写执行脚本,占位符请填写<{##}>" value=item2.tpl class="form-control input-md"}}
+							                		</td>
+							                		<td>
+							                			{{input required=true placeholder="占位符默认值" value=item2.input class="form-control input-md"}}
+							                		</td>
+							                	</tr>
+							                	</tbody>
+							                </table>
+			 							{{/if}}
+			 							
+									</td>
+									<td>
+										<button type="button" {{action "copyKeyAction" index index2 index3}} class="btn btn-default btn-xs"><i class="fa fa-plus"></i></button>
+	                          							
+	                          			<button type="button" {{action "cancelKeyAction" index index2}} class="btn btn-default btn-xs"><i class="fa fa-minus"></i></button>
+									</td>
+								</tr>
+								{{/each}}
+		                    </tbody>
+	                    </table>
+	                
+					</td>
+				</tr>
+				{{/each}}
+				
+				
+			</tbody>
+		</table>
+		<div class="text-center">
+	        <button type="submit" class="btn btn-primary">提 交</button>
+	        {{#link-to "dashboard.company.hardware.list"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
+		</div>
+    </div>
+    </form>
+	{{/common/io-form-validator}}
+</div>

@@ -1,0 +1,109 @@
+/**
+ * buttons
+ */
+
+.btn-ghost, .btn-default {
+    color: #444;
+    background-color: #fff;
+    border-color: #d9d9d9;
+    transition: all .2s cubic-bezier(.645, .045, .355, 1);
+    &:hover {
+        color: @brand-primary;
+        background: white;
+        border-color: @brand-primary;
+        i {
+            color: @brand-primary !important;
+        }
+    }
+}
+.btn {
+    padding: 6px 17px;
+    &.btn-xs {
+        padding: 1px 5px;
+    }
+    &.btn-sm {
+        padding: 5px 10px;
+    }
+    i {
+        margin-right: 3px;
+    }
+    &.btn-icon-only {
+        i {
+            margin-right: 0;
+        }
+    }
+}
+.btn.disabled {
+    opacity: 0.4;
+    &:hover {
+        cursor: no-drop!important;
+        color: #444;
+    }
+}
+.btn-link {
+    font-size: 14px;
+    padding: 3px 4px;
+    &.btn-danger {
+        color: #EF1D15;
+        &:hover {
+            color: darken(#EF1D15, 5%);
+        }
+    }
+    &.btn-info {
+        color: #31b0d5;
+        &:hover {
+            color: darken(#31b0d5, 5%);
+        }
+    }
+    &.btn-warning {
+        color: #ec971f;
+        &:hover {
+            color: darken(#ec971f, 10%);
+        }
+    }
+}
+.btn-circle {
+    border-radius: 25px;
+    padding: 3px 6px 2px 6px;
+    &.btn-default i{
+        color: #ccc;
+    }
+}
+
+.btn-lock, .btn-lock:active, .btn-lock:focus, .btn-lock:hover{
+    box-shadow: none;
+    // padding: 4px 8px; 
+    // background: none !important;
+    i {
+        color: rgb(255, 145, 0) !important;
+    }
+    // font-size: 20px;
+    border-color: rgb(255, 145, 0);
+}
+
+.btn-icon-only {
+    width: 27px;
+    height: 27px;
+    &.btn-xs {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.panel-heading .btn {
+  padding: 3px 10px;
+  position: relative;
+  bottom: 2px;
+}
+
+
+// .btn-primary {
+//     background: #7266ba;
+//     border-color: #7266ba;
+// }
+
+// .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+//     color: #fff!important;
+//     background-color: #6254b2;
+//     border-color: #5a4daa;
+// }

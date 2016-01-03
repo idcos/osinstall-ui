@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+    <div class="panel-heading paddingtop0">
+    	<!--
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>模板管理</li>
+            <li class="active">网段管理</li>
+        </ol>
+        -->
+        <div class="breadcrumb paddingtop3">
+	        <div style="float: left;">
+	        	<h5>设备管理/日志查询</h5>
+	        </div>
+        </div>
+        
+    </div>
+    <div class="panel-body">
+		<!--
+			<div class="text-right paddingbottom10">{{#link-to "dashboard.network.new"}}<button type="button" class="btn btn-primary">添加网段</button>{{/link-to}}</div>
+		-->
+		
+        <table class="table big">
+            <thead>
+                <tr>
+                	
+                    <th width="20%">时间</th>
+                    <th width="25%">主题</th>
+                    <th width="48%">内容</th>
+                </tr>
+            </thead>
+            <tbody>
+            	{{#each model.info as |item index|}}
+                <tr>
+                	
+					<td>{{item.CreatedAt}}</td>
+					<td>{{item.Title}}</td>
+					<td>{{common/io-ansi text=item.Content}}</td>
+				</tr>
+				{{/each}}
+            </tbody>
+        </table>
+        <div class="padding10">
+            <button type="button" onclick="javascript:history.go(-1);" class="btn btn-default">返 回</button>
+        </div>
+    </div>
+</div>

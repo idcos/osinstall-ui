@@ -1,0 +1,79 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>硬件配置管理</li>
+            <li class="active">硬件配置详情</li>
+        </ol>
+    </div>
+    
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="20%"><label>服务器厂商</label></td>
+					<td width="80%">
+						<div class="col-md-5">
+							{{model.info.Company}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>产品名称</label></td>
+					<td>
+						<div class="col-md-5">
+							{{model.info.Product}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>服务器型号</label></td>
+					<td>
+						<div class="col-md-5">
+							{{model.info.ModelName}}
+						</div>
+					</td>
+				</tr>
+				
+			
+				{{#if model.info.FormatData}}
+				{{#each model.info.FormatData as |item index|}}
+				<tr>
+					<td class="active" align="right"><label>{{item.Name}}</label></td>
+					<td colspan=3>
+						<table class="table table-hover">
+		                    <thead>
+			                    <tr>
+			                      <th width="40%">配置项</th>
+			                      <th width="60%">配置信息</th>
+			                    </tr>
+		                    </thead>
+		                    <tbody>
+								{{#each item.Data as |item2 index2|}}
+								<tr>
+									<td>
+										{{item2.Name}}
+									</td>
+									<td>
+										{{item2.Value}}	
+									</td>
+								</tr>
+								{{/each}}
+		                    </tbody>
+	                    </table>
+	                
+					</td>
+				</tr>
+				{{/each}}
+				{{/if}}
+				
+				
+			</tbody>
+		</table>
+		<div class="text-center">
+	        <button type="button" class="btn btn-default" onclick="javascript:history.go(-1);">返 回</button>
+		</div>
+    </div>
+    
+</div>

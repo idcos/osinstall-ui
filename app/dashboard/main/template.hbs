@@ -1,0 +1,139 @@
+<div class="panel panel-default">
+	<div class="panel-body" style="padding: 60px;">
+		<div >
+			<div id="div_chart" style="height:400px"></div>
+			<script type="text/javascript">
+			        var myChart = echarts.init(document.getElementById("div_chart"));
+			        var option = {
+					    title : {
+					        text: 'IDCOS 物理机装机平台数据统计',
+					        subtext: "累计使用 180 天\n累计安装 20000 台",
+					        x:'center'
+					    },
+					    tooltip : {
+					        trigger: 'item',
+					        formatter: "{a} <br/>{b} : {c} ({d}%)"
+					    },
+					    /*
+					    legend: {
+					        orient : 'vertical',
+					        x : 'left',
+					        data:['安装失败(100)','等待安装(2000)','正在安装(1000)','安装成功(4999)']
+					    },
+					    */
+					    toolbox: {
+					        show : true,
+					        feature : {
+					            mark : {show: true},
+					            dataView : {show: true, readOnly: false},
+					            magicType : {
+					                show: true, 
+					                type: ['pie', 'funnel'],
+					                option: {
+					                    funnel: {
+					                        x: '25%',
+					                        width: '50%',
+					                        funnelAlign: 'left',
+					                        max: 1548
+					                    }
+					                }
+					            },
+					            restore : {show: true},
+					            saveAsImage : {show: true}
+					        }
+					    },
+					    calculable : true,
+					    series : [
+					        {
+					            name:'',
+					            type:'pie',
+					            radius : '55%',
+					            center: ['25%', '60%'],
+					            data:[
+					            	{value:9000, name:'H3C(9000)'},
+					                {value:4000, name:'惠普(4000)'},
+					                {value:2000, name:'华为(2000)'},
+					                {value:1000, name:'Dell(1000)'},
+					                {value:2000, name:'联想(2000)'},
+					                {value:1000, name:'IBM(1000)'},
+					                {value:1000, name:'宝德(1000)'},
+					            ]
+					        },
+					        {
+					            name:'',
+					            type:'pie',
+					            radius : '55%',
+					            center: ['75%', '60%'],
+					            data:[
+					            	{value:8000, name:'RedHat(8000)'},
+					                {value:4000, name:'SuSE(4000)'},
+					                {value:6000, name:'Windows(6000)'},
+					                {value:2000, name:'VMware(2000)'}
+					            ]
+					        }
+					    ]
+					};           
+			        myChart.setOption(option);
+			    </script>
+			</div>
+			<br><br>
+			<div>
+				<h4 style="color:#0088cc">支持厂商及型号</h4>
+				<div class="rows">
+					<div class="col-md-1">
+						{{#link-to "dashboard.hardware.list"}}
+						<img src="image/h3c.png" />
+						{{/link-to}}
+					</div>
+
+					<!--
+					<div class="col-md-2">
+						{{#link-to "dashboard.hardware.list"}}
+						<img style="margin-top: 13px;" width="109" height="33" src="image/inspur.jpg" />
+						{{/link-to}}
+					</div>
+					-->
+
+					<div class="col-md-1" style="margin-right: 30px;">
+						{{#link-to "dashboard.hardware.list"}}
+						<img src="image/dell.png" />
+						{{/link-to}}
+					</div>
+
+					<div class="col-md-2">
+						{{#link-to "dashboard.hardware.list"}}
+						<img style="margin-top: 13px;" width="109" height="33" src="image/huawei.png" />
+						{{/link-to}}
+					</div>
+
+					
+
+					<div class="col-md-2">
+						{{#link-to "dashboard.hardware.list"}}
+						<img style="margin-top: 12px;" src="image/lenovo.png" />
+						{{/link-to}}
+					</div>
+
+
+					<div class="col-md-1" style="margin-left: 10px;">
+						{{#link-to "dashboard.hardware.list"}}
+						<img style="margin-top: 5px;" src="image/hp.png" />
+						{{/link-to}}
+					</div>
+					
+					<div class="col-md-1" style="margin-right: 30px;">
+						{{#link-to "dashboard.hardware.list"}}
+						<img style="margin-top: 7px;" src="image/ibm.png" />
+						{{/link-to}}
+					</div>
+					
+
+					<div class="col-md-1" style="margin-left: 20px;">
+						{{#link-to "dashboard.hardware.list"}}
+						<img src="image/powerleader.png" />
+						{{/link-to}}
+					</div>
+				</div>
+			</div>
+	</div>
+</div>

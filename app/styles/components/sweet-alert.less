@@ -1,0 +1,91 @@
+// SweetAlert
+// 2014 (c) - Tristan Edwards
+// github.com/t4t5/sweetalert
+
+// @import "sweet-alert-animations";
+
+.sweet-overlay {
+  background-color: fade(#000, 40%);
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  display: none;
+  z-index: @zindex-modal;
+}
+
+.sweet-alert {
+  @width: 478px;
+  @padding: 17px;
+
+  background-color: @body-bg;
+  width: @width;
+  padding: @padding;
+  // border-radius: 5px;
+  text-align: center;
+
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -(@width / 2 + @padding);
+  margin-top: -200px;
+
+  overflow: hidden;
+  display: none;
+  z-index: 2000;
+
+  @media all and (max-width: @screen-xs-max) {
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+
+    left: (@grid-gutter-width / 2);
+    right: (@grid-gutter-width / 2);
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  .btn {
+    padding: 5px 25px;
+    border-radius: 0;
+    font-size: 14px;
+  }
+
+  .icon {
+    display: none !important; 
+  }
+
+  .btn-default {
+    .form-control-focus(@btn-default-border);
+  }
+  .btn-success {
+    .form-control-focus(@btn-success-border);
+  }
+  .btn-info {
+    .form-control-focus(@btn-info-border);
+  }
+  .btn-danger {
+    .form-control-focus(@btn-danger-border);
+  }
+  .btn-warning {
+    .form-control-focus(@btn-warning-border);
+  }
+
+  button::-moz-focus-inner {
+    border: 0;
+  }
+}
+ 
+.showSweetAlert {
+  -webkit-animation: zoomIn 0.3s;
+  animation: zoomIn 0.3s; }
+
+.hideSweetAlert {
+  -webkit-animation: hideSweetAlert 0.2s;
+  animation: hideSweetAlert 0.2s; }
+ 

@@ -1,0 +1,58 @@
+@import "./io-error.less";
+@import "./io-tree.less";
+// @import "./io-panel.less";
+// @import "./io-steps.less";
+@import "./io-input.less";
+@import "./io-button.less";
+@import "./io-nav-pills.less";
+@import "./io-table.less";
+@import "./nav-tabs.less";
+
+.statistic {
+	font-size: 3rem;
+	font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    font-weight: 400;
+    line-height: 1em;
+    color: #444;
+    text-transform: uppercase;
+    margin: 0 5px;
+    &.statistic-xs {
+		font-size: 4rem
+    }
+}
+
+.point {
+	@size: 12px;
+	display: inline-block;
+	margin-right: 5px;
+	width: @size;
+	height: @size;
+	background-color: @brand-default;
+	border-radius: 2px;
+	
+	&.small {
+		@size: 8px;
+		width: @size;
+		height: @size;
+		margin-right: 3px;
+	}
+
+	&.circle {
+		border-radius: @size/2;
+	}
+	&.success {
+		background-color: @brand-success;
+	}
+	&.info {
+		background-color: @brand-info;
+	}
+	&.primary {
+		background-color: @brand-primary;
+	}
+	&.warning {
+		background-color: @brand-warning;
+	}
+	&.danger {
+		background-color: @brand-danger;
+	}
+}

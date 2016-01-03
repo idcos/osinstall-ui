@@ -1,0 +1,49 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>机房管理/房间管理</li>
+            <li class="active">编辑房间</li>
+        </ol>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right"><b>机房</b></td>
+					<td>
+						<div class="col-md-5">
+							<select class="form-control">
+								<option>留下机房</option>
+								<option>萧山机房</option>
+							</select>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right" width="20%"><b>房间名</b></td>
+					<td width="80%">
+						<div class="col-md-5">{{input type="text" class="form-control input-md"}}</div>
+					</td>
+				</tr>
+				
+				
+				<!--
+				<tr>
+					<td class="active" align="right"><b>备注</b></td>
+					<td colspan=3>
+						{{textarea value="" rows="6" class="form-control input-md"}}
+					</td>
+				</tr>
+				-->
+			</tbody>
+		</table>
+		<div class="text-center">
+			{{#link-to "dashboard.location.room"}}
+	        <button type="button" class="btn btn-primary">提 交</button>
+	        {{/link-to}}
+	        
+	        {{#link-to "dashboard.location.room"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
+		</div>
+    </div>
+</div>

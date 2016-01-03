@@ -1,0 +1,137 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>设备型号管理</li>
+            <li class="active">设备型号详情</li>
+        </ol>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="18%"><label class="required">服务器厂商</label></td>
+					<td width="82%">
+						<div class="col-md-5">
+			 				{{model.info.Company}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label class="required">产品名称</label></td>
+					<td>
+						<div class="col-md-5">
+							{{model.info.Product}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label class="required">服务器型号</label></td>
+					<td>
+						<div class="col-md-5">
+							{{model.info.ModelName}}
+						</div>
+					</td>
+				</tr>
+				
+			
+				{{#each model.info.FormatTpl as |item index|}}
+				<tr>
+					<td class="active" align="right"><label>{{item.name}}</label></td>
+					<td colspan=3>
+						<table class="table table-hover">
+		                    <thead>
+			                    <tr>
+			                      <th width="20%">配置项</th>
+			                      <th width="15%">类型</th>
+			                      <th width="60%">配置信息</th>
+			                    </tr>
+		                    </thead>
+		                    <tbody>
+								{{#each item.data as |item2 index2|}}
+								<tr>
+									<td>
+										{{item2.name}}
+									</td>
+									<td>
+			 							{{#if (eq "select" item2.type)}}
+			 								下拉框
+			 							{{/if}}
+
+			 							{{#if (eq "input" item2.type)}}
+			 								输入框
+			 							{{/if}}
+									</td>
+
+									<td>
+										
+										{{#if (eq "select" item2.type)}}
+											<table class="table table-hover">
+							                    <thead>
+								                    <tr>
+								                      <th width="20%">默认</th>
+								                      <th width="25%">名称</th>
+								                      <th width="65%">执行脚本</th>
+								                    </tr>
+							                    </thead>
+							                    <tbody>
+			 									{{#each item2.data as |item3 index3|}}
+							                	<tr>
+							                		<td>
+							                			{{#if (eq item3.value item2.default)}}
+							 								默认选中
+							 							{{/if}}
+							                		</td>
+								                	<td>
+								                		{{item3.name}}
+													</td>
+													<td>
+														{{item3.value}}
+													</td>
+												</tr>
+			 								{{/each}}
+			 								</tbody>
+			 								</table>
+			 							{{/if}}
+
+							
+			 							{{#if (eq "input" item2.type)}}
+			 								<table class="table table-hover">
+							                    <thead>
+								                    <tr>
+								                      <th width="70%">执行脚本</th>
+								                      <th width="30%">占位符默认值</th>
+								                    </tr>
+							                    </thead>
+							                    <tbody>
+							                	<tr>
+							                		<td>
+							                			{{item2.tpl}}
+							                		</td>
+							                		<td>
+							                			{{item2.input}}
+							                		</td>
+							                	</tr>
+							                	</tbody>
+							                </table>
+			 							{{/if}}
+			 							
+									</td>
+								</tr>
+								{{/each}}
+		                    </tbody>
+	                    </table>
+	                
+					</td>
+				</tr>
+				{{/each}}
+				
+				
+			</tbody>
+		</table>
+		<div class="text-center">
+	        <button type="button" class="btn btn-default" onclick="javascript:history.go(-1);">返 回</button>
+		</div>
+    </div>
+</div>

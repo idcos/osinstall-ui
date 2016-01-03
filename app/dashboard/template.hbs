@@ -1,0 +1,127 @@
+<div class="navbar-static-top navbar-inverse page-nav" id="topDiv">
+	<div class="navbar-header navbar-brand">{{#link-to "dashboard.main"}} <i class="fa fa-balance-scale"></i> OS 装机平台{{/link-to}}</div>
+	<div class="navbar-right" style="margin-right: 0px; margin-top: 8px;">
+		欢迎您，admin &nbsp;&nbsp;
+		{{#link-to "login" class="btn btn-dropdown btn-link dropdown-toggle btn-primary"}}<small><i class="fa fa-power-off"></i> 安全退出</small>{{/link-to}}
+	</div>
+	<!--
+	<ul	class="nav navbar-nav navbar-right">
+		<div class="btn-group btn-group-lg">
+			<a class="btn btn-dropdown dropdown-toggle btn-primary"	data-toggle="dropdown"><span class="glyphicon glyphicon-flag"></span><small>信息(2)</small></a>
+			<ul	class="dropdown-menu" role="menu">
+				<li>
+					<a >共有2类信息</a>
+				</li>
+				<li	class="divider"></li>
+				<li>
+					<a>系统公告(2)</a>
+				</li>
+				<li>
+					<a>我的代办(1)</a>
+				</li>
+			</ul>
+		</div>
+		<div class="btn-group btn-group-lg">
+			<a class="btn btn-dropdown dropdown-toggle btn-primary"	data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><small>测试用户</small></a>
+			<ul	class="dropdown-menu" role="menu">
+				<li>
+					<a>个人资料</a>
+				</li>
+				<li>
+					<a>用户配置</a>
+				</li>
+				<li>
+					<a>退出系统</a>
+				</li>
+			</ul>
+		</div>
+	</ul>
+	-->
+</div>
+
+<div class="section page-body block align-items-stretch" id="middleDiv">
+	<nav class="page-body-nav block shrink content">
+		{{#common/io-sidebar}}
+	    <ul class="nav">
+	        <li class="active">
+	            <a href="javascript:void(0);">
+	            	<i class="fa fa-server"></i>
+	                <label>装机管理</label>
+	                <span class="pull-right toggle"> <i class="fa fa-angle-down"></i> </span>
+	            </a>
+	            <ul class="nav nav-sub">
+	                <li> {{#link-to "dashboard.device.list" "all"  }}设备列表{{/link-to}} </li>
+	                <li> {{#link-to "dashboard.device.new"  }}录入新设备{{/link-to}} </li>
+	                <li> {{#link-to "dashboard.device.list" "installing"  }}正在安装的设备
+					{{#if (not-eq 0 model.installingDeviceNum)}}
+	                (<span class="orange">{{model.installingDeviceNum}}</span>)
+					{{/if}}
+	                {{/link-to}}
+	                </li>
+	                <li> {{#link-to "dashboard.device.list" "failure"  }}安装失败的设备
+	                {{#if (not-eq 0 model.failureDeviceNum)}}(<span class="red">{{model.failureDeviceNum}}</span>)
+					{{/if}}
+	                {{/link-to}}
+	                 </li>
+	            </ul>
+	        </li>
+	        <li class="">
+	            <a href="javascript:void(0);">
+	            	<i class="fa fa-line-chart"></i>
+	                <label>统计报表</label>
+	                <span class="pull-right toggle"> <i class="fa fa-angle-down"></i> </span>
+	            </a>
+	            <ul class="nav nav-sub">
+	                <li> {{#link-to "dashboard.report.status"  }}设备状态报表{{/link-to}} </li>
+	            </ul>
+	        </li>
+	        <li class="">
+	            <a href="javascript:void(0);">
+	            	<i class="fa fa-industry"></i>
+	                <label>厂商及型号</label>
+	                <span class="pull-right toggle"> <i class="fa fa-angle-down"></i> </span>
+	            </a>
+	            <ul class="nav nav-sub">
+	            	<!--
+	                <li> {{#link-to "dashboard.hardware.list"  }}硬件配置管理{{/link-to}} </li>
+	                -->
+	                <li>  {{#link-to "dashboard.company.hardware.list"  }}设备型号管理{{/link-to}} </li>
+	                <li>  {{#link-to "dashboard.main"  }}数据统计{{/link-to}} </li>
+	            </ul>
+	        </li>
+	         <li class="">
+	            <a href="javascript:void(0);">
+	            	<i class="fa fa-puzzle-piece"></i>
+	                <label>模板管理</label>
+	                <span class="pull-right toggle"> <i class="fa fa-angle-down"></i> </span>
+	            </a>
+	            <ul class="nav nav-sub">
+	            	<li>
+		               {{#link-to "dashboard.network.list"  }}网段管理{{/link-to}}
+	            		
+	            	</li>
+	            	<li>
+						{{#link-to "dashboard.os.list"  }}操作系统管理{{/link-to}}
+	            	</li>
+	            	<li>
+						{{#link-to "dashboard.systemTpl.list"  }}系统模板管理{{/link-to}}
+	            	</li>
+	            	<li> {{#link-to "dashboard.hardware.list"  }}硬件配置模板管理{{/link-to}} </li>
+	            	<li>
+						{{#link-to "dashboard.location.list" 0  }}位置管理{{/link-to}}
+	            	</li>
+			    </ul>
+			</li>
+		</ul>
+		{{/common/io-sidebar}}
+		<!--
+		<a class="list-group-item list-group-item-info">帮助中心</a>
+		<a  >合作厂商</a>
+		<a class="list-group-item padding30">帮助文档</a>
+		-->
+	</nav>
+	<section class="page-body-main block content">
+		{{outlet}}
+	</section>
+</div>
+

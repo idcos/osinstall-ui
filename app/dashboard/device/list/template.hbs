@@ -1,0 +1,184 @@
+<div class="panel panel-default">
+	
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>装机管理</li>
+            <li class="active">设备列表</li>
+        </ol>
+    </div>
+    <!--
+    <ul class="nav nav-tabs"> 
+		<li class="active">{{#link-to "dashboard.device.list"}}所有设备列表{{/link-to}}</li>
+	    <li>{{#link-to "dashboard.device.preInstall"}}待安装{{/link-to}}</li>
+	    <li>{{#link-to "dashboard.device.installing"}}正在安装{{/link-to}}</li>
+	</ul>
+	-->
+    <div class="panel-body">
+		<div style="margin-bottom: 10px;">
+			{{#common/io-form-validator submitForm="searchAction"}}
+			<form class="form-horizontal">
+			<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td width="15%" class="active" align="right"><b>搜索</b></td>
+					<td width="85%">
+						<div class="block">
+							<div class="col-md-6">
+							{{textarea placeholder="可输入批次号、SN、主机名、IP等进行查询
+多条信息间可通过换行、逗号、分号分隔" value=form.Keyword rows="4" class="form-control input-md"}}
+							</div>
+							<div class="col-md-6">
+								<button type="submit" class="btn btn-primary">搜 索</button>
+								&nbsp;&nbsp;
+								{{input type="checkbox" checked=autoRefresh}}自动刷新
+								{{#if (eq false isShowMultiSearchBlock)}}
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a {{action "showMultiSearchBlockAction"}} href="javascript::void(0);">展开更多条件</a>
+								{{/if}}
+							</div>
+						</div>
+					</td>
+				</tr>
+
+				{{#if isShowMultiSearchBlock}}
+				<tr>
+					<td width="15%" class="active" align="right"><b>操作系统</b></td>
+					<td width="85%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择操作系统"
+ content=model.osConfigData value=form.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="15%" class="active" align="right"><b>硬件配置模板</b></td>
+					<td width="85%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择硬件配置模板"
+ content=model.hardwareData value=form.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="15%" class="active" align="right"><b>系统安装模板</b></td>
+					<td width="85%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择系统安装模板" content=model.systemConfigData value=form.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+						{{#if (not-eq "all" model.status)}}
+							{{#if (eq true isShowMultiSearchBlock)}}
+							<div class="col-md-2">
+								<a {{action "hideMultiSearchBlockAction"}} href="javascript::void(0);">收起</a>
+							</div>
+							{{/if}}
+						{{/if}}
+					</td>
+				</tr>
+
+				{{#if (eq "all" model.status)}}
+				<tr>
+					<td width="15%" class="active" align="right"><b>状态</b></td>
+					<td width="85%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择状态" content=model.statusData value=form.Status optionValuePath="content.ID" optionLabelPath="content.Name"}}
+						</div>
+						{{#if (eq true isShowMultiSearchBlock)}}
+						<div class="col-md-2">
+							<a {{action "hideMultiSearchBlockAction"}} href="javascript::void(0);">收起</a>
+						</div>
+						{{/if}}
+					</td>
+				</tr>
+				{{/if}}
+				{{/if}}
+			</tbody>
+			</table>
+			</form>
+			{{/common/io-form-validator}}
+		</div>
+
+		
+        <table class="table big">
+            <thead>
+                <tr>
+                	<th>{{input type="checkbox" checked=selectAll}}</th>
+                    <th>SN</th>
+					<th>主机名</th>
+					<th>批次号</th>
+					<th>IP</th>
+					<th>操作系统</th>
+					<th>硬件配置模板</th>
+					<th>系统安装模板</th>
+					<th>状态</th>
+					{{#if isShowInstallInfoCol}}
+					<th width="8%">安装进度</th>
+					<th>安装日志</th>
+					{{/if}}
+                </tr>
+            </thead>
+            <tbody>
+            	{{#each rowList as |item index|}}
+                <tr>
+                	<td>{{input type="checkbox" checked=item.checked}}</td>
+					<td>{{#link-to "dashboard.device.detail" item.ID}}{{item.Sn}}{{/link-to}}</td>
+					<td>{{#link-to "dashboard.device.detail" item.ID}}{{item.Hostname}}{{/link-to}}</td>
+					<td><a href="javascript:void(0);" {{action "searchBatchNumberAction" item.BatchNumber}}>{{item.BatchNumber}}</a></td>
+					<td>{{#link-to "dashboard.network.detail" item.NetworkID}}{{item.Ip}}{{/link-to}}</td>
+					<td>{{#link-to "dashboard.os.detail" item.OsID}}{{item.OsName}}{{/link-to}}</td>
+					<td>{{#link-to "dashboard.hardware.detail" item.HardwareID}}{{item.HardwareName}}{{/link-to}}</td>
+					<td>{{#link-to "dashboard.systemTpl.detail" item.SystemID}}{{item.SystemName}}{{/link-to}}</td>
+					<td>
+						{{#link-to "dashboard.log.detail" item.ID "install"}}
+						{{#if (eq "pre_install" item.Status)}}
+							<span class="text-muted">等待安装</span>
+						{{/if}}
+
+						{{#if (eq "installing" item.Status)}}
+							<span class="text-info">正在安装</span>
+						{{/if}}
+
+						{{#if (eq "success" item.Status)}}
+							<span class="text-success">安装成功</span>
+						{{/if}}
+
+						{{#if (eq "failure" item.Status)}}
+							<span class="text-danger">安装失败</span>
+						{{/if}}
+						{{/link-to}}
+					</td>
+					{{#if isShowInstallInfoCol}}
+						<td>
+							{{#link-to "dashboard.log.detail" item.ID "install"}}
+							<div class="progress progress-striped active" title="{{item.InstallLog}}" style="height: 17px;">
+							   <div title="{{item.InstallLog}}" class="progress-bar progress-bar-success" role="progressbar" 
+							      aria-valuemin="0" aria-valuemax="100" 
+							      style="width: {{percentage item.InstallProgress}};">
+							      <span class="sr-only">{{item.InstallLog}}</span>
+							   </div>
+							</div>
+							{{/link-to}}
+
+
+						</td>
+						<td>{{#link-to "dashboard.log.detail" item.ID "install"}}详情{{/link-to}}</td>
+					{{/if}}
+				</tr>
+				{{/each}}
+            </tbody>
+        </table>
+        	<div class="row padding0">
+					<div class="col-sm-6">
+					
+			       		<button {{action "reInstallAction"}} type="button" class="btn btn-default btn-sm">重新安装</button>
+						&nbsp;&nbsp;
+			       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
+			       	
+					</div>
+					<div class="col-sm-6">
+						{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+					</div>
+				</div>
+    </div>
+</div>

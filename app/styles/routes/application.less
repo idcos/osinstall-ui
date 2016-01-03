@@ -1,0 +1,93 @@
+@import './app-sidebar-nav.less';
+@import './vs-install.less';
+
+/**
+ * app structure
+ */
+
+body {
+    @padding: 10px;
+    @pageNavHeight: 50px;
+    @pageBodyNavWidth: 260px;
+    .page-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: @pageNavHeight;
+        .navbar-header {
+            width: @pageBodyNavWidth;
+        }
+    }
+    .page-body {
+        width: 100%;
+        position: absolute;
+        top: @pageNavHeight;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        .page-body-nav {
+            width: @pageBodyNavWidth;
+        }
+        .page-body-main {
+            background: white;
+            overflow-y: scroll;
+            >.panel {
+                border: none;
+                box-shadow: none;
+            }
+        }
+    }
+} 
+
+
+/**
+ * app top navigation
+ */
+.page-nav {
+    background: white;
+    border-bottom: solid 1px #ececec;
+    &:after {
+        position: absolute;
+        content: "";
+        height: 8px;
+        width: 100%;
+        bottom: -2px;
+        left: 0;
+        background: rgba(208, 208, 208, 0.07);
+    }
+    .navbar-brand {
+        text-align: center;
+        &:hover, & {
+            background: #0B366A;
+            a {
+                color: white;
+                text-decoration: none;
+            }
+        }
+        font-size: 20px; 
+        i {
+            margin-right: 5px;
+        }
+    }
+    .btn-link {
+        color: #666;
+        i {
+            color: #dd5826;
+            font-size: 16px;
+        }
+        &:hover {
+            color: #333;
+            text-decoration: none;
+        }
+    }
+}
+
+.nav-tabs {
+    li a {
+        color: #666;
+    }
+    li a.active {
+        color: @brand-primary;
+    }
+}

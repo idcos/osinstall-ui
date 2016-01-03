@@ -1,0 +1,84 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>设备型号管理</li>
+            <li class="active">编辑设备型号</li>
+        </ol>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right"><b>服务器厂商</b></td>
+					<td>
+						<div class="col-md-5">
+							<select class="form-control">
+								<option>Dell</option>
+							</select>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><b>产品名称</b></td>
+					<td>
+						<div class="col-md-5">
+							{{input type="text" value="PowerEdge" class="form-control input-md"}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><b>服务器型号</b></td>
+					<td>
+						<div class="col-md-5">
+							{{input type="text" value="R420" class="form-control input-md"}}
+						</div>
+					</td>
+				</tr>
+				
+				<!--
+				<tr>
+					<td class="active" align="right"><b>配置模板名称：</b></td>
+					<td>
+						<div class="col-md-6">
+							{{input type="text" value="" class="form-control input-md"}}
+						</div>
+					</td>
+				</tr>
+				-->
+				
+				
+				<tr>
+					<td class="active" align="right"><b>RAID</b></td>
+					<td colspan=3>
+						<div class="col-md-10">{{textarea value="" rows="10" class="form-control input-md"}}</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="active" align="right"><b>OOB</b></td>
+					<td colspan=3>
+						<div class="col-md-10">{{textarea value="" rows="10" class="form-control input-md"}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><b>BIOS</b></td>
+					<td colspan=3>
+						<div class="col-md-10">{{textarea value="" rows="10" class="form-control input-md"}}</div>
+					</td>
+				</tr>
+				
+				
+			</tbody>
+		</table>
+		<div class="text-center">
+	        {{#link-to "dashboard.product.list"}}<button type="button" class="btn btn-primary">提 交</button>{{/link-to}}
+	        <!--
+	        {{#link-to "dashboard.hardware.new"}}<button type="button" class="btn btn-primary">克隆新模板</button>{{/link-to}}
+	        -->
+	        {{#link-to "dashboard.product.list"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
+		</div>
+    </div>
+</div>

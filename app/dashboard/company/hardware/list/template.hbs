@@ -1,0 +1,93 @@
+<div class="panel panel-default">
+    <div class="panel-heading paddingtop0">
+    	<!--
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>模板管理</li>
+            <li class="active">网段管理</li>
+        </ol>
+        -->
+        <div class="breadcrumb paddingtop3">
+	        <div style="float: left;">
+	        	<h5>设备型号管理</h5>
+	        </div>
+	       	
+			<div style="float:right; position: relative; top: 7px; left: 16px;">
+	        	{{#link-to "dashboard.company.hardware.new" "new"}}<button type="button" class="btn btn-primary btn-xs">添加新硬件配置</button>{{/link-to}}
+	        </div>
+	        
+        </div>
+        
+    </div>
+    <div class="panel-body">
+		<!--
+			<div class="text-right paddingbottom10">{{#link-to "dashboard.network.new"}}<button type="button" class="btn btn-primary">添加网段</button>{{/link-to}}</div>
+		-->
+		{{#common/io-form-validator submitForm="searchAction"}}
+		<form class="form-horizontal">
+		<div style="margin-bottom: 10px;">
+			<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td width="15%" class="active" align="right"><b>搜索</b></td>
+					<td width="85%" colspan=3>
+
+							<div class="col-md-3">
+								{{view "select" class="form-control" prompt="--请选择厂商--"
+			 content=model.companyData value=Company optionValuePath="content.Company" optionLabelPath="content.Company" }}
+							</div>
+
+							<div class="col-md-3">
+								{{view "select" class="form-control" prompt="--请选择产品名称--"
+			 content=model.productData value=Product optionValuePath="content.Product" optionLabelPath="content.Product" }}
+							</div>
+
+							<div class="col-md-3">
+								{{view "select" class="form-control" prompt="--请选择服务器型号--"
+			 content=model.modelNameData value=ModelName optionValuePath="content.ModelName" optionLabelPath="content.ModelName" }}
+							</div>
+						
+
+						<div class="col-md-2">
+							<button type="submit" class="btn btn-primary">搜 索</button>
+							&nbsp;&nbsp;
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+		</form>
+		{{/common/io-form-validator}}
+
+        <table class="table  big">
+            <thead>
+                <tr>
+                	<th>ID</th>
+                    <th>服务器厂商</th>
+                    <th>产品名称</th>
+                    <th>服务器型号</th>
+                    <th class="text-center" style="width: 200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            	{{#each rowList as |item index|}}
+                <tr>
+                	<td>{{#link-to "dashboard.company.hardware.detail" item.ID}}{{item.ID}}{{/link-to}}</td>
+					<td>{{item.Company}}</td>
+					<td>{{item.Product}}</td>
+					<td>{{item.ModelName}}</td>
+					<td class="text-center">
+						{{#link-to "dashboard.company.hardware.new" item.ID}}<button type="button" class="btn btn-default btn-xs">克隆</button>{{/link-to}}
+						{{#link-to "dashboard.company.hardware.edit" item.ID}}<button type="button" class="btn btn-default btn-xs">修改</button>{{/link-to}}
+						<button type="button" {{action "deleteAction" item.ID}} class="btn btn-default btn-xs">删除</button>
+						
+					</td>
+				</tr>
+				{{/each}}
+            </tbody>
+        </table>
+        <div class="padding10">
+            {{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+        </div>
+    </div>
+</div>

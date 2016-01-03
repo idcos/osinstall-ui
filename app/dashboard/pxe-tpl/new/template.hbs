@@ -1,0 +1,36 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>PXE安装模板管理</li>
+            <li class="active">编辑PXE安装模板</li>
+        </ol>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="20%"><b>模板名</b></td>
+					<td width="80%">
+						<div class="col-md-5">{{input type="text" class="form-control input-md"}}</div>
+					</td>
+				</tr>
+				
+				
+				<tr>
+					<td class="active" align="right"><b>内容</b></td>
+					<td colspan=3>
+						<div class="col-md-10">{{textarea value="" rows="15" class="form-control input-md"}}</div>
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		<div class="text-center">
+	        <button type="button" {{action "saveAction"}} class="btn btn-primary">提 交</button>
+	        <!--
+	        {{#link-to "dashboard.pxeTpl.new"}}<button type="button" class="btn btn-primary">克隆新模板</button>{{/link-to}}
+	        -->
+	        {{#link-to "dashboard.pxeTpl.list"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
+		</div>
+    </div>
+</div>

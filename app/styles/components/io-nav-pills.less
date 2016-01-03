@@ -1,0 +1,31 @@
+/**
+ * nav pills
+ */
+.nav.nav-pills {
+    border: solid 1px;
+    color: @brand-primary;
+    display: inline-block;
+    > li {
+        a {
+            white-space: nowrap;
+            border-right: solid 1px @brand-primary;
+            color: @brand-primary;
+            padding: 4px 20px;
+            background: white;
+        }
+        &:last-child {
+            a {
+                border-right: none;
+            }
+        }
+        &.active {
+            a {
+                color: white;
+                background: @brand-primary;
+            }
+        }
+        + li {
+            margin-left: 0;
+        }
+    }
+}

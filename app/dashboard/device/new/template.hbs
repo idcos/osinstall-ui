@@ -1,0 +1,139 @@
+<div class="panel panel-default">
+	<!--
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>装机管理</li>
+            <li class="active">录入新设备</li>
+        </ol>
+    </div>
+    -->
+	{{#common/io-form-validator submitForm="addAction"}}
+	<form class="form-horizontal">
+    <div class="panel-body">
+	    <ul class="nav nav-tabs nav-tabs-bare">
+			<li class="active">{{#link-to "dashboard.device.new"}}单个录入{{/link-to}}</li>
+		    <li>{{#link-to "dashboard.device.import"}}批量录入{{/link-to}}</li>
+		</ul>
+		<br>
+    	{{#each rows as |item index|}}
+    	{{#if (eq true isMultiDevice)}}
+    	<h5>第 {{int-add index 1}} 台：</h5>
+    	{{/if}}
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="20%"><label class="required">SN</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{input value=item.Sn required=true type="text" class="form-control input-md"}}</div>
+						<div class="col-md-5" style="margin-top: 5px;">
+							{{html-safe item.messageSn}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label class="required">主机名</label></td>
+					<td>
+						<div class="col-md-5">{{input value=item.Hostname required=true type="text" class="form-control input-md" key-up="hostnameChangeAction"}}</div>
+						<div class="col-md-5" style="margin-top: 5px;">
+							{{html-safe item.messageHostname}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label class="required">IP</label></td>
+					<td>
+						<div class="col-md-5">
+							{{input type="text" value=item.Ip required=true class="form-control input-md"}}
+						</div>
+						<div class="col-md-2" style="margin-top: 5px;">
+							{{html-safe item.messageIp}}
+						</div>
+						<div class="col-md-4 text-success" style="margin-top: 5px;">
+							{{#if item.isShowNetworkInfo}}
+								匹配到网段:{{item.Network}}
+							{{/if}}
+						</div>
+					</td>
+				</tr>
+
+				<!--
+				<tr>
+					<td class="active" align="right"><b>匹配到网段</b></td>
+					<td height="51">
+						<div class="col-md-5">
+							{{#if item.isShowNetworkInfo}}
+								{{item.Network}}
+							{{/if}}
+						</div>
+					</td>
+				</tr>
+				-->
+				
+
+				<tr>
+					<td class="active" align="right"><label class="required">操作系统</label></td>
+					<td>
+						<div class="col-md-5">
+							{{view "select" required=true class="form-control" prompt="请选择操作系统"
+ content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>硬件配置模板</label></td>
+					<td>
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择硬件配置模板"
+ content=model.hardwareData value=item.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label class="required">系统安装模板</label></td>
+					<td>
+						<div class="col-md-5">
+							{{view "select" required=true class="form-control" prompt="请选择系统安装模板"
+ content=model.systemConfigData value=item.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label class="required">位置</label></td>
+					<td>
+						<div class="col-md-5">
+							{{view "select" required=true class="form-control" prompt="请选择位置" content=model.locationTree value=item.LocationID optionValuePath="content.ID" optionLabelPath="content.ShowName" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>财编</label></td>
+					<td>
+						<div class="col-md-5">{{input type="text" value=item.AssetNumber class="form-control input-md"}}</div>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+		{{/each}}
+
+		<div class="text-right">
+			<button type="button" {{action "addDeviceAction"}} class="btn btn-primary btn-link"> 
+				<i class="fa fa-plus"></i> 再录一台
+			</button>
+		</div>
+		<div class="text-center">
+	        <button type="submit" class="btn btn-primary">提 交</button>
+	        {{#link-to "dashboard.device.list" "all"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
+		</div>
+
+    </div>
+
+    </form>
+	{{/common/io-form-validator}}
+</div>

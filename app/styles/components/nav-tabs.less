@@ -1,0 +1,22 @@
+/**
+ * tabs 样式
+ */
+
+// tabs-bare
+.nav-tabs-bare {
+	> li > a {
+		padding: 5px 16px !important;
+		&:hover {
+			background: none;
+			border: none;
+		}
+	}
+	>li.active{
+		a, a:hover, a:active, a:focus {
+			border: none;
+			border-top: none !important;
+			border-bottom: solid 3px;
+			color: @brand-primary;
+		}
+	}
+}

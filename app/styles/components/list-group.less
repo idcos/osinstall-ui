@@ -1,0 +1,31 @@
+/**
+ * listgroup
+ */
+.list-group {
+    background:  @list-group-bg;
+    color:  @list-group-bg;
+    .list-group-item {
+        list-style: none;
+        border-bottom: solid 1px @list-group-border;
+        padding: 0; 
+        a {
+            background: white;
+            color:  @list-group-font-color;
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-left: none;
+            transition: all .1s ease-in 0s;
+        }
+        &.active {
+            border-color: @list-group-border-color;
+            a {
+                background: @list-group-bg-active; 
+                color: @list-group-font-active-color;
+                border-left: solid 3px;
+            }
+        }
+    }
+}

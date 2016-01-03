@@ -1,0 +1,75 @@
+<div class="panel panel-default">
+    <div class="panel-heading paddingtop0">
+    	<!--
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>模板管理</li>
+            <li class="active">网段管理</li>
+        </ol>
+        -->
+        <div class="breadcrumb paddingtop3">
+	        <div style="float: left;">
+                <h5>
+                {{#if (not-eq "0" model.pid)}}
+                    顶级位置>{{model.locationName}}
+                {{/if}}
+
+                {{#if (eq "0" model.pid)}}
+                    位置管理
+                {{/if}}
+                </h5>
+	        </div>
+	        <div style="float:right; position: relative; top: 7px; left: 16px;">
+                {{#if model.info.ID}}
+                {{#link-to "dashboard.location.list" model.info.Pid}}<button type="button" class="btn btn-default btn-xs">返回父级位置</button>{{/link-to}} &nbsp;&nbsp;
+                {{/if}}
+	        	{{#link-to "dashboard.location.new" pid}}<button type="button" class="btn btn-primary btn-xs">添加新位置</button>{{/link-to}}
+	        </div>
+        </div>
+        
+    </div>
+    <div class="panel-body">
+		<!--
+			<div class="text-right paddingbottom10">{{#link-to "dashboard.network.new"}}<button type="button" class="btn btn-primary">添加网段</button>{{/link-to}}</div>
+		-->
+		
+		
+        <table class="table big">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>父级位置</th>
+                    <th>位置名</th>
+                    <th>子项</th>
+                    <th class="text-center" width="200px;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            	{{#each rowList as |item index|}}
+                <tr>
+                    <td>{{item.ID}}</td>
+                    <td>
+                        {{#if model.info.Name}}
+                            {{#link-to "dashboard.location.list" model.info.Pid}}{{model.info.Name}}{{/link-to}}
+                        {{else}}
+                            顶级位置
+                        {{/if}}
+                    </td>
+					<td>{{item.Name}}</td>
+					<td>
+					{{#link-to "dashboard.location.list" item.ID}}查看{{/link-to}}
+					</td>
+					<td class="text-center">
+					{{#link-to "dashboard.location.new" item.ID}}<button type="button" class="btn btn-xs btn-default">添加子位置</button>{{/link-to}}
+					{{#link-to "dashboard.location.edit" item.ID item.Pid}}<button type="button" class="btn btn-xs btn-default">修改</button>{{/link-to}}
+					<button type="button" {{action "deleteAction" item.ID}} class="btn btn-xs btn-default">删除</button>
+					</td>
+				</tr>
+				{{/each}}
+				
+            </tbody>
+        </table>
+        <div class="padding10">
+            {{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+        </div>
+    </div>
+</div>
