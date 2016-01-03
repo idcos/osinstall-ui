@@ -46,7 +46,8 @@
     "paths": [
       "lib/bootstrap",
       "lib/remarkable-bootstrap-notify",
-      "lib/bootstrap-validator"
+      "lib/bootstrap-validator",
+      "lib/ace"
     ]
   }
 }
