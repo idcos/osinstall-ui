@@ -16,9 +16,25 @@
 		</ul>
 		<br>
     	{{#each rows as |item index|}}
-    	{{#if (eq true isMultiDevice)}}
-    	<h5>第 {{int-add index 1}} 台：</h5>
-    	{{/if}}
+		
+		
+		<div class="block">
+			<div class="col-md-6">
+				{{#if (eq true isMultiDevice)}}
+		    	<h5>第 {{int-add index 1}} 台：</h5>
+		    	{{/if}}
+			</div>
+			<div class="col-md-6">
+				<div class="text-right">
+					{{#if (not-eq index 0)}}
+					<button type="button" {{action "deleteDeviceAction" index}} class="btn btn-primary btn-link"><i class="fa fa-minus"></i> 取消</button>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+		
+    	
+
         <table class="table table-bordered">
 			<tbody>
 				<tr>
@@ -133,6 +149,8 @@
 		{{/each}}
 
 		<div class="text-right">
+			
+
 			<button type="button" {{action "addDeviceAction"}} class="btn btn-primary btn-link"> 
 				<i class="fa fa-plus"></i> 再录一台
 			</button>

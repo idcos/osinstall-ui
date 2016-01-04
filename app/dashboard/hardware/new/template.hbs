@@ -43,7 +43,9 @@
 				<tr>
 					<td class="active" align="right"><label>{{item.name}}</label></td>
 					<td colspan=3>
-						<table class="table table-hover">
+						<div class="block">
+						<div class="col-md-11">
+							<table class="table table-hover">
 		                    <thead>
 			                    <tr>
 			                      <th width="30%">配置项</th>
@@ -75,7 +77,12 @@
 								{{/each}}
 		                    </tbody>
 	                    </table>
-	                
+						</div>
+	                	<div class="col-md-1">
+	                		<button type="button" {{action "deleteItemAction" index}} class="btn btn-default btn-xs"><i class="fa fa-minus"></i></button>
+	                	</div>
+	                	</div>
+
 					</td>
 				</tr>
 				{{/each}}

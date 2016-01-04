@@ -167,6 +167,29 @@ export default Ember.Controller.extend({
 			var height = document.body.scrollHeight;
 			window.scrollTo(0,height);
       */
-		}
+		},
+    deleteDeviceAction:function(key){
+      console.log(key);
+      var rows = this.get('rows');
+      var data = {};
+      if(!Ember.isEmpty(rows)){
+        var datas = [];
+        for(var i=0;i<rows.length;i++){
+          if(i !== key){
+            datas.pushObject(rows[i]);
+          }
+        }
+        set(this,'rows',datas);
+        if(datas.length > 1){
+          set(this,'isMultiDevice',true);
+        }else{
+          set(this,'isMultiDevice',false);
+        }
+      }
+      /*
+      var height = document.body.scrollHeight;
+      window.scrollTo(0,height);
+      */
+    },
 	}
 });

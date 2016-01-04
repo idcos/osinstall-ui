@@ -26,6 +26,17 @@ export default Ember.Controller.extend({
                 }
             }
         },
+        deleteItemAction:function(key){
+            var self = this;
+            var tpl = self.get("model.info.FormatTpl");
+            var rows = [];
+            for(var i=0;i<tpl.length;i++) {
+                if(i !== key){
+                    rows.pushObject(tpl[i]);
+                }
+            }
+            self.set('model.info.FormatTpl',rows);
+        },
         saveAction:function(){
             var self = this;
             var result = [];
