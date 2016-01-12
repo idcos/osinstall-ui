@@ -11,14 +11,14 @@ export default Ember.Controller.extend({
     networkSrv: Ember.inject.service('api/network/service'),
 	page:1,
 	pageCount:1,
-	pageSize:10,
+	pageSize:7,
 	form:{Status:null,OsID:null,HardwareID:null,SystemID:null,Keyword:null,BatchNumber:null},
 	isShowMultiSearchBlock:false, //是否显示复杂查询区块
 	isShowInstallInfoCol:false,
     selectAll:false,//是否全选
     autoRefresh:true,//是否自动刷新
     autoRefreshTimer:null,
-    autoRefreshTime:2000000,
+    autoRefreshTime:20000,
     //虚拟机装机
     vmInstallSrv: Ember.inject.service('api/vmInstall/service'),
     currentStep: 1,

@@ -25,7 +25,6 @@ export default Ember.Controller.extend({
       var company = this.get('Company');
       var product = this.get('Product');
         this.get("hardwareSrv").getModelNameByCompanyAndProductAndGroup(company,product).then(function(data){
-            console.log(data);
             self.set('model.modelNameData', data.Content);
         });
     }.observes("Product"),
@@ -71,7 +70,6 @@ export default Ember.Controller.extend({
                         });
                         //self.transitionToRoute('dashboard.os.list');
                         self.send("pageChanged",self.get("page"));
-                        console.log("done");
                     } else {
                         Ember.$.notify({
                         	title: "<strong>保存失败:</strong>",

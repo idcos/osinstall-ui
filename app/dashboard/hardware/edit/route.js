@@ -11,7 +11,11 @@ export default Ember.Route.extend({
 
     setupController: function(controller, model) {
     	model.info.FormatTpl = $.parseJSON(model.info.Tpl);
-        console.log(model.info.FormatTpl);
+        if(!Ember.isEmpty(model.info.FormatTpl) && model.info.FormatTpl.length > 1){
+            model.isShowDeleteItemButton = true;
+        }else{
+            model.isShowDeleteItemButton = false;
+        }
     	controller.set("model",model);
     }
 });

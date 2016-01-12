@@ -35,6 +35,11 @@ export default Ember.Controller.extend({
                     rows.pushObject(tpl[i]);
                 }
             }
+            if(rows.length > 1){
+                self.set('model.isShowDeleteItemButton',true);
+            }else{
+                self.set('model.isShowDeleteItemButton',false);
+            }
             self.set('model.info.FormatTpl',rows);
         },
         saveAction:function(){
@@ -64,7 +69,6 @@ export default Ember.Controller.extend({
             form.Data = data;
             form.Tpl = JSON.stringify(form.FormatTpl);
             form.IsSystemAdd = "No";
-            //console.log(form);
 
             self.get("hardwareSrv").create(form).then(function(data) {
                 if(data.Status==="success"){

@@ -79,9 +79,13 @@
 		                    </tbody>
 	                    </table>
 	                    </div>
-	                    <div class="col-md-1">
+	                    {{#if model.isShowDeleteItemButton}}
+	                	<div class="col-md-1">
 	                		<button type="button" {{action "deleteItemAction" index}} class="btn btn-default btn-xs"><i class="fa fa-minus"></i></button>
 	                	</div>
+	                	{{/if}}
+
+	                    
 	                    </div>
 	                
 					</td>
