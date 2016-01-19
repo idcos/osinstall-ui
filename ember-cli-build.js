@@ -9,6 +9,6 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
   });
-
+  app.import('bower_components/bowser/bowser.min.js');
   return app.toTree();
 };

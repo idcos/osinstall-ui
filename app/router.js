@@ -6,6 +6,7 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('error');
   this.route('dashboard', function() {
     this.route('vsInstall');
     this.route('device', function() {
