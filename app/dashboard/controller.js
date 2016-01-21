@@ -33,6 +33,6 @@ export default Ember.Controller.extend({
             this.get('deviceSrv').getNumByStatus("failure").then(function(data){
                 self.set('model.failureDeviceNum',data.Content.count);
             });
-		},
+		}
 	}
 });

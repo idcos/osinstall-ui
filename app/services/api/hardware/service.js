@@ -125,6 +125,16 @@ export default Ember.Service.extend({
         });
     },
 
+    //导出
+    exportHardware : function(param) {
+        var url = "/api/osinstall/v1/hardware/export";
+        if(!Ember.isEmpty(param)){
+        	url += param;
+        }
+		location.href = url;
+		return ;
+    },
+
     /*
     * 获取列表
     */

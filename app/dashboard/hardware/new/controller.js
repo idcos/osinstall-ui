@@ -69,6 +69,7 @@ export default Ember.Controller.extend({
             form.Data = data;
             form.Tpl = JSON.stringify(form.FormatTpl);
             form.IsSystemAdd = "No";
+            form.Status = "Success";
 
             self.get("hardwareSrv").create(form).then(function(data) {
                 if(data.Status==="success"){

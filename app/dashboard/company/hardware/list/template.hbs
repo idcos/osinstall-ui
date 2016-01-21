@@ -12,7 +12,9 @@
 	        </div>
 	       	
 			<div style="float:right; position: relative; top: 7px; left: 16px;">
-	        	{{#link-to "dashboard.company.hardware.new" "new"}}<button type="button" class="btn btn-primary btn-xs">添加新硬件配置</button>{{/link-to}}
+	        	{{#link-to "dashboard.company.hardware.new" "new"}}<button type="button" class="btn btn-primary btn-xs">添加新设备型号</button>{{/link-to}}
+	        	&nbsp;
+	        	{{#link-to "dashboard.company.hardware.import"}}<button type="button" class="btn btn-primary btn-xs">导入设备型号</button>{{/link-to}}
 	        </div>
 	        
         </div>
@@ -62,20 +64,34 @@
         <table class="table  big">
             <thead>
                 <tr>
+                	<th>{{input type="checkbox" checked=selectAll}}</th>
                 	<th>ID</th>
                     <th>服务器厂商</th>
                     <th>产品名称</th>
                     <th>服务器型号</th>
+                    <th>状态</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>
             	{{#each rowList as |item index|}}
                 <tr>
+                	<td>{{input type="checkbox" checked=item.checked}}</td>
                 	<td>{{#link-to "dashboard.company.hardware.detail" item.ID}}{{item.ID}}{{/link-to}}</td>
 					<td>{{item.Company}}</td>
 					<td>{{item.Product}}</td>
 					<td>{{item.ModelName}}</td>
+					<td>
+						{{#if (eq "Pending" item.Status)}}
+							待审核
+						{{/if}}
+						{{#if (eq "Success" item.Status)}}
+							<span class="text-success">审核成功</span>
+						{{/if}}
+						{{#if (eq "Failure" item.Status)}}
+							<span class="text-danger">审核失败</span>
+						{{/if}}
+					</td>
 					<td>
 						{{#link-to "dashboard.company.hardware.new" item.ID}}<button type="button" class="btn btn-default btn-xs">克隆</button>{{/link-to}}
 						{{#link-to "dashboard.company.hardware.edit" item.ID}}<button type="button" class="btn btn-default btn-xs">修改</button>{{/link-to}}
@@ -85,8 +101,19 @@
 				{{/each}}
             </tbody>
         </table>
-        <div class="padding10">
-            {{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
-        </div>
+
+        <div class="row padding0">
+					<div class="col-sm-6">
+			       		<button type="button" {{action "exportSelectedAction"}} class="btn btn-default btn-sm">导出选中</button>
+						&nbsp;&nbsp;&nbsp;
+			       		<a href="/api/osinstall/v1/hardware/export">
+			       		<button type="button" {{action "exportAction"}} class="btn btn-default btn-sm">导出全部</button>
+			       		</a>
+			       	</div>
+			       	<div class="col-sm-6">
+			       		{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+			       	</div>
+		</div>
+
     </div>
 </div>

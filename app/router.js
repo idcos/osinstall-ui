@@ -75,6 +75,7 @@ Router.map(function() {
 
     this.route('hardware', function() {
       this.route('list');
+      this.route('import');
       this.route('new', {
         path: 'new/:id',
       });
@@ -134,7 +135,8 @@ Router.map(function() {
         this.route('detail', {
           path: 'detail/:id'
         });
-        });
+        this.route('import');
+      });
     });
 
     this.route('vm', function() {

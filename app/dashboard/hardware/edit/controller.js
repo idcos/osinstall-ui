@@ -68,6 +68,7 @@ export default Ember.Controller.extend({
             var form = this.get("model.info");
             form.Data = data;
             form.Tpl = JSON.stringify(form.FormatTpl);
+            form.Status = "Success";
 
             self.get("hardwareSrv").update(form).then(function(data) {
                 if(data.Status==="success"){

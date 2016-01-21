@@ -7,6 +7,7 @@ export default Ember.Route.extend({
             companyData:[{name:"Dell"},{name:"惠普"},{name:"IBM"},{name:"联想"},{name:"华为"},{name:"浪潮"},{name:"H3C"},{name:"宝德"}],
 			typeData:[{name:"下拉框",value:"select"},{name:"输入框",value:"input"}],
 			info:this.get('hardwareSrv').get(params.id).then(function(data){return data.Content;}),
+            statusData:[{id:"Pending",name:"待审核"},{id:"Success",name:"审核成功"},{id:"Failure",name:"审核失败"}],
 		});
     },
 

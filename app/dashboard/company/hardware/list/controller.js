@@ -1,4 +1,9 @@
 import Ember from 'ember';
+const {
+  get,
+  set,
+  computed
+} = Ember;
 
 export default Ember.Controller.extend({
 	hardwareSrv: Ember.inject.service('api/hardware/service'),
@@ -9,6 +14,7 @@ export default Ember.Controller.extend({
     Product:null,
     ModelName:null,
     IsSystemAdd:"Yes",
+    selectAll:false,//是否全选
 
     CompanyChange: function() {
       var self = this;
@@ -20,6 +26,19 @@ export default Ember.Controller.extend({
             self.set('model.productData', data.Content);
         });
     }.observes("Company"),
+
+    selectAllChange: function() {
+            var self = this;
+            var selectAll = this.get('selectAll');
+            var rowList = this.get("rowList");
+            Object.keys(rowList).forEach(function (key) {
+                var re = /^[0-9]*]*$/;
+                if(re.test(key)){
+                    var row = rowList[key];
+                    set(row,"checked",selectAll); 
+                }
+            });
+    }.observes("selectAll"),
 
     ProductChange: function() {
       var self = this;
@@ -88,6 +107,56 @@ export default Ember.Controller.extend({
                     }
                 });
             }
+        },
+        exportSelectedAction: function() {
+            var self = this;
+            var rowList = self.get("rowList");
+            var ids = [];
+            for(var i=0;i<rowList.length;i++){
+                var row = rowList[i];
+                if(row.checked === true){
+                    ids.push(row.ID);
+                }
+            }
+
+            if(ids.length === 0){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "请先选中要导出的项!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
+            var url = "?method=get";
+            ids = ids.join(",");
+            url += "&ids="+ids;
+            self.get("hardwareSrv").exportHardware(url);
+            return ;
+        },
+
+        exportAction: function() {
+            var self = this;
+            var url = "?method=get";
+            var company = this.get('Company');
+            var product = this.get('Product');
+            var modelName = this.get('ModelName');
+            if(!Ember.isEmpty(company)){
+                url += "&company="+company;
+            }
+            if(!Ember.isEmpty(product)){
+                url += "&product="+product;
+            }
+            if(!Ember.isEmpty(modelName)){
+                url += "&modelName="+modelName;
+            }
+            self.get("hardwareSrv").exportHardware(url);
+            return ;
         },
 	}
 });

@@ -37,6 +37,16 @@
 						</div>
 					</td>
 				</tr>
+
+				<tr>
+					<td class="active" align="right" width="18%"><label class="required">状态</label></td>
+					<td width="82%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择状态"
+			 content=model.statusData required=true value=model.info.Status optionValuePath="content.id" optionLabelPath="content.name" }}
+						</div>
+					</td>
+				</tr>
 				
 			
 				{{#each model.info.FormatTpl as |item index|}}
