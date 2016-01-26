@@ -60,6 +60,9 @@
 	        <button type="submit" class="btn btn-primary">提 交</button>
 	        {{#link-to "dashboard.network.list"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
 		</div>
+		<div class="text-center" style="margin-top: 15px;">
+			{{html-safe message}}
+		</div>
     </div>
     </form>
     {{/common/io-form-validator}}
