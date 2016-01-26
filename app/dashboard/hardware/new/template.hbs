@@ -61,8 +61,8 @@
 									</td>
 									<td>
 										{{#if (eq "select" item2.type)}}
-										{{view "select" class="form-control" prompt="请选择"
-			 content=item2.data value=item2.default optionValuePath="content.value" optionLabelPath="content.name" }}
+										{{common/io-select class="form-control" prompt="请选择"
+			 content=item2.data value=item2.default onChange="selectChangeAction" optionValuePath="content.value" optionLabelPath="content.name" }}
 			 							{{/if}}
 
 			 							{{#if (eq "input" item2.type)}}
@@ -71,7 +71,14 @@
 									</td>
 
 									<td>
-										{{input placeholder="请填写" value=item2.default class="form-control input-md"}}
+										{{#if (eq "select" item2.type)}}
+											{{input placeholder="请填写" key-up="selectInputChangeAction" value=item2.value class="form-control input-md"}}
+										{{/if}}
+
+										{{#if (eq "input" item2.type)}}
+											{{input placeholder="请填写" value=item2.default class="form-control input-md"}}
+										{{/if}}
+
 									</td>
 								</tr>
 								{{/each}}
