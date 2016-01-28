@@ -76,7 +76,6 @@ export default Ember.Controller.extend({
         var rows = this.get('rows');
 
         function eachFunction(row){ 
-            //set(row,"messageSn",null);
             var isError = false;
             for(var j=0;j<rows.length;j++){
               if(i !== j && row.Sn === rows[j].Sn){
@@ -100,7 +99,7 @@ export default Ember.Controller.extend({
           if(!Ember.isEmpty(row.Sn)){
             eachFunction(row);
           }else{
-              set(row,"messageSn",null);
+              set(row,"messageSn","<span class='text-muted'>请填写真实的序列号</span>");
           }
         }
   }.observes("rows.@each.Sn"),

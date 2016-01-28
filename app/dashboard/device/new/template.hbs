@@ -63,12 +63,13 @@
 						<div class="col-md-5">
 							{{input type="text" value=item.Ip required=true class="form-control input-md"}}
 						</div>
-						<div class="col-md-2" style="margin-top: 5px;">
+
+						<div class="col-md-7" style="margin-top: 5px;">
 							{{html-safe item.messageIp}}
-						</div>
-						<div class="col-md-4 text-success" style="margin-top: 5px;">
 							{{#if item.isShowNetworkInfo}}
+								<span class="text-success" style="margin-left: 10px;">
 								匹配到网段:{{item.Network}}
+								</span>
 							{{/if}}
 						</div>
 					</td>
@@ -95,6 +96,11 @@
 							{{view "select" required=true class="form-control" prompt="请选择操作系统"
  content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
 						</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								请提前在【模板管理】->【操作系统管理】里录入操作系统信息
+							</span>
+						</div>
 					</td>
 				</tr>
 
@@ -104,6 +110,11 @@
 						<div class="col-md-5">
 							{{view "select" class="form-control" prompt="请选择硬件配置模板"
  content=model.hardwareData value=item.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
+						</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								请提前在【模板管理】->【硬件配置模板管理】里录入配置信息
+							</span>
 						</div>
 					</td>
 				</tr>
@@ -115,6 +126,11 @@
 							{{view "select" required=true class="form-control" prompt="请选择系统安装模板"
  content=model.systemConfigData value=item.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
 						</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								请提前在【模板管理】->【系统模板管理】里录入系统模板信息
+							</span>
+						</div>
 					</td>
 				</tr>
 
@@ -124,6 +140,11 @@
 						<div class="col-md-5">
 							{{view "select" required=true class="form-control" prompt="请选择位置" content=model.locationTree value=item.LocationID optionValuePath="content.ID" optionLabelPath="content.ShowName" }}
 						</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								请提前在【模板管理】->【位置管理】里录入位置信息
+							</span>
+						</div>
 					</td>
 				</tr>
 
@@ -131,6 +152,11 @@
 					<td class="active" align="right"><label>财编</label></td>
 					<td>
 						<div class="col-md-5">{{input type="text" value=item.AssetNumber class="form-control input-md"}}</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								资产编号，可自定义
+							</span>
+						</div>
 					</td>
 				</tr>
 
