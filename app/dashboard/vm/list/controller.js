@@ -7,7 +7,6 @@ const {
 
 export default Ember.Controller.extend({
 	deviceSrv: Ember.inject.service('api/device/service'),
-    vmInstallSrv: Ember.inject.service('api/vmInstall/service'),
     networkSrv: Ember.inject.service('api/network/service'),
 	page:1,
 	pageCount:1,

@@ -7,7 +7,6 @@ const {
 
 export default Ember.Controller.extend({
 	deviceSrv: Ember.inject.service('api/device/service'),
-    vmInstallSrv: Ember.inject.service('api/vmInstall/service'),
     networkSrv: Ember.inject.service('api/network/service'),
 	isShowMultiSearchBlock:false, //是否显示复杂查询区块
 	isShowInstallInfoCol:false,
