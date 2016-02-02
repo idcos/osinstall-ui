@@ -44,6 +44,24 @@ export default Ember.Service.extend({
     },
 
     /*
+    * 取消安装操作系统
+    */
+    batchCancelInstall : function(form) {
+        var url = "/api/osinstall/v1/device/batchCancelInstall";
+		//生成发请求数据对象
+		var data = {};
+		data = form;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    /*
     * 批量删除
     */
     batchDelete : function(form) {
