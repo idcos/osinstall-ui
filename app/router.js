@@ -27,6 +27,13 @@ Router.map(function() {
       this.route('edit', {
         path: 'edit/:id'
       });
+      this.route('scan', function() {
+        this.route('detail', {
+          path: 'detail/:id'
+        });
+        this.route('list');
+      });
+      this.route('scanInstall');
     });
 
     this.route('network', function() {

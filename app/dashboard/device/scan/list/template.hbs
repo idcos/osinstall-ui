@@ -1,0 +1,178 @@
+<div class="panel panel-default">
+	
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>装机管理</li>
+            <li class="active">发现新设备</li>
+        </ol>
+    </div>
+    
+    <div class="panel-body">
+		<div style="margin-bottom: 10px;">
+			{{#common/io-form-validator submitForm="searchAction"}}
+			<form class="form-horizontal">
+			<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td width="15%" class="active" align="right"><b>搜索</b></td>
+					<td width="85%">
+						<div class="block">
+							<div class="col-md-6">
+							{{textarea placeholder="可输入SN、厂商、产品名称、型号、IP等进行查询
+多条信息间可通过换行、逗号、分号分隔" value=form.Keyword rows="4" class="form-control input-md"}}
+							</div>
+							<div class="col-md-6">
+								<button type="submit" class="btn btn-primary">搜 索</button>
+								&nbsp;&nbsp;
+								{{#if (eq false isShowMultiSearchBlock)}}
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a {{action "showMultiSearchBlockAction"}} href="javascript::void(0);">展开更多条件</a>
+								{{/if}}
+							</div>
+						</div>
+					</td>
+				</tr>
+
+				{{#if isShowMultiSearchBlock}}
+				<tr>
+					<td width="15%" class="active" align="right"><b>厂商</b></td>
+					<td width="85%">
+						<div class="col-md-3">
+							{{view "select" class="form-control" prompt="请选择"
+ content=model.companyData value=form.Company optionValuePath="content.Company" optionLabelPath="content.Company" }}
+						</div>
+					</td>
+				</tr>
+
+				{{#if model.productData}}
+				<tr>
+					<td width="15%" class="active" align="right"><b>产品名</b></td>
+					<td width="85%">
+						<div class="col-md-3">
+							{{view "select" class="form-control" prompt="请选择"
+ content=model.productData value=form.Product optionValuePath="content.Product" optionLabelPath="content.Product" }}
+						</div>
+					</td>
+				</tr>
+				{{/if}}
+
+				{{#if model.modelNameData}}
+				<tr>
+					<td width="15%" class="active" align="right"><b>型号</b></td>
+					<td width="85%">
+						<div class="col-md-3">
+							{{view "select" class="form-control" prompt="请选择"
+ content=model.modelNameData value=form.ModelName optionValuePath="content.ModelName" optionLabelPath="content.ModelName" }}
+						</div>
+					</td>
+				</tr>
+				{{/if}}
+
+				<tr>
+					<td width="15%" class="active" align="right"><b>CPU</b></td>
+					<td width="85%">
+						<div class="col-md-2">
+							{{view "select" class="form-control" prompt="请选择"
+ content=model.calculateRule value=form.CpuRule optionValuePath="content.id" optionLabelPath="content.name" }}
+						</div>
+						<div class="col-md-2" style="padding-right: 0px;">
+							{{input type="number" value=form.Cpu placeholder="CPU核数" class="form-control input-md"}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="15%" class="active" align="right"><b>内存</b></td>
+					<td width="85%">
+						<div class="col-md-2">
+							{{view "select" class="form-control" prompt="请选择"
+ content=model.calculateRule value=form.MemoryRule optionValuePath="content.id" optionLabelPath="content.name" }}
+						</div>
+						<div class="col-md-2" style="padding-right: 0px;">
+							{{input type="number" value=form.Memory placeholder="内存大小" class="form-control input-md"}}
+						</div>
+						<div class="col-md-1" style="margin-top:6px;">
+							GB
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="15%" class="active" align="right"><b>磁盘</b></td>
+					<td width="85%">
+						<div class="col-md-2">
+							{{view "select" class="form-control" prompt="请选择"
+ content=model.calculateRule value=form.DiskRule optionValuePath="content.id" optionLabelPath="content.name" }}
+						</div>
+						<div class="col-md-2" style="padding-right: 0px;">
+							{{input type="number" value=form.Disk placeholder="磁盘大小" class="form-control input-md"}}
+						</div>
+						<div class="col-md-1" style="margin-top:6px;">
+							GB
+						</div>
+						{{#if (eq true isShowMultiSearchBlock)}}
+						<div class="col-md-2" style="margin-top:6px;">
+							<a {{action "hideMultiSearchBlockAction"}} href="javascript::void(0);">收起</a>
+						</div>
+						{{/if}}
+					</td>
+				</tr>
+
+				
+				{{/if}}
+
+			</tbody>
+			</table>
+			</form>
+			{{/common/io-form-validator}}
+		</div>
+
+		
+        <table class="table big table-hover">
+            <thead>
+                <tr>
+                	<th>{{input type="checkbox" checked=selectAll}}</th>
+                    <th>SN</th>
+					<th>厂商</th>
+					<th>产品名称</th>
+					<th>型号</th>
+					<th>CPU</th>
+					<th>内存</th>
+					<th>磁盘</th>
+					<th>IP</th>
+					<th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each rowList as |item index|}}
+				<tr>
+                	<td>{{input type="checkbox" checked=item.checked}}</td>
+					<td>{{item.Sn}}</td>
+					<td>{{item.Company}}</td>
+					<td>{{item.Product}}</td>
+					<td>{{item.ModelName}}</td>
+					<td>{{item.Cpu}}</td>
+					<td>{{item.Memory}}</td>
+					<td>{{item.Disk}}</td>
+					<td>{{item.Ip}}</td>
+					<td>{{#link-to "dashboard.device.scan.detail" item.ID}}详情{{/link-to}}</td>
+				</tr>
+			{{/each}}
+            </tbody>
+        </table>
+        	<div class="row padding0">
+					<div class="col-sm-7">
+			       		<button {{action "exportAction" "select"}} type="button" class="btn btn-primary btn-sm">导出选中</button>
+			       		&nbsp;&nbsp;
+			       		<button {{action "exportAction" "all"}} type="button" class="btn btn-primary btn-sm">导出全部</button>
+			       		&nbsp;&nbsp;
+					</div>
+					<div class="col-sm-5">
+						{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+					</div>
+				</div>
+				<div class="row" style="margin-left: 5px;">
+					注:您可将此设备信息导出、编辑完后，使用【录入新设备】->【批量录入】功能导入到设备列表
+				</div>
+    </div>
+</div>

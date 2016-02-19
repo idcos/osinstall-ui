@@ -1,0 +1,161 @@
+<div class="panel panel-default">
+	<!--
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>装机管理</li>
+            <li class="active">录入新设备</li>
+        </ol>
+    </div>
+    -->
+    <div class="panel-body">
+	    <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>发现新设备</li>
+            <li class="active">设备详情</li>
+        </ol>
+		<br>
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="20%"><label>ID</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{item.ID}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right" width="20%"><label>SN</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{item.Sn}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right" width="20%"><label>厂商</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{item.Company}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>产品</label></td>
+					<td>
+						<div class="col-md-5">{{item.Product}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>型号</label></td>
+					<td>
+						<div class="col-md-5">{{item.ModelName}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>IP</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.Ip}}
+						</div>
+					</td>
+				</tr>
+
+
+				<tr>
+					<td class="active" align="right"><label>Mac</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.Mac}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>网卡信息</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.Nic}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>CPU</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.Cpu}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>内存</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.Memory}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>磁盘</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.Disk}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>主板</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.Motherboard}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>Raid</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.Raid}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>OOB</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.Oob}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>添加时间</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.CreatedAt}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>最后更新时间</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.UpdatedAt}}
+						</div>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+
+		<div class="text-center">
+			<button type="button" class="btn btn-default" onclick="javascript:history.go(-1);">返回</button>
+		</div>
+
+    </div>
+</div>

@@ -207,6 +207,92 @@ export default Ember.Service.extend({
     /*
     * 获取列表
     */
+    scanList : function(limit,offset,form) {
+        var url = "/api/osinstall/v1/device/scan/list";
+		//生成发请求数据对象
+		var data = form;
+		data.Limit = limit;
+		data.Offset = offset;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    getScan : function(id) {
+        var url = "/api/osinstall/v1/device/scan/view";
+		//生成发请求数据对象
+		var data = {};
+		data.ID = parseInt(id);
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    scanCompanyList : function() {
+        var url = "/api/osinstall/v1/device/scan/company/list";
+		//生成发请求数据对象
+		var data = {};
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    scanProductList : function(form) {
+        var url = "/api/osinstall/v1/device/scan/product/list";
+		//生成发请求数据对象
+		var data = form;
+		
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    scanModelNameList : function(form) {
+        var url = "/api/osinstall/v1/device/scan/modelName/list";
+		//生成发请求数据对象
+		var data = form;
+		
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    //导出
+    exportScanDevice : function(param) {
+        var url = "/api/osinstall/v1/device/scan/export";
+        if(!Ember.isEmpty(param)){
+        	url += param;
+        }
+		location.href = url;
+		return ;
+    },
+
+    /*
+    * 获取列表
+    */
     getNumByStatus : function(status) {
         var url = "/api/osinstall/v1/device/getNumByStatus";
 		//生成发请求数据对象
