@@ -199,9 +199,9 @@
 		</table>
 
 		<div class="text-center">
-			
-	        {{#link-to "dashboard.device.edit" item.ID}}<button type="button" class="btn btn-default">修改设备信息</button>{{/link-to}}
-			
+			{{#if (not-eq "success" item.Status)}}
+	        	{{#link-to "dashboard.device.edit" item.ID}}<button type="button" class="btn btn-default">修改设备信息</button>{{/link-to}}
+			{{/if}}
 	
 			<button type="button" class="btn btn-default" onclick="javascript:history.go(-1);">返回</button>
 		</div>

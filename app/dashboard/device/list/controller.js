@@ -8,6 +8,7 @@ const {
 export default Ember.Controller.extend({
 	deviceSrv: Ember.inject.service('api/device/service'),
     networkSrv: Ember.inject.service('api/network/service'),
+    userSrv: Ember.inject.service('api/user/service'),
 	page:1,
 	pageCount:1,
 	pageSize:7,
@@ -149,6 +150,14 @@ export default Ember.Controller.extend({
 			}else{
 				self.set('isShowInstallInfoCol',false);
 			}
+
+            var session = this.get("userSrv").getLocalSession();
+            if(!Ember.isEmpty(session)){
+                if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                    form.UserID = parseInt(session.ID);
+                }
+            }
+
 			this.get("deviceSrv").list(pageSize,(page-1)*pageSize,form).then(function(data){
                 self.set('rowList', data.Content.list);
                 var pageCount = Math.ceil(data.Content.recordCount/pageSize);
@@ -162,6 +171,7 @@ export default Ember.Controller.extend({
             var self = this;
             var rowList = self.get("rowList");
             var datas = [];
+            var isHasSuccessDevice = false;
             Object.keys(rowList).forEach(function (key) {
                 var re = /^[0-9]*]*$/;
                 if(re.test(key)){
@@ -170,6 +180,10 @@ export default Ember.Controller.extend({
                         var currentData = {};
                         currentData.ID = row.ID;
                         datas.pushObject(currentData);
+
+                        if(row.Status === "success"){
+                            isHasSuccessDevice = true;
+                        }
                     }
                 }
             });
@@ -186,6 +200,22 @@ export default Ember.Controller.extend({
                             });
                 return ;
             }
+
+            if(isHasSuccessDevice === true){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "安装成功的设备不允许直接重装!<br>请使用【录入新设备】的功能，重新录入后再安装!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
+
             self.get("deviceSrv").batchReInstall(datas).then(function(data) {
                     if(data.Status==="success"){
                         Ember.$.notify({

@@ -293,11 +293,14 @@ export default Ember.Service.extend({
     /*
     * 获取列表
     */
-    getNumByStatus : function(status) {
+    getNumByStatus : function(status,userID) {
         var url = "/api/osinstall/v1/device/getNumByStatus";
 		//生成发请求数据对象
 		var data = {};
 		data.Status = status;
+		if(!Ember.isEmpty(userID)){
+			data.UserID = parseInt(userID);
+		}
 
 		//发送ajax请求
         return ajax({

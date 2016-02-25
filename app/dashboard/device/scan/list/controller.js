@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
 	pageSize:7,
 	form:{Status:null,Keyword:null},
     selectAll:false,//是否全选
-    isShowMultiSearchBlock:true, //是否显示复杂查询区块
+    isShowMultiSearchBlock:false, //是否显示复杂查询区块
 
 	selectAllChange: function() {
             var self = this;

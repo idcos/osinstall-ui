@@ -1,8 +1,8 @@
 <div class="navbar-static-top navbar-inverse page-nav" id="topDiv">
 	<div class="navbar-header navbar-brand">{{#link-to "dashboard.main"}} <i class="fa fa-balance-scale"></i> CloudJ X86 V1.1{{/link-to}}</div>
 	<div class="navbar-right" style="margin-right: 0px; margin-top: 8px;">
-		欢迎您，admin &nbsp;&nbsp;
-		{{#link-to "login" class="btn btn-dropdown btn-link dropdown-toggle btn-primary"}}<small><i class="fa fa-power-off"></i> 安全退出</small>{{/link-to}}
+		欢迎您，{{model.session.Username}} &nbsp;&nbsp;
+		<button {{action "logoutAction"}} class="btn btn-dropdown btn-link dropdown-toggle btn-primary"><small><i class="fa fa-power-off"></i> 安全退出</small></button>
 	</div>
 	<!--
 	<ul	class="nav navbar-nav navbar-right">
@@ -67,10 +67,9 @@
 	            </ul>
 	        </li>
 
-
 	        <li>
 	            <a href="javascript:void(0);">
-	            	<i class="fa fa-server"></i>
+	            	<i class="fa fa-database"></i>
 	                <label>资源池管理</label>
 	                <span class="pull-right toggle"> <i class="fa fa-angle-down"></i> </span>
 	            </a>
@@ -103,6 +102,8 @@
 	                <li> {{#link-to "dashboard.report.status"  }}设备状态报表{{/link-to}} </li>
 	            </ul>
 	        </li>
+
+	        {{#if (eq "Administrator" model.session.Role)}}
 	        <li class="">
 	            <a href="javascript:void(0);">
 	            	<i class="fa fa-industry"></i>
@@ -117,7 +118,28 @@
 	                <li>  {{#link-to "dashboard.main"  }}数据统计{{/link-to}} </li>
 	            </ul>
 	        </li>
-	         <li class="">
+	        {{/if}}
+			
+			<li class="">
+	            <a href="javascript:void(0);">
+	            	<i class="fa fa-gears"></i>
+	                <label>系统管理</label>
+	                <span class="pull-right toggle"> <i class="fa fa-angle-down"></i> </span>
+	            </a>
+	            <ul class="nav nav-sub">
+	            	{{#if (eq "Administrator" model.session.Role)}}
+	            	<li>
+		               {{#link-to "dashboard.user.list"}}用户管理{{/link-to}}
+	            	</li>
+	            	{{/if}}
+	            	<li>
+						{{#link-to "dashboard.user.my"}}个人信息管理{{/link-to}}
+	            	</li>
+			    </ul>
+			</li>
+			
+			{{#if (eq "Administrator" model.session.Role)}}
+	        <li class="">
 	            <a href="javascript:void(0);">
 	            	<i class="fa fa-puzzle-piece"></i>
 	                <label>模板管理</label>
@@ -126,7 +148,6 @@
 	            <ul class="nav nav-sub">
 	            	<li>
 		               {{#link-to "dashboard.network.list"  }}网段管理{{/link-to}}
-	            		
 	            	</li>
 	            	<li>
 						{{#link-to "dashboard.os.list"  }}操作系统管理{{/link-to}}
@@ -140,6 +161,7 @@
 	            	</li>
 			    </ul>
 			</li>
+			{{/if}}
 		</ul>
 		{{/common/io-sidebar}}
 		<!--

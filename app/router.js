@@ -156,6 +156,18 @@ Router.map(function() {
       this.route('new');
       this.route('guideNew');
     });
+
+    this.route('user', function() {
+      this.route('list');
+      this.route('detail', {
+        path: 'detail/:id'
+      });
+      this.route('edit', {
+        path: 'edit/:id'
+      });
+      this.route('new');
+      this.route('my');
+    });
   });
   this.route('login');
 });

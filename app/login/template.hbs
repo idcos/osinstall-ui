@@ -13,11 +13,12 @@
 		</div>
 		<div class="panel-body">
 			<div class="col-md-10">
+				{{#common/io-form-validator submitForm="loginAction"}}
 				<form class="form-horizontal">
 					<div class="form-group">
 						<label class="col-md-3 control-label" for="textinput">用户名：</label>
 						<div class="form-group col-md-9">
-							{{input type="text" class="form-control input-md" name="name" id="name"}}
+							{{input type="text" value=model.info.Username  required=true class="form-control input-md"}}
 							<div class="help-block with-errors"/>
 						</div>
 					</div>
@@ -25,18 +26,16 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label" for="textinput">密码：</label>
 						<div class="form-group col-md-9">
-							{{input type="password" class="form-control input-md" name="password" id="password"}}
+							{{input type="password" value=model.info.Password required=true class="form-control input-md"}}
 							<div class="help-block with-errors"/>
 						</div>
 					</div>	
 
 					<div class="text-center">
-						{{#link-to "dashboard.main"}}
-						<button type="button" class="btn btn-primary">登 录</button>
-						{{/link-to}}
+						<button type="submit" class="btn btn-primary">登 录</button>
 					</div>
-
-				</form>	
+				</form>
+				{{/common/io-form-validator}}
 			</div>
 		</div>
 	</div>
