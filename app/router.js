@@ -24,6 +24,9 @@ Router.map(function() {
       this.route('detail', {
         path: 'detail/:id'
       });
+      this.route('manufacturer', {
+        path: 'manufacturer/:id'
+      });
       this.route('edit', {
         path: 'edit/:id'
       });
@@ -167,6 +170,19 @@ Router.map(function() {
       });
       this.route('new');
       this.route('my');
+    });
+
+    this.route('manageNetwork', function() {
+      this.route('list');
+      this.route('new', {
+        path: 'new/:id',
+      });
+      this.route('edit', {
+        path: 'edit/:id'
+      });
+      this.route('detail', {
+        path: 'detail/:id'
+      });
     });
   });
   this.route('login');

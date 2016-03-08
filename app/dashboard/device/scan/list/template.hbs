@@ -11,10 +11,10 @@
 		<div style="margin-bottom: 10px;">
 			{{#common/io-form-validator submitForm="searchAction"}}
 			<form class="form-horizontal">
-			<table class="table table-bordered">
+			<table class="table no-border">
 			<tbody>
 				<tr>
-					<td width="15%" class="active" align="right"><b>搜索</b></td>
+					<td width="15%" align="right">搜索</td>
 					<td width="85%">
 						<div class="block">
 							<div class="col-md-6">
@@ -35,7 +35,7 @@
 
 				{{#if isShowMultiSearchBlock}}
 				<tr>
-					<td width="15%" class="active" align="right"><b>厂商</b></td>
+					<td width="15%" align="right">厂商</td>
 					<td width="85%">
 						<div class="col-md-3">
 							{{view "select" class="form-control" prompt="请选择"
@@ -46,7 +46,7 @@
 
 				{{#if model.productData}}
 				<tr>
-					<td width="15%" class="active" align="right"><b>产品名</b></td>
+					<td width="15%" align="right">产品名</td>
 					<td width="85%">
 						<div class="col-md-3">
 							{{view "select" class="form-control" prompt="请选择"
@@ -58,7 +58,7 @@
 
 				{{#if model.modelNameData}}
 				<tr>
-					<td width="15%" class="active" align="right"><b>型号</b></td>
+					<td width="15%" align="right">型号</td>
 					<td width="85%">
 						<div class="col-md-3">
 							{{view "select" class="form-control" prompt="请选择"
@@ -69,7 +69,7 @@
 				{{/if}}
 
 				<tr>
-					<td width="15%" class="active" align="right"><b>CPU</b></td>
+					<td width="15%" align="right">CPU</td>
 					<td width="85%">
 						<div class="col-md-2">
 							{{view "select" class="form-control" prompt="请选择"
@@ -82,7 +82,7 @@
 				</tr>
 
 				<tr>
-					<td width="15%" class="active" align="right"><b>内存</b></td>
+					<td width="15%" align="right">内存</td>
 					<td width="85%">
 						<div class="col-md-2">
 							{{view "select" class="form-control" prompt="请选择"
@@ -92,13 +92,13 @@
 							{{input type="number" value=form.Memory placeholder="内存大小" class="form-control input-md"}}
 						</div>
 						<div class="col-md-1" style="margin-top:6px;">
-							GB
+							MB
 						</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td width="15%" class="active" align="right"><b>磁盘</b></td>
+					<td width="15%" align="right">磁盘</td>
 					<td width="85%">
 						<div class="col-md-2">
 							{{view "select" class="form-control" prompt="请选择"
@@ -134,12 +134,13 @@
                 	<th>{{input type="checkbox" checked=selectAll}}</th>
                     <th>SN</th>
 					<th>厂商</th>
-					<th>产品名称</th>
 					<th>型号</th>
 					<th>CPU</th>
 					<th>内存</th>
 					<th>磁盘</th>
-					<th>IP</th>
+					<th>DHCP IP</th>
+					<th>OOB IP</th>
+					<th>管理人</th>
 					<th>操作</th>
                 </tr>
             </thead>
@@ -149,12 +150,34 @@
                 	<td>{{input type="checkbox" checked=item.checked}}</td>
 					<td>{{item.Sn}}</td>
 					<td>{{item.Company}}</td>
-					<td>{{item.Product}}</td>
 					<td>{{item.ModelName}}</td>
-					<td>{{item.Cpu}}</td>
-					<td>{{item.Memory}}</td>
-					<td>{{item.Disk}}</td>
-					<td>{{item.Ip}}</td>
+					<td>
+						{{#if item.CpuSum}}
+							{{item.CpuSum}}核
+						{{/if}}
+					</td>
+					<td>
+						{{#if item.MemorySum}}
+							{{item.MemorySum}}M
+						{{/if}}
+					</td>
+					<td>
+						{{#if item.DiskSum}}
+							{{item.DiskSum}}G
+						{{/if}}
+					</td>
+					<td>
+						{{#if item.NicIp}}
+							{{#each item.NicIp as |item2 index2|}}
+								{{#if (not-eq 0 index2)}}
+									<br />
+								{{/if}}
+								{{item2.Ip}}
+							{{/each}}
+						{{/if}}
+					</td>
+					<td>{{item.Oob}}</td>
+					<td>{{item.OwnerName}}</td>
 					<td>{{#link-to "dashboard.device.scan.detail" item.ID}}详情{{/link-to}}</td>
 				</tr>
 			{{/each}}
@@ -166,9 +189,15 @@
 			       		&nbsp;&nbsp;
 			       		<button {{action "exportAction" "all"}} type="button" class="btn btn-primary btn-sm">导出全部</button>
 			       		&nbsp;&nbsp;
+			       		{{#if (eq "Administrator" model.session.Role)}}
+			       		<button {{action "showAssignUserModalAction"}} type="button" class="btn btn-primary btn-sm">分配管理人</button>
+			       		&nbsp;&nbsp;
+			       		{{/if}}
 					</div>
 					<div class="col-sm-5">
-						{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+						{{#if (not-eq 1 pageCount)}}
+							{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+						{{/if}}
 					</div>
 				</div>
 				<div class="row" style="margin-left: 5px;">
@@ -176,3 +205,39 @@
 				</div>
     </div>
 </div>
+
+
+{{#common/io-modal show=model.isShowAssignUserModal close="toggleModal"}}
+{{#common/io-form-validator submitForm="assignSelectDevicesUserAction"}}
+<form class="form-horizontal">
+<div class="modal fade" data-backdrop="static">
+  <div class="modal-dialog" style="width:700px;height:600px;">
+    <div class="modal-content">
+      <div class="modal-header">
+				<button type="button" class="close" {{action "toggleModal"}}>×</button>
+				<h4 class="modal-title">选择管理人</h4>
+			</div>
+      <div style="margin-left: 13px; margin-top: 10px; margin-bottom: 10px; height: 300px;">
+      	<div class="block">
+	        <div class="col-md-3">分配给该用户管理：</div>
+	        <div class="col-md-4">
+	        	{{view "select" class="form-control" required=true prompt="请选择"
+	 content=model.userData value=model.selectUserID optionValuePath="content.ID" optionLabelPath="content.Username" }}
+	        </div>
+        </div>
+        <div class="block" style="padding-top: 50px;">
+	        <div class="col-md-3"></div>
+	        <div class="col-md-4">
+	        	<button type="submit" class="btn btn-primary">提交</button>
+      			&nbsp;&nbsp;
+        		<a class="btn btn-default" {{action "toggleModal"}}  data-dismiss="modal">取消</a>
+	        </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+</form>
+{{/common/io-form-validator}}
+{{/common/io-modal}}

@@ -6,12 +6,14 @@ const {
 } = Ember;
 
 export default Ember.Controller.extend({
-	networkSrv: Ember.inject.service('api/network/service'),
+  networkSrv: Ember.inject.service('api/network/service'),
+	manageNetworkSrv: Ember.inject.service('api/manageNetwork/service'),
 	deviceSrv: Ember.inject.service('api/device/service'),
 	isMultiDevice:false,//是否录入多个设备
 	isShowNetworkInfo:false,//是否显示网段信息
 	ip:null,
   LocationID:null,
+  isShowingModal:false,
 
 	ipChange: function() {
       var self = this;
@@ -70,6 +72,53 @@ export default Ember.Controller.extend({
           }
         }
   }.observes("rows.@each.Ip"),
+
+  manageIpChanged: function() {
+        var self = this;
+        var rows = this.get('rows');
+
+        function eachFunction(row){
+          var regexp =  /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+          if(regexp.test(row.ManageIp)){
+            var isError = false;
+            for(var j=0;j<rows.length;j++){
+              if(i !== j && row.ManageIp === rows[j].ManageIp){
+                set(row,"messageManageIp","<span class='text-danger'>管理IP有重复!</span>");
+                isError = true;
+              }
+            }
+
+            if(isError === false){
+              self.get('manageNetworkSrv').validateIp(row.ManageIp).then(function(data){
+                if(data.Status === "failure"){
+                  set(row,"messageManageIp","<span class='text-danger'>"+data.Message+"</span>");
+                }else if(data.Status === "success"){
+                  set(row,"isShowManageNetworkInfo",true);
+                  set(row,"ManageNetwork",data.Content.Network);
+                  set(row,"ManageNetworkID",data.Content.ID);
+                  set(row,"messageManageIp","<span class='text-success'>管理IP填写正确!</span>");
+                }
+              });
+            }
+          }else{
+            set(row,"messageManageIp","<span class='text-danger'>IP格式不正确!</span>");
+          }
+        }
+
+        for (var i=0;i<rows.length;i++) {
+          var row = rows[i];
+          
+          set(row,"isShowManageNetworkInfo",false);
+          set(row,"ManageNetwork",null);
+          set(row,"ManageNetworkID",null);
+
+          if(!Ember.isEmpty(row.ManageIp)){
+            eachFunction(row);
+          }else{
+              //set(row,"isShowNetworkInfo",false);
+          }
+        }
+  }.observes("rows.@each.ManageIp"),
 
   snChanged: function() {
         var self = this;
@@ -189,6 +238,9 @@ export default Ember.Controller.extend({
       var height = document.body.scrollHeight;
       window.scrollTo(0,height);
       */
+    },
+    toggleModal: function() {
+      this.toggleProperty('isShowingModal');
     },
 	}
 });

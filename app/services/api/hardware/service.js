@@ -73,12 +73,29 @@ export default Ember.Service.extend({
         });
     },
 
-    getModelNameByCompanyAndProductAndGroup : function(company,product) {
+    getModelNameByCompanyAndGroup : function(company,isSystemAdd) {
+        var url = "/api/osinstall/v1/hardware/getModelNameByWhereAndGroup";
+		//生成发请求数据对象
+		var data = {};
+		data.Company = company;
+		data.IsSystemAdd = isSystemAdd;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    getModelNameByCompanyAndProductAndGroup : function(company,product,isSystemAdd) {
         var url = "/api/osinstall/v1/hardware/getModelNameByWhereAndGroup";
 		//生成发请求数据对象
 		var data = {};
 		data.Company = company;
 		data.Product = product;
+		data.IsSystemAdd = isSystemAdd;
 
 		//发送ajax请求
         return ajax({

@@ -13,6 +13,8 @@ html {
     }
 }
 
+
+
 ::selection {
     background: @blue-l2;
     color: #fff;
@@ -102,6 +104,69 @@ h3 {
         color: @brand-primary;
         border-left: solid 4px @brand-primary;
     }
+}
+
+table span{
+    font-size: 12px;
+}
+
+table.table.no-border{
+    border: none;
+    td {
+        border: none;
+    }
+}
+
+table.table.light-title{
+    tr {
+        td:first-child{
+            color:#C6C6C6;
+            padding-right: 0px;
+        }
+    }
+}
+
+.brand-ul li {
+    width: 13%;
+    margin: 0 3px;
+}
+
+/*
+.text-muted{
+    font-size: 14px;
+}
+
+.text-primary{
+    font-size: 14px;
+}
+
+.text-success{
+    font-size: 14px;
+}
+
+.text-info{
+    font-size: 14px;
+}
+
+.text-warning{
+    font-size: 14px;
+}
+
+.text-danger{
+    font-size: 14px;
+}
+*/
+
+.font-size-14{
+    font-size: 14px;
+}
+
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight:normal;
 }
 
 label.required:before {

@@ -14,7 +14,8 @@ export default Ember.Controller.extend({
 			var self = this;
 			this.set("page",page);
 			var pageSize = this.get("pageSize");
-			this.get("userSrv").list(pageSize,(page-1)*pageSize).then(function(data){
+            var form = this.get("model.form");
+			this.get("userSrv").list(pageSize,(page-1)*pageSize,form).then(function(data){
                 self.set('rowList', data.Content.list);
                 var pageCount = Math.ceil(data.Content.recordCount/pageSize);
                 if(pageCount <= 0){
@@ -39,7 +40,6 @@ export default Ember.Controller.extend({
                         });
                         //self.transitionToRoute('dashboard.os.list');
                         self.send("pageChanged",self.get("page"));
-                        console.log("done");
                     } else {
                         Ember.$.notify({
                         	title: "<strong>保存失败:</strong>",

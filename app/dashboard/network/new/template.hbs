@@ -8,10 +8,10 @@
     {{#common/io-form-validator submitForm="addAction"}}
 	<form class="form-horizontal">
     <div class="panel-body">
-        <table class="table table-bordered">
+        <table class="table no-border">
 			<tbody>
 				<tr>
-					<td class="active" align="right" width="20%"><label class="required" for="Network">IP/掩码位</label></td>
+					<td align="right" width="20%"><label class="required" for="Network">IP/掩码位</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{input id="Network" value=model.info.Network required=true type="text" class="form-control input-md"}}</div>
 						<span class="help-block with-errors">格式如:192.168.0.1/24</span>
@@ -20,7 +20,7 @@
 				
 				{{#if isShowNetmask}}
 				<tr>
-					<td class="active" align="right"><label class='required' for='Netmask'>掩码</label></td>
+					<td align="right"><label class='required' for='Netmask'>掩码</label></td>
 					<td>
 						<div class="col-md-5">{{input type="text" id="Netmask" value=model.info.Netmask required=true class="form-control input-md"}}</div>
 					</td>
@@ -28,28 +28,30 @@
 				{{/if}}
 
 				<tr>
-					<td class="active" align="right"><label class='required' for='Gateway'>网关</label></td>
+					<td align="right"><label class='required' for='Gateway'>网关</label></td>
 					<td>
 						<div class="col-md-5">{{input type="text" id="Gateway" value=model.info.Gateway required=true class="form-control input-md"}}</div>
 					</td>
 				</tr>
 
+				<!--
 				<tr>
 					<td class="active" align="right"><b>vlan</b></td>
 					<td>
 						<div class="col-md-5">{{input type="text" value=model.info.Vlan class="form-control input-md"}}</div>
 					</td>
 				</tr>
+				-->
 
 				<tr>
-					<td class="active" align="right"><b>trunk</b></td>
+					<td align="right">trunk</td>
 					<td>
 						<div class="col-md-5">{{input type="text" value=model.info.Trunk class="form-control input-md"}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><b>bonding</b></td>
+					<td align="right">bonding</td>
 					<td>
 						<div class="col-md-5">{{input type="text" value=model.info.Bonding class="form-control input-md"}}</div>
 					</td>
@@ -58,7 +60,7 @@
 		</table>
 		<div class="text-center">
 	        <button type="submit" class="btn btn-primary">提 交</button>
-	        &nbsp;
+	        &nbsp;&nbsp;
 	        {{#link-to "dashboard.network.list"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
 		</div>
 

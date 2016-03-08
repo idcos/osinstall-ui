@@ -19,7 +19,7 @@ export default Ember.Route.extend({
 
 	setupController: function(controller, model) {
 		controller.set("model",model);
-		var data = [{id:0,LocationID:null,IsSupportVm:"Yes",messageHostname:"<span class='text-muted'>主机名可自定义</span>",messageIp:"请提前在【模板管理】->【网段管理】里录入网段信息"}];
+		var data = [{id:0,LocationID:null,IsSupportVm:"Yes",messageHostname:"<span class='text-muted'>主机名可自定义</span>",messageIp:"请提前在【网段管理】->【应用网段管理】里录入网段信息",messageManageIp:""}];
 		controller.set('rows', data);
 	}
 });

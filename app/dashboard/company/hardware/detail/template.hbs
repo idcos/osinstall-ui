@@ -6,28 +6,30 @@
         </ol>
     </div>
     <div class="panel-body">
-        <table class="table table-bordered">
+        <table class="table no-border light-title">
 			<tbody>
 				<tr>
-					<td class="active" align="right" width="18%"><label class="required">服务器厂商</label></td>
+					<td align="right" width="18%"><label>服务器厂商</label></td>
 					<td width="82%">
 						<div class="col-md-5">
 			 				{{model.info.Company}}
 						</div>
 					</td>
 				</tr>
-
+				
+				<!--
 				<tr>
-					<td class="active" align="right"><label class="required">产品名称</label></td>
+					<td align="right"><label>产品名称</label></td>
 					<td>
 						<div class="col-md-5">
 							{{model.info.Product}}
 						</div>
 					</td>
-				</tr>
-
+				</tr
+				-->
+				
 				<tr>
-					<td class="active" align="right"><label class="required">服务器型号</label></td>
+					<td align="right"><label>服务器型号</label></td>
 					<td>
 						<div class="col-md-5">
 							{{model.info.ModelName}}
@@ -38,7 +40,7 @@
 			
 				{{#each model.info.FormatTpl as |item index|}}
 				<tr>
-					<td class="active" align="right"><label>{{item.name}}</label></td>
+					<td align="right"><label>{{item.name}}</label></td>
 					<td colspan=3>
 						<table class="table table-hover">
 		                    <thead>

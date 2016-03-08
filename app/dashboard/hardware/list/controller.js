@@ -15,8 +15,8 @@ export default Ember.Controller.extend({
       self.set('model.modelNameData', null);
       self.set('Product', null);
       self.set('ModelName', null);
-        this.get("hardwareSrv").getProductByCompanyAndGroup(company).then(function(data){
-            self.set('model.productData', data.Content);
+        this.get("hardwareSrv").getModelNameByCompanyAndGroup(company,'').then(function(data){
+            self.set('model.modelNameData', data.Content);
         });
     }.observes("Company"),
 

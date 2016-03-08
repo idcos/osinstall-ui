@@ -11,7 +11,7 @@
         <table class="table table-bordered">
 			<tbody>
 				<tr>
-					<td class="active" align="right" width="18%"><label class="required">服务器厂商</label></td>
+					<td align="right" width="18%"><label class="required">服务器厂商</label></td>
 					<td width="82%">
 						<div class="col-md-5">
 							{{view "select" class="form-control" prompt="请选择厂商"
@@ -19,18 +19,20 @@
 						</div>
 					</td>
 				</tr>
-
+				
+				<!--
 				<tr>
-					<td class="active" align="right"><label class="required">产品名称</label></td>
+					<td align="right"><label class="required">产品名称</label></td>
 					<td>
 						<div class="col-md-5">
 							{{input required=true type="text" value=model.info.Product class="form-control input-md"}}
 						</div>
 					</td>
 				</tr>
+				-->
 
 				<tr>
-					<td class="active" align="right"><label class="required">服务器型号</label></td>
+					<td align="right"><label class="required">产品型号</label></td>
 					<td>
 						<div class="col-md-5">
 							{{input required=true type="text" value=model.info.ModelName class="form-control input-md"}}
@@ -41,7 +43,7 @@
 			
 				{{#each model.info.FormatTpl as |item index|}}
 				<tr>
-					<td class="active" align="left">
+					<td align="left">
 					<div class="col-md-11">
 						<div class="block"><label>配置名称：</label></div>
 						<div class="block">
@@ -153,6 +155,7 @@
 		</table>
 		<div class="text-center">
 	        <button type="submit" class="btn btn-primary">提 交</button>
+	        &nbsp;&nbsp;
 	        {{#link-to "dashboard.company.hardware.list"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
 		</div>
     </div>

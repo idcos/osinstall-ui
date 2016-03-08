@@ -1,12 +1,12 @@
 <div class="panel panel-default">
-	<div class="panel-body" style="padding: 60px;">
+	<div class="panel-body">
 		<div >
 			<div id="div_chart" style="height:400px"></div>
 			<script type="text/javascript">
 			        var myChart = echarts.init(document.getElementById("div_chart"));
 			        var option = {
 					    title : {
-					        text: 'IDCOS 物理机装机平台数据统计',
+					        text: 'CloudJ X86 装机平台数据统计',
 					        subtext: "累计使用 180 天\n累计安装 20000 台",
 					        x:'center'
 					    },
@@ -79,60 +79,45 @@
 			<br><br>
 			<div>
 				<h4 style="color:#0088cc">支持厂商及型号</h4>
-				<div class="rows">
-					<div class="col-md-1">
-						{{#link-to "dashboard.hardware.list"}}
-						<img src="image/h3c.png" />
+				<div class="rows" style="text-align: center;">
+					<ul class="list-inline brand-ul" style="display: inline-block;">
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img src="image/logo/h3c.png" width="80" height="80" />
 						{{/link-to}}
-					</div>
-
-					<!--
-					<div class="col-md-2">
-						{{#link-to "dashboard.hardware.list"}}
-						<img style="margin-top: 13px;" width="109" height="33" src="image/inspur.jpg" />
+					  </li>
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img src="image/logo/dell.png" width="80" height="80" />
 						{{/link-to}}
-					</div>
-					-->
-
-					<div class="col-md-1" style="margin-right: 30px;">
-						{{#link-to "dashboard.hardware.list"}}
-						<img src="image/dell.png" />
+					  </li>
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="80" height="80" src="image/logo/huawei.png" />
 						{{/link-to}}
-					</div>
-
-					<div class="col-md-2">
-						{{#link-to "dashboard.hardware.list"}}
-						<img style="margin-top: 13px;" width="109" height="33" src="image/huawei.png" />
+					  </li>
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="120" height="52" src="image/logo/lenovo.png" />
 						{{/link-to}}
-					</div>
-
-					
-
-					<div class="col-md-2">
-						{{#link-to "dashboard.hardware.list"}}
-						<img style="margin-top: 12px;" src="image/lenovo.png" />
+					  </li>
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="80" height="80" src="image/logo/hp.png" />
 						{{/link-to}}
-					</div>
-
-
-					<div class="col-md-1" style="margin-left: 10px;">
-						{{#link-to "dashboard.hardware.list"}}
-						<img style="margin-top: 5px;" src="image/hp.png" />
+					  </li>
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="88" height="80" src="image/logo/ibm.png" />
 						{{/link-to}}
-					</div>
-					
-					<div class="col-md-1" style="margin-right: 30px;">
-						{{#link-to "dashboard.hardware.list"}}
-						<img style="margin-top: 7px;" src="image/ibm.png" />
+					  </li>
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="100" height="100" src="image/logo/powerleader.png" />
 						{{/link-to}}
-					</div>
-					
-
-					<div class="col-md-1" style="margin-left: 20px;">
-						{{#link-to "dashboard.hardware.list"}}
-						<img src="image/powerleader.png" />
-						{{/link-to}}
-					</div>
+					  </li>
+					 	
+					</ul>
 				</div>
 			</div>
 	</div>

@@ -19,6 +19,7 @@ export default Ember.Route.extend({
 
     setupController: function(controller, model) {
     	var data = [];
+    	model.info.messageManageIp = "";
     	data.pushObject(model.info);
     	controller.set("rows",data);
     	controller.set("model",model);

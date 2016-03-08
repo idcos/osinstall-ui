@@ -7,6 +7,7 @@ const {
 
 export default Ember.Controller.extend({
     hardwareSrv: Ember.inject.service('api/hardware/service'),
+    isShowRemoveBigItemButton:true,
     actions:{
         copyKeyItemAction:function(key1,key2,key3){
 	      var tpl = this.get("model.info.FormatTpl");
@@ -116,6 +117,11 @@ export default Ember.Controller.extend({
 	      		newData.pushObject(row);
 	      	}
 	      }
+	      if(newData.length > 1){
+	      	set(this,'isShowRemoveBigItemButton',true);
+	      }else{
+	      	set(this,'isShowRemoveBigItemButton',false);
+	      }
 	      set(this,'model.info.FormatTpl',newData);
 	    },
 	    cancelAction:function(key1){
@@ -125,6 +131,11 @@ export default Ember.Controller.extend({
 	      	if(i !== key1){
 	      		newData.pushObject(data[i]);
 	      	}
+	      }
+	      if(newData.length > 1){
+	      	set(this,'isShowRemoveBigItemButton',true);
+	      }else{
+	      	set(this,'isShowRemoveBigItemButton',false);
 	      }
 	      set(this,'model.info.FormatTpl',newData);
 	    },

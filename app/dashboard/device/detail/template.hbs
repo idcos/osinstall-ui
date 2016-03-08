@@ -1,68 +1,67 @@
 <div class="panel panel-default">
-	<!--
-    <div class="panel-heading">
-        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
-        	<li>装机管理</li>
-            <li class="active">录入新设备</li>
-        </ol>
-    </div>
-    -->
     <div class="panel-body">
-	    <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
-        	<li>设备列表</li>
-            <li class="active">设备详情</li>
-        </ol>
+	   	<ul class="nav nav-tabs nav-tabs-bare">
+			<li class="active">{{#link-to "dashboard.device.detail" item.ID}}查看设备信息{{/link-to}}</li>
+			{{#if model.manufacturer}}
+				{{#if (eq model.manufacturer.Sn item.Sn)}}
+			    <li>{{#link-to "dashboard.device.manufacturer" item.ID}}查看硬件信息{{/link-to}}</li>
+			    {{/if}}
+		    {{/if}}
+		</ul>
 		<br>
-        <table class="table table-bordered">
+        <table class="table no-border light-title">
 			<tbody>
 				<tr>
-					<td class="active" align="right" width="20%"><label>ID</label></td>
+					<td align="right" width="20%"><label>ID</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{item.ID}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right" width="20%"><label>批次号</label></td>
+					<td align="right" width="20%" style="color:#C6C6C6"><label>批次号</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{item.BatchNumber}}</div>
 					</td>
 				</tr>
 				<tr>
-					<td class="active" align="right" width="20%"><label>SN</label></td>
+					<td align="right" width="20%"><label>SN</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{item.Sn}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>主机名</label></td>
+					<td align="right"><label>主机名</label></td>
 					<td>
 						<div class="col-md-5">{{item.Hostname}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>IP</label></td>
+					<td align="right"><label>应用IP</label></td>
 					<td>
 						<div class="col-md-5">
-							{{item.Ip}}
+							{{item.Ip}} (网段:{{item.NetworkName}})
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right"><label>管理IP</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.ManageIp}}
+							{{#if item.ManageNetworkName}}
+							(网段:{{item.ManageNetworkName}})
+							{{/if}}
 						</div>
 					</td>
 				</tr>
 
 
 				<tr>
-					<td class="active" align="right"><label>匹配到网段</label></td>
-					<td>
-						<div class="col-md-5">
-							{{item.NetworkName}}
-						</div>
-					</td>
-				</tr>
-
-				<tr>
-					<td class="active" align="right"><label>操作系统</label></td>
+					<td align="right"><label>操作系统</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.OsName}}
@@ -71,7 +70,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>硬件配置模板</label></td>
+					<td align="right"><label>硬件配置模板</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.HardwareName}}
@@ -80,7 +79,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>系统安装模板</label></td>
+					<td align="right"><label>系统安装模板</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.SystemName}}
@@ -89,7 +88,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>位置</label></td>
+					<td align="right"><label>位置</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.LocationName}}
@@ -98,7 +97,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>财编</label></td>
+					<td align="right"><label>财编</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.AssetNumber}}
@@ -107,7 +106,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>状态</label></td>
+					<td align="right"><label>状态</label></td>
 					<td>
 						<div class="col-md-5">
 							{{#if (eq "pre_install" item.Status)}}
@@ -130,7 +129,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>安装进度</label></td>
+					<td align="right"><label>安装进度</label></td>
 					<td>
 						{{#link-to "dashboard.log.detail" item.ID "install"}}
 						<div class="col-md-4">
@@ -150,7 +149,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>安装日志</label></td>
+					<td align="right"><label>安装日志</label></td>
 					<td>
 						<div class="col-md-5">
 							{{#link-to "dashboard.log.detail" item.ID "install"}}查看{{/link-to}}
@@ -159,7 +158,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>是否支持安装虚拟机</label></td>
+					<td align="right"><label>是否支持安装虚拟机</label></td>
 					<td>
 						<div class="col-md-5">
 							{{#if (eq "Yes" item.IsSupportVm)}}
@@ -178,7 +177,7 @@
 
 
 				<tr>
-					<td class="active" align="right"><label>添加时间</label></td>
+					<td align="right"><label>添加时间</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.CreatedAt}}
@@ -187,7 +186,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>最后更新时间</label></td>
+					<td align="right"><label>最后更新时间</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.UpdatedAt}}
@@ -199,8 +198,11 @@
 		</table>
 
 		<div class="text-center">
-			{{#if (not-eq "success" item.Status)}}
-	        	{{#link-to "dashboard.device.edit" item.ID}}<button type="button" class="btn btn-default">修改设备信息</button>{{/link-to}}
+			{{#if hasPurviewOperation}}
+				{{#if (not-eq "success" item.Status)}}
+		        	{{#link-to "dashboard.device.edit" item.ID}}<button type="button" class="btn btn-default">修改设备信息</button>{{/link-to}}
+		        	&nbsp;&nbsp;
+				{{/if}}
 			{{/if}}
 	
 			<button type="button" class="btn btn-default" onclick="javascript:history.go(-1);">返回</button>

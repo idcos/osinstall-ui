@@ -1,0 +1,71 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>管理网段管理</li>
+            <li class="active">编辑网段</li>
+        </ol>
+    </div>
+    {{#common/io-form-validator submitForm="saveAction"}}
+	<form class="form-horizontal">
+    <div class="panel-body">
+        <table class="table no-border">
+			<tbody>
+				<tr>
+					<td align="right" width="20%"><label class="required" for="Network">网段/掩码</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{input id="Network" value=model.info.Network required=true type="text" class="form-control input-md"}}</div>
+						<span class="help-block with-errors">格式如:192.168.0.1/24</span>
+					</td>
+				</tr>
+
+				{{#if isShowNetmask}}
+				<tr>
+					<td align="right"><label class='required' for='Netmask'>掩码</label></td>
+					<td>
+						<div class="col-md-5">{{input type="text" id="Netmask" value=model.info.Netmask required=true class="form-control input-md"}}</div>
+					</td>
+				</tr>
+				{{/if}}
+
+				<tr>
+					<td align="right"><label class='required' for='Gateway'>网关</label></td>
+					<td>
+						<div class="col-md-5">{{input type="text" id="Gateway" value=model.info.Gateway required=true class="form-control input-md"}}</div>
+					</td>
+				</tr>
+				<!--
+				<tr>
+					<td align="right"><b>vlan</b></td>
+					<td>
+						<div class="col-md-5">{{input type="text" value=model.info.Vlan class="form-control input-md"}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right"><b>trunk</b></td>
+					<td>
+						<div class="col-md-5">{{input type="text" value=model.info.Trunk class="form-control input-md"}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right"><b>bonding</b></td>
+					<td>
+						<div class="col-md-5">{{input type="text" value=model.info.Bonding class="form-control input-md"}}</div>
+					</td>
+				</tr>
+				-->
+			</tbody>
+		</table>
+		<div class="text-center">
+	        <button type="submit" class="btn btn-primary">提 交</button>
+	        &nbsp;&nbsp;
+	        {{#link-to "dashboard.manageNetwork.list"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
+		</div>
+		<div class="text-center" style="margin-top: 15px;">
+			{{html-safe message}}
+		</div>
+    </div>
+    </form>
+    {{/common/io-form-validator}}
+</div>

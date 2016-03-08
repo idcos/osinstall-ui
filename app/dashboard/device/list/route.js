@@ -5,7 +5,8 @@ export default Ember.Route.extend({
 	osConfigSrv: Ember.inject.service('api/os-config/service'),
 	hardwareSrv: Ember.inject.service('api/hardware/service'),
 	systemConfigSrv: Ember.inject.service('api/system-config/service'),
-	vmInstallSrv: Ember.inject.service('api/vmInstall/service'),
+    vmInstallSrv: Ember.inject.service('api/vmInstall/service'),
+	userSrv: Ember.inject.service('api/user/service'),
 	model: function(params) {
         return Ember.RSVP.hash({
 			status:params.status,
@@ -24,7 +25,8 @@ export default Ember.Route.extend({
             networkTypeData:[{id:"bridge",name:"桥接"},{id:"nat",name:"NAT"}],
             networkDeviceTypeData:[{id:"e1000",name:"e1000"},{id:"rtl8139",name:"rtl8139"},{id:"virtio",name:"virtio"}],
             newMacAddress:this.get('vmInstallSrv').createNewMacAddress().then(function(data){return data.Content;}),
-		});
+		    session:this.get("userSrv").getLocalSession(),
+        });
     },
 
     setupController: function(controller, model) {

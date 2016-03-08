@@ -8,18 +8,15 @@ export default Ember.Controller.extend({
         	var form = this.get("model.info");
         	self.get("userSrv").login(form).then(function(data) {
                 if(data.Status==="success"){
-                	/*
-                    Ember.$.notify({
-                    	message: "登录成功!"
-                    }, {
-                    	animate: {
-                    		enter: 'animated fadeInRight',
-                    		exit: 'animated fadeOutRight'
-                    	},
-                    	type: 'success'
-                    });
-                    */
                     self.get("userSrv").createLocalSession(data.Content);
+                    
+                    var isRememberPassword = self.get("model.isRememberPassword");
+                    if(isRememberPassword === true){
+                        window.localStorage.setItem("osinstallRememberUsername",form.Username);
+                        window.localStorage.setItem("osinstallRememberPassword",form.Password);
+                    }else{
+                        window.localStorage.clear();
+                    }
                     self.transitionToRoute('dashboard.main');
                 } else {
                     Ember.$.notify({

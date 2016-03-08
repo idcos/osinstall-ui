@@ -8,10 +8,10 @@
     {{#common/io-form-validator submitForm="saveAction"}}
 	<form class="form-horizontal">
     <div class="panel-body">
-        <table class="table table-bordered">
+        <table class="table no-border">
 			<tbody>
 				<tr>
-					<td class="active" align="right" width="20%"><label class="required" for="Username">用户名</label></td>
+					<td align="right" width="20%"><label class="required" for="Username">用户名</label></td>
 					<td width="80%">
 						<div class="col-md-5">
 						{{model.info.Username}}
@@ -20,20 +20,20 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label for="Password">密码</label></td>
+					<td align="right"><label for="Password">密码</label></td>
 					<td>
 						<div class="col-md-5">
 						{{input type="password" id="Password" value=model.info.Password class="form-control input-md"}}
 						<span class="help-block with-errors"></span>
 						</div>
-						<div class="col-md-5" style="margin-top: 5px;">
+						<div class="col-md-5" style="margin-top: 5px;font-size: 12px;">
 						密码为空则表示不修改
 						</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label class="required" for="Name">姓名</label></td>
+					<td align="right"><label class="required" for="Name">姓名</label></td>
 					<td>
 						<div class="col-md-5">
 						{{input type="text" id="Name" value=model.info.Name required=true class="form-control input-md"}}
@@ -43,7 +43,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label for="PhoneNumber">手机号</label></td>
+					<td align="right"><label for="PhoneNumber">手机号</label></td>
 					<td>
 						<div class="col-md-5">
 						{{input type="text" id="PhoneNumber" value=model.info.PhoneNumber class="form-control input-md"}}

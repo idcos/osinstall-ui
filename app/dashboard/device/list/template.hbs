@@ -8,7 +8,7 @@
     </div>
     <!--
     <ul class="nav nav-tabs"> 
-		<li class="active">{{#link-to "dashboard.device.list"}}所有设备列表{{/link-to}}</li>
+		<li>{{#link-to "dashboard.device.list"}}所有设备列表{{/link-to}}</li>
 	    <li>{{#link-to "dashboard.device.preInstall"}}待安装{{/link-to}}</li>
 	    <li>{{#link-to "dashboard.device.installing"}}正在安装{{/link-to}}</li>
 	</ul>
@@ -17,10 +17,10 @@
 		<div style="margin-bottom: 10px;">
 			{{#common/io-form-validator submitForm="searchAction"}}
 			<form class="form-horizontal">
-			<table class="table table-bordered">
+			<table class="table no-border">
 			<tbody>
 				<tr>
-					<td width="15%" class="active" align="right"><b>搜索</b></td>
+					<td width="15%" align="right">搜索</td>
 					<td width="85%">
 						<div class="block">
 							<div class="col-md-6">
@@ -42,7 +42,7 @@
 
 				{{#if isShowMultiSearchBlock}}
 				<tr>
-					<td width="15%" class="active" align="right"><b>操作系统</b></td>
+					<td width="15%" align="right">操作系统</td>
 					<td width="85%">
 						<div class="col-md-5">
 							{{view "select" class="form-control" prompt="请选择操作系统"
@@ -52,7 +52,7 @@
 				</tr>
 
 				<tr>
-					<td width="15%" class="active" align="right"><b>硬件配置模板</b></td>
+					<td width="15%" align="right">硬件配置模板</td>
 					<td width="85%">
 						<div class="col-md-5">
 							{{view "select" class="form-control" prompt="请选择硬件配置模板"
@@ -62,7 +62,7 @@
 				</tr>
 
 				<tr>
-					<td width="15%" class="active" align="right"><b>系统安装模板</b></td>
+					<td width="15%" align="right">系统安装模板</td>
 					<td width="85%">
 						<div class="col-md-5">
 							{{view "select" class="form-control" prompt="请选择系统安装模板" content=model.systemConfigData value=form.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
@@ -79,7 +79,7 @@
 
 				{{#if (eq "all" model.status)}}
 				<tr>
-					<td width="15%" class="active" align="right"><b>状态</b></td>
+					<td width="15%" align="right">状态</td>
 					<td width="85%">
 						<div class="col-md-5">
 							{{view "select" class="form-control" prompt="请选择状态" content=model.statusData value=form.Status optionValuePath="content.ID" optionLabelPath="content.Name"}}
@@ -116,6 +116,9 @@
 					<th width="8%">安装进度</th>
 					<th>安装日志</th>
 					{{/if}}
+					{{#if (eq "all" model.status)}}
+					<th>管理人</th>
+					{{/if}}
 					<!--
 					<th>虚拟机</th>
 					-->
@@ -135,19 +138,19 @@
 					<td>
 						{{#link-to "dashboard.log.detail" item.ID "install"}}
 						{{#if (eq "pre_install" item.Status)}}
-							<span class="text-muted">等待安装</span>
+							<span class="text-muted font-size-14">等待安装</span>
 						{{/if}}
 
 						{{#if (eq "installing" item.Status)}}
-							<span class="text-info">正在安装</span>
+							<span class="text-info font-size-14">正在安装</span>
 						{{/if}}
 
 						{{#if (eq "success" item.Status)}}
-							<span class="text-success">安装成功</span>
+							<span class="text-success font-size-14">安装成功</span>
 						{{/if}}
 
 						{{#if (eq "failure" item.Status)}}
-							<span class="text-danger">安装失败</span>
+							<span class="text-danger font-size-14">安装失败</span>
 						{{/if}}
 						{{/link-to}}
 					</td>
@@ -174,6 +177,9 @@
 						{{/if}}
 					</td>
 					-->
+					{{#if (eq "all" model.status)}}
+						<td>{{item.OwnerName}}</td>
+					{{/if}}
 				</tr>
 				{{/each}}
             </tbody>
@@ -186,7 +192,10 @@
 			       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
 					</div>
 					<div class="col-sm-6">
-						{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+						{{#if (not-eq 1 pageCount)}}
+							{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+						{{/if}}
+						
 					</div>
 				</div>
     </div>

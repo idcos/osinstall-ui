@@ -8,10 +8,10 @@
     {{#common/io-form-validator submitForm="addAction"}}
 	<form class="form-horizontal">
     <div class="panel-body">
-        <table class="table table-bordered">
+        <table class="table no-border">
 			<tbody>
 				<tr>
-					<td class="active" align="right" width="20%"><label class="required" for="Username">用户名</label></td>
+					<td align="right" width="20%"><label class="required" for="Username">用户名</label></td>
 					<td width="80%">
 						<div class="col-md-5">
 						{{input type="text" id="Username" value=model.info.Username required=true class="form-control input-md"}}
@@ -21,7 +21,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label class="required" for="Password">密码</label></td>
+					<td align="right"><label class="required" for="Password">密码</label></td>
 					<td>
 						<div class="col-md-5">
 						{{input type="password" id="Password" value=model.info.Password required=true class="form-control input-md"}}
@@ -31,7 +31,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label class="required" for="Name">姓名</label></td>
+					<td align="right"><label class="required" for="Name">姓名</label></td>
 					<td>
 						<div class="col-md-5">
 						{{input type="text" id="Name" value=model.info.Name required=true class="form-control input-md"}}
@@ -41,7 +41,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label for="PhoneNumber">手机号</label></td>
+					<td align="right"><label for="PhoneNumber">手机号</label></td>
 					<td>
 						<div class="col-md-5">
 						{{input type="text" id="PhoneNumber" value=model.info.PhoneNumber class="form-control input-md"}}
@@ -51,7 +51,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label class="required">状态</label></td>
+					<td align="right"><label class="required">状态</label></td>
 					<td>
 						<div class="col-md-5">
 							{{view "select" required=true class="form-control" prompt="请选择" content=model.statusData value=model.info.Status optionValuePath="content.id" optionLabelPath="content.name"}}
@@ -60,7 +60,7 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label class="required">角色</label></td>
+					<td align="right"><label class="required">角色</label></td>
 					<td>
 						<div class="col-md-5">
 							{{view "select" required=true class="form-control" prompt="请选择" content=model.roleData value=model.info.Role optionValuePath="content.id" optionLabelPath="content.name"}}
@@ -71,7 +71,8 @@
 								1.超级管理员可以管理所有信息 <br>
 								2.普通用户只能管理自己录入的机器 <br>
 								3.普通用户无权使用【模板管理】功能 <br>
-								4.普通用户无权使用【用户管理】功能
+								4.普通用户无权使用【用户管理】功能 <br>
+								5.普通用户无权使用【网段管理】功能
 							</div>
 						</div>
 						

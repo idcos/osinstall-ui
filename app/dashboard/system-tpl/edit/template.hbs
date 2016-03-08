@@ -8,10 +8,10 @@
     {{#common/io-form-validator submitForm="saveAction"}}
 	<form class="form-horizontal">
     <div class="panel-body">
-        <table class="table table-bordered">
+        <table class="table no-border">
 			<tbody>
 				<tr>
-					<td class="active" align="right" width="20%"><label class="required" for="Name">模板名</label></td>
+					<td align="right" width="20%"><label class="required" for="Name">模板名</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{input required=true id="Name" value=model.info.Name type="text" class="form-control input-md"}}</div>
 					</td>
@@ -19,7 +19,7 @@
 				
 				
 				<tr>
-					<td class="active" align="right"><label class="required" for="Content">内容</label></td>
+					<td align="right"><label class="required" for="Content">内容</label></td>
 					<td colspan=3>
 						<div class="col-md-10">
 						<!--
@@ -34,6 +34,7 @@
 		</table>
 		<div class="text-center">
 	        <button type="submit" class="btn btn-primary">提 交</button>
+	        &nbsp;&nbsp;
 	        <!--
 	        {{#link-to "dashboard.systemTpl.new"}}<button type="button" class="btn btn-primary">克隆新模板</button>{{/link-to}}
 	        -->

@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 	model: function(params) {
         return Ember.RSVP.hash({
         	deviceId:params.deviceId,
-			info:this.get('deviceLogSrv').list(params.deviceId,params.type).then(function(data){return data.Content;}),
+			info:this.get('deviceLogSrv').list(params.deviceId,params.type,"id ASC",0).then(function(data){return data.Content;}),
 		});
     },
 

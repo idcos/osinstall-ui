@@ -132,7 +132,7 @@ export default Ember.Service.extend({
     	if(typeof window.sessionStorage === 'undefined'){
     		return false;
     	}
-        window.sessionStorage.setItem("osinstallAuthID",data.ID);
+        window.sessionStorage.setItem("osinstallAuthID",parseInt(data.ID));
     	window.sessionStorage.setItem("osinstallAuthUsername",data.Username);
     	window.sessionStorage.setItem("osinstallAuthName",data.Name);
     	window.sessionStorage.setItem("osinstallAuthRole",data.Role);
@@ -153,7 +153,7 @@ export default Ember.Service.extend({
     	}
 
     	var data = {};
-        data.ID = window.sessionStorage.getItem("osinstallAuthID");
+        data.ID = parseInt(window.sessionStorage.getItem("osinstallAuthID"));
     	data.Username = window.sessionStorage.getItem("osinstallAuthUsername");
     	data.Name = window.sessionStorage.getItem("osinstallAuthName");
     	data.Role = window.sessionStorage.getItem("osinstallAuthRole");
@@ -185,10 +185,10 @@ export default Ember.Service.extend({
     /*
     * 获取列表
     */
-    list : function(limit,offset) {
+    list : function(limit,offset,form) {
         var url = "/api/osinstall/v1/user/list";
 		//生成发请求数据对象
-		var data = {};
+		var data = form;
 		data.Limit = limit;
 		data.Offset = offset;
 

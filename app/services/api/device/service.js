@@ -238,6 +238,21 @@ export default Ember.Service.extend({
         });
     },
 
+    getScanByDeviceId : function(deviceId) {
+        var url = "/api/osinstall/v1/device/scan/viewByDeviceId";
+		//生成发请求数据对象
+		var data = {};
+		data.DeviceID = parseInt(deviceId);
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
     scanCompanyList : function() {
         var url = "/api/osinstall/v1/device/scan/company/list";
 		//生成发请求数据对象
@@ -288,6 +303,21 @@ export default Ember.Service.extend({
         }
 		location.href = url;
 		return ;
+    },
+
+    batchAssignScanDeviceUser : function(form) {
+        var url = "/api/osinstall/v1/device/scan/batchAssignOwner";
+		//生成发请求数据对象
+		var data = {};
+		data = form;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
     },
 
     /*

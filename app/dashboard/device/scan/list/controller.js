@@ -6,7 +6,8 @@ const {
 } = Ember;
 
 export default Ember.Controller.extend({
-	deviceSrv: Ember.inject.service('api/device/service'),
+    deviceSrv: Ember.inject.service('api/device/service'),
+	userSrv: Ember.inject.service('api/user/service'),
 	page:1,
 	pageCount:1,
 	pageSize:7,
@@ -35,8 +36,16 @@ export default Ember.Controller.extend({
       self.set('form.ModelName', null);
       var form = {};
       form.Company = company;
-        this.get("deviceSrv").scanProductList(form).then(function(data){
-            self.set('model.productData', data.Content);
+            
+        var session = this.get("userSrv").getLocalSession();
+        if(!Ember.isEmpty(session)){
+            if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                form.UserID = parseInt(session.ID);
+            }
+        }
+
+        this.get("deviceSrv").scanModelNameList(form).then(function(data){
+            self.set('model.modelNameData', data.Content);
         });
     }.observes("form.Company"),
 
@@ -73,8 +82,41 @@ export default Ember.Controller.extend({
             this.set("page",page);
             var pageSize = this.get("pageSize");
             var form = this.get("form");
+            var session = this.get("userSrv").getLocalSession();
+            if(!Ember.isEmpty(session)){
+                if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                    form.UserID = parseInt(session.ID);
+                }
+            }
+
             this.get("deviceSrv").scanList(pageSize,(page-1)*pageSize,form).then(function(data){
-                self.set('rowList', data.Content.list);
+                var rows = [];
+                if(!Ember.isEmpty(data.Content.list) && data.Content.list.length > 0){
+                    for(var i=0;i<data.Content.list.length;i++){
+                        var row = data.Content.list[i];
+                        if(!Ember.isEmpty(row.Cpu)){
+                            row.CpuFormat = $.parseJSON(row.Cpu);  
+                        }
+                        if(!Ember.isEmpty(row.Memory)){
+                            row.MemoryFormat = $.parseJSON(row.Memory);
+                        }
+                        if(!Ember.isEmpty(row.Disk)){
+                            row.DiskFormat = $.parseJSON(row.Disk);
+                        }
+                        if(!Ember.isEmpty(row.Nic)){
+                            row.NicFormat = $.parseJSON(row.Nic);
+                            var ips = [];
+                            for(var j=0;j<row.NicFormat.length;j++){
+                                if(!Ember.isEmpty(row.NicFormat[j].Ip)){
+                                    ips.pushObject(row.NicFormat[j]);
+                                }
+                            }
+                            row.NicIp = ips;
+                        }
+                        rows.pushObject(row);
+                    }
+                }
+                self.set('rowList', rows);
                 var pageCount = Math.ceil(data.Content.recordCount/pageSize);
                 if(pageCount <= 0){
                     pageCount = 1;
@@ -89,6 +131,93 @@ export default Ember.Controller.extend({
                     self.set('model.companyData',data.Content);
                 }
             });
+        },
+        assignSelectDevicesUserAction:function(value){
+            var self = this;
+                var rowList = self.get("rowList");
+                var form = [];
+                for(var i=0;i<rowList.length;i++){
+                    var row = rowList[i];
+                    if(row.checked === true){
+                        var currentData = {};
+                        currentData.ID = row.ID;
+                        currentData.UserID = self.get("model.selectUserID");
+                        form.pushObject(currentData);
+                    }
+                }
+
+                if(form.length === 0){
+                    Ember.$.notify({
+                                    title: "<strong>操作失败:</strong>",
+                                    message: "请先选中要操作的设备!",
+                                }, {
+                                    animate: {
+                                        enter: 'animated fadeInRight',
+                                        exit: 'animated fadeOutRight'
+                                    },
+                                    type: 'danger'
+                                });
+                    return ;
+                }
+            self.get("deviceSrv").batchAssignScanDeviceUser(form).then(function(data) {
+                    if(data.Status==="success"){
+                        Ember.$.notify({
+                            message: "操作成功!"
+                        }, {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            type: 'success'
+                        });
+                        self.toggleProperty('model.isShowAssignUserModal');
+                        self.send("pageChanged",self.get("page"));
+                    } else {
+                        Ember.$.notify({
+                            title: "<strong>操作失败:</strong>",
+                            message: data.Message
+                        }, {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            type: 'danger'
+                        });
+                    }
+                });
+
+        },
+        showAssignUserModalAction:function(value){
+            var self = this;
+                var rowList = self.get("rowList");
+                var form = [];
+                for(var i=0;i<rowList.length;i++){
+                    var row = rowList[i];
+                    if(row.checked === true){
+                        var currentData = {};
+                        currentData.ID = row.ID;
+                        currentData.UserID = self.get("model.selectUserID");
+                        form.pushObject(currentData);
+                    }
+                }
+
+                if(form.length === 0){
+                    Ember.$.notify({
+                                    title: "<strong>操作失败:</strong>",
+                                    message: "请先选中要操作的设备!",
+                                }, {
+                                    animate: {
+                                        enter: 'animated fadeInRight',
+                                        exit: 'animated fadeOutRight'
+                                    },
+                                    type: 'danger'
+                                });
+                    return ;
+                }
+            this.toggleProperty('model.isShowAssignUserModal');
+        },
+        toggleModal: function() {
+          this.toggleProperty('model.isShowAssignUserModal');
         },
         exportAction:function(value){
             var self = this;

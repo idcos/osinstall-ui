@@ -6,51 +6,53 @@
         </ol>
     </div>
     <div class="panel-body">
-        <table class="table table-bordered">
+        <table class="table no-border light-title">
 			<tbody>
 				<tr>
-					<td class="active" align="right" width="20%"><label for="Network">ID</label></td>
+					<td align="right" width="20%"><label for="Network">ID</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{model.info.ID}}</div>
 					</td>
 				</tr>
 				<tr>
-					<td class="active" align="right" width="20%"><label for="Network">网段/掩码</label></td>
+					<td align="right" width="20%"><label for="Network">网段/掩码</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{model.info.Network}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label for='Netmask'>掩码</label></td>
+					<td align="right"><label for='Netmask'>掩码</label></td>
 					<td>
 						<div class="col-md-5">{{model.info.Netmask}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label for='Gateway'>网关</label></td>
+					<td align="right"><label for='Gateway'>网关</label></td>
 					<td>
 						<div class="col-md-5">{{model.info.Gateway}}</div>
 					</td>
 				</tr>
-
+				
+				<!--
 				<tr>
-					<td class="active" align="right"><b>vlan</b></td>
+					<td align="right"><b>vlan</b></td>
 					<td>
 						<div class="col-md-5">{{model.info.Vlan}}</div>
 					</td>
 				</tr>
+				-->
 
 				<tr>
-					<td class="active" align="right"><b>trunk</b></td>
+					<td align="right">trunk</td>
 					<td>
 						<div class="col-md-5">{{model.info.Trunk}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><b>bonding</b></td>
+					<td align="right">bonding</td>
 					<td>
 						<div class="col-md-5">{{model.info.Bonding}}</div>
 					</td>

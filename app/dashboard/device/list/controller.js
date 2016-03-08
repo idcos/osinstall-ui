@@ -151,13 +151,6 @@ export default Ember.Controller.extend({
 				self.set('isShowInstallInfoCol',false);
 			}
 
-            var session = this.get("userSrv").getLocalSession();
-            if(!Ember.isEmpty(session)){
-                if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
-                    form.UserID = parseInt(session.ID);
-                }
-            }
-
 			this.get("deviceSrv").list(pageSize,(page-1)*pageSize,form).then(function(data){
                 self.set('rowList', data.Content.list);
                 var pageCount = Math.ceil(data.Content.recordCount/pageSize);
@@ -172,6 +165,10 @@ export default Ember.Controller.extend({
             var rowList = self.get("rowList");
             var datas = [];
             var isHasSuccessDevice = false;
+
+            var session = this.get("model.session");
+            var isNoPurviewOperation = false;
+
             Object.keys(rowList).forEach(function (key) {
                 var re = /^[0-9]*]*$/;
                 if(re.test(key)){
@@ -180,17 +177,41 @@ export default Ember.Controller.extend({
                         var currentData = {};
                         currentData.ID = row.ID;
                         datas.pushObject(currentData);
-
                         if(row.Status === "success"){
                             isHasSuccessDevice = true;
                         }
+
+                        if(!Ember.isEmpty(session)){
+                            if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                                if(!Ember.isEmpty(session.ID) && row.UserID !== session.ID){
+                                    isNoPurviewOperation = true;
+                                }
+                            }
+                        }
                     }
+
+
                 }
             });
+
             if(datas.length === 0){
                 Ember.$.notify({
                                 title: "<strong>操作失败:</strong>",
                                 message: "请先选中要重装的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
+            if(isNoPurviewOperation === true){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "您无权操作其他人的设备!",
                             }, {
                                 animate: {
                                     enter: 'animated fadeInRight',
@@ -214,6 +235,8 @@ export default Ember.Controller.extend({
                             });
                 return ;
             }
+
+            
 
 
             self.get("deviceSrv").batchReInstall(datas).then(function(data) {
@@ -246,6 +269,10 @@ export default Ember.Controller.extend({
             var self = this;
             var rowList = self.get("rowList");
             var datas = [];
+
+            var session = this.get("model.session");
+            var isNoPurviewOperation = false;
+
             Object.keys(rowList).forEach(function (key) {
                 var re = /^[0-9]*]*$/;
                 if(re.test(key)){
@@ -254,6 +281,14 @@ export default Ember.Controller.extend({
                         var currentData = {};
                         currentData.ID = row.ID;
                         datas.pushObject(currentData);
+
+                        if(!Ember.isEmpty(session)){
+                            if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                                if(!Ember.isEmpty(session.ID) && row.UserID !== session.ID){
+                                    isNoPurviewOperation = true;
+                                }
+                            }
+                        }
                     }
                 }
             });
@@ -270,6 +305,21 @@ export default Ember.Controller.extend({
                             });
                 return ;
             }
+
+            if(isNoPurviewOperation === true){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "您无权操作其他人的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
             self.get("deviceSrv").batchCancelInstall(datas).then(function(data) {
                     if(data.Status==="success"){
                         Ember.$.notify({
@@ -301,6 +351,10 @@ export default Ember.Controller.extend({
             var self = this;
             var rowList = self.get("rowList");
             var datas = [];
+
+            var session = this.get("model.session");
+            var isNoPurviewOperation = false;
+
             Object.keys(rowList).forEach(function (key) {
                 var re = /^[0-9]*]*$/;
                 if(re.test(key)){
@@ -309,13 +363,46 @@ export default Ember.Controller.extend({
                         var currentData = {};
                         currentData.ID = row.ID;
                         datas.pushObject(currentData);
+
+                        if(!Ember.isEmpty(session)){
+                            if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                                if(!Ember.isEmpty(session.ID) && row.UserID !== session.ID){
+                                    isNoPurviewOperation = true;
+                                }
+                            }
+                        }
                     }
                 }
             });
             if(datas.length === 0){
-                alert("请先选中要删除的设备!");
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "请先选中要删除的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
                 return ;
             }
+
+
+            if(isNoPurviewOperation === true){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "您无权操作其他人的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
             if(confirm("确定删除吗?")){
                 self.get("deviceSrv").batchDelete(datas).then(function(data) {
                     if(data.Status==="success"){

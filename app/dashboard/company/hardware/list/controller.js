@@ -22,8 +22,8 @@ export default Ember.Controller.extend({
       self.set('model.modelNameData', null);
       self.set('Product', null);
       self.set('ModelName', null);
-        this.get("hardwareSrv").getProductByCompanyAndGroup(company).then(function(data){
-            self.set('model.productData', data.Content);
+        this.get("hardwareSrv").getModelNameByCompanyAndGroup(company,'Yes').then(function(data){
+            self.set('model.modelNameData', data.Content);
         });
     }.observes("Company"),
 
@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
       var self = this;
       var company = this.get('Company');
       var product = this.get('Product');
-        this.get("hardwareSrv").getModelNameByCompanyAndProductAndGroup(company,product).then(function(data){
+        this.get("hardwareSrv").getModelNameByCompanyAndProductAndGroup(company,product,'Yes').then(function(data){
             self.set('model.modelNameData', data.Content);
         });
     }.observes("Product"),
