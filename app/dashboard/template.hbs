@@ -101,10 +101,8 @@
 	                <li> {{#link-to "dashboard.vm.new"  }}申请虚拟机{{/link-to}} </li>
 	            </ul>
 	        </li>
-	        -->
-
+			
 	        {{#if (eq "Administrator" model.session.Role)}}
-	        <!--
 	        <li class="">
 	            <a href="javascript:void(0);">
 	            	<i class="io-fa icon-brand"></i>
@@ -116,8 +114,8 @@
 	                
 	            </ul>
 	        </li>
-	        -->
-	        {{/if}}			
+	        {{/if}}	
+	        -->		
 			
 			<li class="">
 	            <a href="javascript:void(0);">
@@ -131,7 +129,6 @@
 	            </ul>
 	        </li>
 
-	        {{#if (eq "Administrator" model.session.Role)}}
 			<li class="">
 	            <a href="javascript:void(0);">
 	            	<i class="io-fa icon-manage"></i>
@@ -149,7 +146,6 @@
 	            	</li>
 			    </ul>
 			</li>
-			{{/if}}
 			
 		</ul>
 		{{/common/io-sidebar}}

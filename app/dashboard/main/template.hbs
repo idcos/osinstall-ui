@@ -14,13 +14,6 @@
 					        trigger: 'item',
 					        formatter: "{a} <br/>{b} : {c} ({d}%)"
 					    },
-					    /*
-					    legend: {
-					        orient : 'vertical',
-					        x : 'left',
-					        data:['安装失败(100)','等待安装(2000)','正在安装(1000)','安装成功(4999)']
-					    },
-					    */
 					    toolbox: {
 					        show : true,
 					        feature : {
@@ -78,45 +71,91 @@
 			</div>
 			<br><br>
 			<div>
-				<h4 style="color:#0088cc">支持厂商及型号</h4>
+				<h4 style="color:#A0A5AC">支持设备厂商</h4>
 				<div class="rows" style="text-align: center;">
 					<ul class="list-inline brand-ul" style="display: inline-block;">
 					  <li>
 					  	{{#link-to "dashboard.hardware.list"}}
-						<img src="image/logo/h3c.png" width="80" height="80" />
+						<img width="128" height="128" src="image/logo/huawei.png" />
+						{{/link-to}}
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img src="image/logo/h3c.png" width="128" height="128" />
+						{{/link-to}}
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="150" height="99" src="image/logo/inspur.png" />
+						{{/link-to}}
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img src="image/logo/dell.png" width="128" height="128" />
+						{{/link-to}}
+					  </li>
+					  
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="128" height="99" src="image/logo/lenovo.png" />
 						{{/link-to}}
 					  </li>
 					  <li>
 					  	{{#link-to "dashboard.hardware.list"}}
-						<img src="image/logo/dell.png" width="80" height="80" />
+						<img width="128" height="128" src="image/logo/hp.png" />
 						{{/link-to}}
 					  </li>
 					  <li>
 					  	{{#link-to "dashboard.hardware.list"}}
-						<img width="80" height="80" src="image/logo/huawei.png" />
+						<img width="128" height="128" src="image/logo/ibm.png" />
 						{{/link-to}}
 					  </li>
 					  <li>
 					  	{{#link-to "dashboard.hardware.list"}}
-						<img width="120" height="52" src="image/logo/lenovo.png" />
-						{{/link-to}}
-					  </li>
-					  <li>
-					  	{{#link-to "dashboard.hardware.list"}}
-						<img width="80" height="80" src="image/logo/hp.png" />
-						{{/link-to}}
-					  </li>
-					  <li>
-					  	{{#link-to "dashboard.hardware.list"}}
-						<img width="88" height="80" src="image/logo/ibm.png" />
-						{{/link-to}}
-					  </li>
-					  <li>
-					  	{{#link-to "dashboard.hardware.list"}}
-						<img width="100" height="100" src="image/logo/powerleader.png" />
+						<img width="128" height="99" src="image/logo/powerleader.png" />
 						{{/link-to}}
 					  </li>
 					 	
+					</ul>
+				</div>
+			</div>
+			<br>
+			<div>
+				<h4 style="color:#A0A5AC">支持应用系统</h4>
+				<div class="rows" style="text-align: center;">
+					<ul class="list-inline os-ul" style="display: inline-block;">
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="193" height="128" src="image/logo/redhat.png" />
+						{{/link-to}}
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="180" height="128" src="image/logo/centos.png" />
+						{{/link-to}}
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="128" height="128" src="image/logo/suse.png" />
+						{{/link-to}}
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="200" height="112" src="image/logo/windowsserver.png" />
+						{{/link-to}}
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="199" height="128" src="image/logo/vmware.png" />
+						{{/link-to}}
+					  </li>
 					</ul>
 				</div>
 			</div>

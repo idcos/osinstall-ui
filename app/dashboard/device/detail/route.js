@@ -27,6 +27,5 @@ export default Ember.Route.extend({
 
     	controller.set("item",model.info);
         controller.set("model",model);
-        console.log(model.manufacturer);
     }
 });

@@ -9,37 +9,37 @@
 		    {{/if}}
 		</ul>
 		<br>
-        <table class="table no-border light-title">
+        <table class="table table-bordered">
 			<tbody>
 				<tr>
-					<td align="right" width="20%"><label>ID</label></td>
+					<td class="active" align="right" width="20%"><label>ID</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{item.ID}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td align="right" width="20%" style="color:#C6C6C6"><label>批次号</label></td>
+					<td class="active" align="right" width="20%"><label>批次号</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{item.BatchNumber}}</div>
 					</td>
 				</tr>
 				<tr>
-					<td align="right" width="20%"><label>SN</label></td>
+					<td class="active" align="right" width="20%"><label>SN</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{item.Sn}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td align="right"><label>主机名</label></td>
+					<td class="active" align="right"><label>主机名</label></td>
 					<td>
 						<div class="col-md-5">{{item.Hostname}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td align="right"><label>应用IP</label></td>
+					<td class="active" align="right"><label>应用IP</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.Ip}} (网段:{{item.NetworkName}})
@@ -48,7 +48,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>管理IP</label></td>
+					<td class="active" align="right"><label>管理IP</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.ManageIp}}
@@ -61,7 +61,7 @@
 
 
 				<tr>
-					<td align="right"><label>操作系统</label></td>
+					<td class="active" align="right"><label>操作系统</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.OsName}}
@@ -70,7 +70,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>硬件配置模板</label></td>
+					<td class="active" align="right"><label>硬件配置模板</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.HardwareName}}
@@ -79,7 +79,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>系统安装模板</label></td>
+					<td class="active" align="right"><label>系统安装模板</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.SystemName}}
@@ -88,7 +88,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>位置</label></td>
+					<td class="active" align="right"><label>位置</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.LocationName}}
@@ -97,7 +97,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>财编</label></td>
+					<td class="active" align="right"><label>财编</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.AssetNumber}}
@@ -106,7 +106,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>状态</label></td>
+					<td class="active" align="right"><label>状态</label></td>
 					<td>
 						<div class="col-md-5">
 							{{#if (eq "pre_install" item.Status)}}
@@ -114,22 +114,22 @@
 							{{/if}}
 
 							{{#if (eq "installing" item.Status)}}
-								<span class="text-info">正在安装</span>
+								<span class="text-info font-size-14">正在安装</span>
 							{{/if}}
 
 							{{#if (eq "success" item.Status)}}
-								<span class="text-success">安装成功</span>
+								<span class="text-success font-size-14">安装成功</span>
 							{{/if}}
 
 							{{#if (eq "failure" item.Status)}}
-								<span class="text-danger">安装失败</span>
+								<span class="text-danger font-size-14">安装失败</span>
 							{{/if}}
 						</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td align="right"><label>安装进度</label></td>
+					<td class="active" align="right"><label>安装进度</label></td>
 					<td>
 						{{#link-to "dashboard.log.detail" item.ID "install"}}
 						<div class="col-md-4">
@@ -149,14 +149,15 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>安装日志</label></td>
+					<td class="active" align="right"><label>安装日志</label></td>
 					<td>
 						<div class="col-md-5">
 							{{#link-to "dashboard.log.detail" item.ID "install"}}查看{{/link-to}}
 						</div>
 					</td>
 				</tr>
-
+				
+				<!--
 				<tr>
 					<td align="right"><label>是否支持安装虚拟机</label></td>
 					<td>
@@ -171,13 +172,10 @@
 						</div>
 					</td>
 				</tr>
-
-
-
-
+				-->
 
 				<tr>
-					<td align="right"><label>添加时间</label></td>
+					<td class="active" align="right"><label>添加时间</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.CreatedAt}}
@@ -186,7 +184,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>最后更新时间</label></td>
+					<td class="active" align="right"><label>最后更新时间</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.UpdatedAt}}
@@ -198,10 +196,12 @@
 		</table>
 
 		<div class="text-center">
-			{{#if hasPurviewOperation}}
+			{{#if model.hasPurviewOperation}}
 				{{#if (not-eq "success" item.Status)}}
-		        	{{#link-to "dashboard.device.edit" item.ID}}<button type="button" class="btn btn-default">修改设备信息</button>{{/link-to}}
-		        	&nbsp;&nbsp;
+					{{#if (not-eq "installing" item.Status)}}
+		        		{{#link-to "dashboard.device.edit" item.ID}}<button type="button" class="btn btn-default">修改设备信息</button>{{/link-to}}
+		        		&nbsp;&nbsp;
+		        	{{/if}}
 				{{/if}}
 			{{/if}}
 	

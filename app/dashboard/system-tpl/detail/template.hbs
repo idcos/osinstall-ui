@@ -6,17 +6,17 @@
         </ol>
     </div>
     <div class="panel-body">
-        <table class="table no-border light-title">
+        <table class="table table-bordered">
 			<tbody>
 				<tr>
-					<td align="right" width="20%"><label for="Network">ID</label></td>
+					<td class="active" align="right" width="20%"><label for="Network">ID</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{model.info.ID}}</div>
 					</td>
 				</tr>
 				
 				<tr>
-					<td align="right" width="20%"><label for="Name">模板名</label></td>
+					<td class="active" align="right" width="20%"><label for="Name">模板名</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{model.info.Name}}</div>
 					</td>
@@ -24,7 +24,7 @@
 				
 				
 				<tr>
-					<td align="right"><label class="required" for="Content">内容</label></td>
+					<td class="active" align="right"><label class="required" for="Content">内容</label></td>
 					<td colspan=3>
 						<div class="col-md-12">
 							{{common/io-editor height="400px" data=model.info key='Content' editable=false}}

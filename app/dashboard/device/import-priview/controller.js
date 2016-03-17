@@ -16,14 +16,26 @@ export default Ember.Controller.extend({
 			var pageSize = this.get("pageSize");
 			var file = this.get("model.id");
 			this.get("deviceSrv").getImportPriview(file,pageSize,(page-1)*pageSize).then(function(data){
-                console.log(data);
-                self.set('rowList', data.Content);
-                self.set('status', data.Status);
-                var pageCount = Math.ceil(data.recordCount/pageSize);
-                if(pageCount <= 0){
-                	pageCount = 1;
+                if(!Ember.isEmpty('success')){
+                    self.set('rowList', data.Content);
+                    self.set('status', data.Status);
+                    var pageCount = Math.ceil(data.recordCount/pageSize);
+                    if(pageCount <= 0){
+                    	pageCount = 1;
+                    }
+                    self.set('pageCount',pageCount);
+                }else{
+                    Ember.$.notify({
+                            title: "<strong>操作失败:</strong>",
+                            message: data.Message
+                        }, {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            type: 'danger'
+                    });
                 }
-                self.set('pageCount',pageCount);
             });
 		},
 		importAction:function(){

@@ -6,10 +6,10 @@
         </ol>
     </div>
     <div class="panel-body">
-        <table class="table no-border light-title">
+        <table class="table table-bordered">
 			<tbody>
 				<tr>
-					<td align="right" width="18%"><label>服务器厂商</label></td>
+					<td class="active" align="right" width="18%"><label>服务器厂商</label></td>
 					<td width="82%">
 						<div class="col-md-5">
 			 				{{model.info.Company}}
@@ -19,7 +19,7 @@
 				
 				<!--
 				<tr>
-					<td align="right"><label>产品名称</label></td>
+					<td class="active" align="right"><label>产品名称</label></td>
 					<td>
 						<div class="col-md-5">
 							{{model.info.Product}}
@@ -29,7 +29,7 @@
 				-->
 				
 				<tr>
-					<td align="right"><label>服务器型号</label></td>
+					<td class="active" align="right"><label>服务器型号</label></td>
 					<td>
 						<div class="col-md-5">
 							{{model.info.ModelName}}
@@ -40,9 +40,9 @@
 			
 				{{#each model.info.FormatTpl as |item index|}}
 				<tr>
-					<td align="right"><label>{{item.name}}</label></td>
+					<td class="active" align="right"><label>{{item.name}}</label></td>
 					<td colspan=3>
-						<table class="table table-hover">
+						<table class="table table-hover no-light-title">
 		                    <thead>
 			                    <tr>
 			                      <th width="20%">配置项</th>
@@ -69,7 +69,7 @@
 									<td>
 										
 										{{#if (eq "select" item2.type)}}
-											<table class="table table-hover">
+											<table class="table table-hover no-light-title">
 							                    <thead>
 								                    <tr>
 								                      <th width="20%">默认</th>

@@ -258,6 +258,15 @@ export default Ember.Controller.extend({
             if(!Ember.isEmpty(form.Keyword)){
                 url += "&Keyword="+encodeURI(form.Keyword);
             }
+
+            var session = this.get("userSrv").getLocalSession();
+            if(!Ember.isEmpty(session)){
+                if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                    form.UserID = parseInt(session.ID);
+                    url += "&UserID="+form.UserID;
+                }
+            }
+
             if(!Ember.isEmpty(form.Company)){
                 url += "&Company="+form.Company;
             }

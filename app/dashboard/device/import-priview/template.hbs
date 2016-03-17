@@ -5,90 +5,7 @@
 	    <li class="active">{{#link-to "dashboard.device.import"}}批量录入{{/link-to}}</li>
 	</ul>
 
-    <!--
-    <ul class="nav nav-tabs"> 
-		<li>{{#link-to "dashboard.device.list"}}所有设备列表{{/link-to}}</li>
-	    <li class="active">{{#link-to "dashboard.device.preInstall"}}待安装{{/link-to}}</li>
-	    <li>{{#link-to "dashboard.device.installing"}}正在安装{{/link-to}}</li>
-	</ul>
-	-->
     <div class="panel-body">
-		
-		<!--
-		<div style="margin-bottom: 10px;">
-			<table class="table table-bordered">
-			<tbody>
-				<tr>
-					<td width="15%" class="active" align="right"><b>搜索</b></td>
-					<td width="85%" colspan=3>
-						<div class="col-md-6">
-						{{textarea placeholder="可输入批次号、SN、主机名、IP等进行查询
-多条信息间可通过换行、逗号、分号分隔" value="" rows="4" class="form-control input-md"}}
-						</div>
-						<div class="col-md-6">
-							<button type="button" class="btn btn-primary">搜 索</button>
-							&nbsp;&nbsp;
-							
-							{{#if (eq false isShowMultiSearchBlock)}}
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<a {{action "showMultiSearchBlockAction"}} href="javascript::void(0);">展开更多条件</a>
-							{{/if}}
-						</div>
-					</td>
-				</tr>
-
-				{{#if isShowMultiSearchBlock}}
-				<tr>
-					<td width="25%" class="active" align="right"><b>操作系统</b></td>
-					<td width="75%">
-						<div class="col-md-5">
-							<select class="form-control">
-								<option>--请选择--</option>
-								<option>centos5u7-x86_64</option>
-								<option>centos6u7-x86_64</option>
-								<option>centos7u1-x86_64</option>
-							</select>
-						</div>
-					</td>
-				</tr>
-
-				<tr>
-					<td width="25%" class="active" align="right"><b>硬件配置模板</b></td>
-					<td width="75%">
-						<div class="col-md-5">
-							<select class="form-control">
-								<option>--请选择--</option>
-								<option>dell_r420</option>
-								<option>dell_r730</option>
-							</select>
-						</div>
-					</td>
-				</tr>
-
-				<tr>
-					<td width="25%" class="active" align="right"><b>系统安装模板</b></td>
-					<td width="75%">
-						<div class="col-md-5">
-							<select class="form-control">
-								<option>--请选择--</option>
-								<option>kvm_server</option>
-							</select>
-						</div>
-						{{#if (eq true isShowMultiSearchBlock)}}
-						<div class="col-md-2">
-							<a {{action "hideMultiSearchBlockAction"}} href="javascript::void(0);">收起</a>
-						</div>
-						{{/if}}
-					</td>
-				</tr>
-
-				{{/if}}
-			</tbody>
-			</table>
-			
-		</div>
-		-->
-
         <table class="table big">
             <thead>
                 <tr>
@@ -130,11 +47,6 @@
 					    	<button type="button" {{action "importAction"}} class="btn btn-primary btn-sm">确认提交</button>
 				       	{{/if}}
 
-						<!--
-				       	{{#if (eq "failure" status)}}
-							
-				       	{{/if}}
-				       	-->
 				       	&nbsp;&nbsp;
 				       	{{#link-to "dashboard.device.import"}}
 				       		<button type="button" class="btn btn-primary btn-sm">重新导入</button>

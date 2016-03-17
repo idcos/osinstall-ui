@@ -5,24 +5,24 @@
 		    <li class="active">{{#link-to "dashboard.device.manufacturer" item.ID}}查看硬件信息{{/link-to}}</li>
 		</ul>
 		<br>
-        <table class="table no-border light-title">
+        <table class="table table-bordered">
 			<tbody>
 				<tr>
-					<td align="right" width="20%"><label>SN</label></td>
+					<td class="active" align="right" width="20%"><label>SN</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{item.Sn}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td align="right" width="20%"><label>厂商</label></td>
+					<td class="active" align="right" width="20%"><label>厂商</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{item.Company}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td align="right"><label>产品型号</label></td>
+					<td class="active" align="right"><label>产品型号</label></td>
 					<td>
 						<div class="col-md-5">{{item.Product}} {{item.ModelName}}</div>
 					</td>
@@ -30,7 +30,7 @@
 
 				<!--
 				<tr>
-					<td align="right"><label>IP</label></td>
+					<td class="active" align="right"><label>IP</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.Ip}}
@@ -39,7 +39,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>Mac</label></td>
+					<td class="active" align="right"><label>Mac</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.Mac}}
@@ -49,11 +49,11 @@
 				-->
 
 				<tr>
-					<td align="right"><label>网卡信息</label></td>
+					<td class="active" align="right"><label>网卡信息</label></td>
 					<td>
 						<div class="col-md-8">
 							{{#if item.NicFormat}}
-								<table class="table table-hover">
+								<table class="table table-hover no-light-title">
 						        	<thead>
 							       		<tr>
 							            	<th width="30%">名称</th>
@@ -77,15 +77,15 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>CPU</label></td>
+					<td class="active" align="right"><label>CPU</label></td>
 					<td>
 						<div class="col-md-8">
 							{{#if item.CpuFormat}}
-								<table class="table table-hover">
+								<table class="table table-hover no-light-title">
 						        	<thead>
 							       		<tr>
-							            	<th width="40%">型号</th>
-							                <th width="60%">核数</th>
+							            	<th width="60%">型号</th>
+							                <th width="40%">核数</th>
 							            </tr>
 						            </thead>
 						            <tbody>
@@ -101,11 +101,11 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>内存</label></td>
+					<td class="active" align="right"><label>内存</label></td>
 					<td>
 						<div class="col-md-8">
 							{{#if item.MemoryFormat}}
-								<table class="table table-hover">
+								<table class="table table-hover no-light-title">
 						        	<thead>
 							       		<tr>
 							            	<th width="40%">内存卡</th>
@@ -130,7 +130,7 @@
 									{{#if item.MemorySum}}
 										<tr>
 											<td>总计：</td>
-											<td>{{item.MemorySum}}MB</td>
+											<td>{{item.MemorySum}} MB</td>
 										</tr>
 									{{/if}}
 						            </tbody>
@@ -141,11 +141,11 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label>磁盘</label></td>
+					<td class="active" align="right"><label>磁盘</label></td>
 					<td>
 						<div class="col-md-8">
 							{{#if item.DiskFormat}}
-								<table class="table table-hover">
+								<table class="table table-hover no-light-title">
 						        	<thead>
 							       		<tr>
 							            	<th width="40%">磁盘块</th>
@@ -164,13 +164,13 @@
 													{{item.Name}}
 												{{/if}}
 											</td>
-											<td>{{item.Size}}GB</td>
+											<td>{{item.Size}}</td>
 										</tr>
 									{{/each}}
 									{{#if item.DiskSum}}
 										<tr>
 											<td>总计：</td>
-											<td>{{item.DiskSum}}GB</td>
+											<td>{{item.DiskSum}} GB</td>
 										</tr>
 									{{/if}}
 						            </tbody>
@@ -182,11 +182,11 @@
 
 				{{#if item.MotherboardFormat.Name}}
 				<tr>
-					<td align="right"><label>主板</label></td>
+					<td class="active" align="right"><label>主板</label></td>
 					<td>
 						<div class="col-md-8">
 							{{#if item.MotherboardFormat.Name}}
-								<table class="table table-hover">
+								<table class="table table-hover no-light-title">
 						        	<thead>
 							       		<tr>
 							            	<th width="40%">名称</th>
@@ -207,18 +207,18 @@
 				{{/if}}
 
 				<tr>
-					<td align="right"><label>Raid</label></td>
+					<td class="active" align="right"><label>Raid</label></td>
 					<td>
-						<div class="col-md-5">
+						<div class="col-md-10">
 							{{item.Raid}}
 						</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td align="right"><label>OOB</label></td>
+					<td class="active" align="right"><label>OOB</label></td>
 					<td>
-						<div class="col-md-5">
+						<div class="col-md-10">
 							{{item.Oob}}
 						</div>
 					</td>

@@ -6,17 +6,17 @@
         </ol>
     </div>
     <div class="panel-body">
-        <table class="table no-border light-title">
+        <table class="table table-bordered">
 			<tbody>
 				<tr>
-					<td align="right" width="20%"><label for="Network">ID</label></td>
+					<td class="active" align="right" width="20%"><label for="Network">ID</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{model.info.ID}}</div>
 					</td>
 				</tr>
 				
 				<tr>
-					<td align="right" width="20%"><label for="Name">用户名</label></td>
+					<td class="active" align="right" width="20%"><label for="Name">用户名</label></td>
 					<td width="80%">
 						<div class="col-md-5">
 						{{model.info.Username}}
@@ -25,7 +25,7 @@
 				</tr>
 				
 				<tr>
-					<td align="right"><label for="Pxe">姓名</label></td>
+					<td class="active" align="right"><label for="Pxe">姓名</label></td>
 					<td colspan=3>
 						<div class="col-md-12">
 						{{model.info.Name}}
@@ -34,7 +34,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label for="Pxe">手机号</label></td>
+					<td class="active" align="right"><label for="Pxe">手机号</label></td>
 					<td colspan=3>
 						<div class="col-md-12">
 						{{model.info.PhoneNumber}}
@@ -43,7 +43,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label for="Pxe">角色</label></td>
+					<td class="active" align="right"><label for="Pxe">角色</label></td>
 					<td colspan=3>
 						<div class="col-md-12">
 							{{#if (eq "Administrator" model.info.Role)}}
@@ -58,7 +58,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label for="Pxe">状态</label></td>
+					<td class="active" align="right"><label for="Pxe">状态</label></td>
 					<td colspan=3>
 						<div class="col-md-12">
 							{{#if (eq "Enable" model.info.Status)}}
@@ -73,7 +73,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label for="Pxe">添加时间</label></td>
+					<td class="active" align="right"><label for="Pxe">添加时间</label></td>
 					<td colspan=3>
 						<div class="col-md-12">
 						{{model.info.CreatedAt}}
@@ -82,7 +82,7 @@
 				</tr>
 
 				<tr>
-					<td align="right"><label for="Pxe">最后更新时间</label></td>
+					<td class="active" align="right"><label for="Pxe">最后更新时间</label></td>
 					<td colspan=3>
 						<div class="col-md-12">
 						{{model.info.UpdatedAt}}

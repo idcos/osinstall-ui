@@ -7,10 +7,10 @@
     </div>
     
     <div class="panel-body">
-        <table class="table no-border light-title">
+        <table class="table table-bordered">
 			<tbody>
 				<tr>
-					<td align="right" width="20%"><label>服务器厂商</label></td>
+					<td class="active" align="right" width="20%"><label>服务器厂商</label></td>
 					<td width="80%">
 						<div class="col-md-5">
 							{{model.info.Company}}
@@ -20,7 +20,7 @@
 				
 				<!--
 				<tr>
-					<td align="right"><label>产品名称</label></td>
+					<td class="active" align="right"><label>产品名称</label></td>
 					<td>
 						<div class="col-md-5">
 							{{model.info.Product}}
@@ -30,7 +30,7 @@
 				-->
 
 				<tr>
-					<td align="right"><label>产品型号</label></td>
+					<td class="active" align="right"><label>产品型号</label></td>
 					<td>
 						<div class="col-md-5">
 							{{model.info.ModelName}}
@@ -42,9 +42,9 @@
 				{{#if model.info.FormatData}}
 				{{#each model.info.FormatData as |item index|}}
 				<tr>
-					<td align="right"><label>{{item.Name}}</label></td>
+					<td class="active" align="right"><label>{{item.Name}}</label></td>
 					<td colspan=3>
-						<table class="table table-hover">
+						<table class="table table-hover no-light-title">
 		                    <thead>
 			                    <tr>
 			                      <th width="40%">配置项</th>
