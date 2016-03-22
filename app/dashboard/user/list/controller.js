@@ -15,7 +15,23 @@ export default Ember.Controller.extend({
 			this.set("page",page);
 			var pageSize = this.get("pageSize");
             var form = this.get("model.form");
+            var model = this.get("model");
+            form.AccessToken = model.session.AccessToken;
+
 			this.get("userSrv").list(pageSize,(page-1)*pageSize,form).then(function(data){
+                if(data.Status !== "success"){
+                    Ember.$.notify({
+                            title: "<strong>操作失败:</strong>",
+                            message: data.Message
+                        }, {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            type: 'danger'
+                        });
+                }
+
                 self.set('rowList', data.Content.list);
                 var pageCount = Math.ceil(data.Content.recordCount/pageSize);
                 if(pageCount <= 0){
@@ -27,7 +43,9 @@ export default Ember.Controller.extend({
 		deleteAction: function(id) {
             if(confirm("确认删除吗？")){
     			var self = this;
-            	self.get("userSrv").deleteRowById(id).then(function(data) {
+                var model = this.get("model");
+                var accessToken = model.session.AccessToken;
+            	self.get("userSrv").deleteRowById(id,accessToken).then(function(data) {
                     if(data.Status==="success"){
                         Ember.$.notify({
                         	message: "删除成功!"

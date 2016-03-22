@@ -6,6 +6,8 @@ export default Ember.Controller.extend({
 		addAction: function() {
 			var self = this;
         	var form = this.get("model.info");
+            var model = this.get("model");
+            form.AccessToken = model.session.AccessToken;
         	self.get("userSrv").create(form).then(function(data) {
                 if(data.Status==="success"){
                     Ember.$.notify({

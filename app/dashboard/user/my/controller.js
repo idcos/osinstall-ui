@@ -6,6 +6,8 @@ export default Ember.Controller.extend({
 		saveAction: function() {
 			var self = this;
         	var form = this.get("model.info");
+            var model = this.get("model");
+            form.AccessToken = model.session.AccessToken;
         	self.get("userSrv").updateMyInfo(form).then(function(data) {
                 if(data.Status==="success"){
                     Ember.$.notify({

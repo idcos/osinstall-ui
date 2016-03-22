@@ -204,6 +204,8 @@ export default Ember.Controller.extend({
 			var rows = this.get('rows');
 			var data = {};
 			data.id = rows.length;
+      var model = this.get("model");
+      data.AccessToken = model.session.AccessToken
 			rows.pushObject(data);
 			set(this,'rows',rows);
 			if(rows.length > 1){

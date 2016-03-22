@@ -167,6 +167,7 @@ export default Ember.Controller.extend({
             var isHasSuccessDevice = false;
 
             var session = this.get("model.session");
+            var accessToken = session.AccessToken;
             var isNoPurviewOperation = false;
 
             Object.keys(rowList).forEach(function (key) {
@@ -176,6 +177,7 @@ export default Ember.Controller.extend({
                     if(row.checked === true){
                         var currentData = {};
                         currentData.ID = row.ID;
+                        currentData.AccessToken = accessToken;
                         datas.pushObject(currentData);
                         if(row.Status === "success"){
                             isHasSuccessDevice = true;
@@ -208,6 +210,7 @@ export default Ember.Controller.extend({
                 return ;
             }
 
+            
             if(isNoPurviewOperation === true){
                 Ember.$.notify({
                                 title: "<strong>操作失败:</strong>",
@@ -221,6 +224,7 @@ export default Ember.Controller.extend({
                             });
                 return ;
             }
+            
 
             if(isHasSuccessDevice === true){
                 Ember.$.notify({
@@ -271,6 +275,7 @@ export default Ember.Controller.extend({
             var datas = [];
 
             var session = this.get("model.session");
+            var accessToken = session.AccessToken;
             var isNoPurviewOperation = false;
 
             Object.keys(rowList).forEach(function (key) {
@@ -280,6 +285,7 @@ export default Ember.Controller.extend({
                     if(row.checked === true){
                         var currentData = {};
                         currentData.ID = row.ID;
+                        currentData.AccessToken = accessToken;
                         datas.pushObject(currentData);
 
                         if(!Ember.isEmpty(session)){
@@ -355,6 +361,7 @@ export default Ember.Controller.extend({
             var session = this.get("model.session");
             var isNoPurviewOperation = false;
 
+            var accessToken = session.AccessToken;
             Object.keys(rowList).forEach(function (key) {
                 var re = /^[0-9]*]*$/;
                 if(re.test(key)){
@@ -362,6 +369,7 @@ export default Ember.Controller.extend({
                     if(row.checked === true){
                         var currentData = {};
                         currentData.ID = row.ID;
+                        currentData.AccessToken = accessToken;
                         datas.pushObject(currentData);
 
                         if(!Ember.isEmpty(session)){
@@ -387,7 +395,6 @@ export default Ember.Controller.extend({
                             });
                 return ;
             }
-
 
             if(isNoPurviewOperation === true){
                 Ember.$.notify({

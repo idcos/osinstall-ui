@@ -47,11 +47,12 @@ export default Ember.Service.extend({
     /*
     * 删除具体信息
     */
-    deleteRowById : function(id) {
+    deleteRowById : function(id,accessToken) {
         var url = "/api/osinstall/v1/user/delete";
 		//生成发请求数据对象
 		var data = {};
 		data.ID = parseInt(id);
+        data.AccessToken = accessToken;
 
 		//发送ajax请求
         return ajax({
@@ -135,7 +136,8 @@ export default Ember.Service.extend({
         window.sessionStorage.setItem("osinstallAuthID",parseInt(data.ID));
     	window.sessionStorage.setItem("osinstallAuthUsername",data.Username);
     	window.sessionStorage.setItem("osinstallAuthName",data.Name);
-    	window.sessionStorage.setItem("osinstallAuthRole",data.Role);
+        window.sessionStorage.setItem("osinstallAuthRole",data.Role);
+    	window.sessionStorage.setItem("osinstallAuthAccessToken",data.AccessToken);
     	return true;
     },
 
@@ -156,7 +158,8 @@ export default Ember.Service.extend({
         data.ID = parseInt(window.sessionStorage.getItem("osinstallAuthID"));
     	data.Username = window.sessionStorage.getItem("osinstallAuthUsername");
     	data.Name = window.sessionStorage.getItem("osinstallAuthName");
-    	data.Role = window.sessionStorage.getItem("osinstallAuthRole");
+        data.Role = window.sessionStorage.getItem("osinstallAuthRole");
+    	data.AccessToken = window.sessionStorage.getItem("osinstallAuthAccessToken");
     	return data;
     },
 
@@ -168,10 +171,10 @@ export default Ember.Service.extend({
         return window.sessionStorage.getItem("osinstallAuthID");
     },
 
-    logout : function() {
+    logout : function(form) {
         var url = "/api/osinstall/v1/user/logout";
 		//生成发请求数据对象
-		var data = {};
+		var data = form;
 
 		//发送ajax请求
         return ajax({

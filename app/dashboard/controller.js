@@ -44,7 +44,10 @@ export default Ember.Controller.extend({
 		},
 		logoutAction:function(){
 			var self = this;
-			self.get("userSrv").logout().then(function(data) {
+            var form = {};
+            var model = self.get("model");
+            form.AccessToken = model.session.AccessToken;
+			self.get("userSrv").logout(form).then(function(data) {
                 if(data.Status==="success"){
                    	self.get("userSrv").clearLocalSession();
                     self.transitionToRoute('login');
