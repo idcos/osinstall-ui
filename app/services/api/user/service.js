@@ -116,16 +116,22 @@ export default Ember.Service.extend({
 
     login : function(form) {
         var url = "/api/osinstall/v1/user/login";
-		//生成发请求数据对象
-		var data = {};
-		data = form;
+        //生成发请求数据对象
+        var data = {};
+        data = form;
 
-		//发送ajax请求
+        //发送ajax请求
         return ajax({
-			'method': 'POST',
-			'contentType': "application/json; charset=utf-8",
-			'url': url,
-			'data': JSON.stringify(data),
+            'method': 'POST',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+            'data': JSON.stringify(data),
+            'timeout' : 3000,
+             error: function (request, status, err) {
+                if(status == "timeout"){
+                    alert("Server端未启动或nginx api转发规则未设置成功!");
+                }
+            }
         }); 
     },
 
