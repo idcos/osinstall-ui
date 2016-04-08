@@ -388,4 +388,32 @@ export default Ember.Service.extend({
         });
     },
 
+    getInstallReport : function() {
+        var url = "/api/osinstall/v1/device/getInstallReport";
+		//生成发请求数据对象
+		var data = {};
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    reportInstallReport : function() {
+        var url = "/api/osinstall/v1/device/reportInstallReport";
+		//生成发请求数据对象
+		var data = {};
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
 });

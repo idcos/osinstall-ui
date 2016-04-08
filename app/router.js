@@ -100,6 +100,7 @@ Router.map(function() {
 
     this.route('report', function() {
       this.route('status');
+      this.route('install');
     });
     this.route('location', function() {
       this.route('list', {
