@@ -1,13 +1,16 @@
 <div class="panel panel-default">
 	<div class="panel-body">
-		<div >
+		{{#if (not-eq report.Count 0)}}
+		<div>
 			<div id="div_chart" style="height:400px"></div>
 			<script type="text/javascript">
+					var companyData = {{model.companyData}}
+					var osData = {{model.osData}}
 			        var myChart = echarts.init(document.getElementById("div_chart"));
 			        var option = {
 					    title : {
-					        text: 'CloudJ X86 装机平台数据统计',
-					        subtext: "累计使用 180 天\n累计安装 20000 台",
+					        text: 'CloudBoot 云启装机平台数据统计',
+					        subtext: "累计安装 {{report.Count}} 台/次",
 					        x:'center'
 					    },
 					    tooltip : {
@@ -42,27 +45,14 @@
 					            type:'pie',
 					            radius : '55%',
 					            center: ['25%', '60%'],
-					            data:[
-					            	{value:9000, name:'H3C(9000)'},
-					                {value:4000, name:'惠普(4000)'},
-					                {value:2000, name:'华为(2000)'},
-					                {value:1000, name:'Dell(1000)'},
-					                {value:2000, name:'联想(2000)'},
-					                {value:1000, name:'IBM(1000)'},
-					                {value:1000, name:'宝德(1000)'},
-					            ]
+					            data:companyData
 					        },
 					        {
 					            name:'',
 					            type:'pie',
 					            radius : '55%',
 					            center: ['75%', '60%'],
-					            data:[
-					            	{value:8000, name:'RedHat(8000)'},
-					                {value:4000, name:'SuSE(4000)'},
-					                {value:6000, name:'Windows(6000)'},
-					                {value:2000, name:'VMware(2000)'}
-					            ]
+					            data:osData
 					        }
 					    ]
 					};           
@@ -70,6 +60,7 @@
 			    </script>
 			</div>
 			<br><br>
+			{{/if}}
 			<div>
 				<h4 style="color:#A0A5AC">支持设备厂商</h4>
 				<div class="rows" style="text-align: center;">

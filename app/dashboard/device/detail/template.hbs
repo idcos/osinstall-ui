@@ -7,6 +7,10 @@
 			    <li>{{#link-to "dashboard.device.manufacturer" item.ID}}查看硬件信息{{/link-to}}</li>
 			    {{/if}}
 		    {{/if}}
+
+		    {{#if model.callbackList.list}}
+				<li>{{#link-to "dashboard.device.callback.list" item.ID}}查看脚本执行信息{{/link-to}}</li>
+		    {{/if}}
 		</ul>
 		<br>
         <table class="table table-bordered">

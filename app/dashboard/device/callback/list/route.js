@@ -25,7 +25,6 @@ export default Ember.Route.extend({
             }
         }
         model.hasPurviewOperation = hasPurviewOperation;
-
     	controller.set("item",model.info);
         controller.set("model",model);
     }

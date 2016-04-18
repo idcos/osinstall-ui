@@ -37,6 +37,12 @@ Router.map(function() {
         this.route('list');
       });
       this.route('scanInstall');
+
+      this.route('callback', function() {
+        this.route('list', {
+          path: 'list/:id'
+        });
+      });
     });
 
     this.route('network', function() {

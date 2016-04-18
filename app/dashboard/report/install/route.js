@@ -28,6 +28,16 @@ export default Ember.Route.extend({
                     str += data.OsReport[i].OsName + ' ' + data.OsReport[i].Count + "台/次\n";
                 }
              }
+
+             if(data.Count > 0 && data.HardwareReport.length > 0){
+                str += "\n\n硬件配置模板:\n";
+                for(var i=0;i<data.HardwareReport.length;i++){
+                    if(Ember.isEmpty(data.HardwareReport[i].HardwareName)){
+                        data.HardwareReport[i].HardwareName = '无模板信息';
+                    }
+                    str += data.HardwareReport[i].HardwareName + ' ' + data.HardwareReport[i].Count + "台/次\n";
+                }
+             }
              controller.set("strReport",str);
         }else{
         	Ember.$.notify({
