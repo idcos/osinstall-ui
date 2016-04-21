@@ -1,163 +1,183 @@
-<div class="navbar-static-top navbar-inverse page-nav" id="topDiv">
+<div {{bind-attr class=":navbar-static-top :navbar-inverse :page-nav for_iframe:hidden"}} id="topDiv">
     <div class="navbar-header navbar-brand">
         {{#link-to "dashboard.main"}}
             <img src="./image/login/logocloudboot.png" width="163" height="47" alt="CloudBoot 云启装机平台"/>
             <small>V1.2.1</small>
         {{/link-to}}
     </div>
+    
+    {{!-- <div class="navbar-breadcrumb">
+        <ol class="ember-view breadcrumb">
+            <li class="ember-view">
+                make IT easy
+            </li>
+        </ol>
+    </div> --}}
+
+    <div class="navbar-breadcrumb">
+        {{outlet "breadcrumb"}}
+    </div>
+
     <div class="navbar-right">
-        欢迎您，{{model.session.Username}} &nbsp;
-        <i {{action "logoutAction"}} alt="注销" class="io-fa icon-iconfontexit" style="cursor:pointer"></i>
-       	&nbsp;&nbsp;
+        <div class="navbar-search pull-left">
+            {{outlet "search"}}
+        </div>
+        <div class="navbar-profile pull-right logout">
+            欢迎您，{{model.session.Username}} &nbsp;
+            <a href="javascript:void(0);" {{action "logoutAction"}} class="io-fa icon-logoutcloudboot"><i alt="注销"></i></a>
+            &nbsp;&nbsp;
+        </div>
     </div>
 </div>
 
-<div class="section page-body block align-items-stretch" id="middleDiv">
-	<nav class="page-body-nav block shrink content">
-		{{#common/io-sidebar}}
-	    <ul class="nav">
-	        <li class="active">
-	            <a href="javascript:void(0);">
-	            	<i class="io-fa icon-server"></i>
-	                <label>物理机管理</label>
-	                <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-	            </a>
-	            <ul class="nav nav-sub">
-	                <li> {{#link-to "dashboard.device.list" "all"  }}设备列表{{/link-to}} </li>
-	                <li> {{#link-to "dashboard.device.new"  }}录入新设备{{/link-to}} </li>
-	                <li> {{#link-to "dashboard.device.list" "installing"  }}正在安装的设备
-					{{#if (not-eq 0 model.installingDeviceNum)}}
-	                (<span class="orange">{{model.installingDeviceNum}}</span>)
-					{{/if}}
-	                {{/link-to}}
-	                </li>
-	                <li> {{#link-to "dashboard.device.list" "failure"  }}安装失败的设备
-	                {{#if (not-eq 0 model.failureDeviceNum)}}(<span class="red">{{model.failureDeviceNum}}</span>)
-					{{/if}}
-	                {{/link-to}}
-	                 </li>
-	                 
-	            </ul>
-	        </li>
+<div {{bind-attr class=":section :page-body :block :align-items-stretch for_iframe:top0"}} id="middleDiv">
+    <nav class="page-body-nav block shrink content">
+        {{#common/io-sidebar}}
+        <ul class="nav">
+            <li class="active">
+                <a href="javascript:void(0);">
+                    <i class="io-fa icon-resourcepooling"></i>
+                    <label>资源池管理</label>
+                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+                </a>
+                <ul class="nav nav-sub">
+                    <li> {{#link-to "dashboard.device.scan.list"  }}发现新设备{{/link-to}} </li>
+                </ul>
+            </li>
 
-	        <li>
-	            <a href="javascript:void(0);">
-	            	<i class="io-fa icon-resourcepooling"></i>
-	                <label>资源池管理</label>
-	                <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-	            </a>
-	            <ul class="nav nav-sub">
-	                <li> {{#link-to "dashboard.device.scan.list"  }}发现新设备{{/link-to}} </li>
-	            </ul>
-	        </li>
+            <li class="active">
+                <a href="javascript:void(0);">
+                    <i class="io-fa icon-server"></i>
+                    <label>物理机管理</label>
+                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+                </a>
+                <ul class="nav nav-sub">
+                    <li> {{#link-to "dashboard.device.list" "all"  }}设备列表{{/link-to}} </li>
+                    <li> {{#link-to "dashboard.device.new"  }}录入新设备{{/link-to}} </li>
+                    <li> {{#link-to "dashboard.device.list" "installing"  }}正在安装的设备
+                    {{#if (not-eq 0 model.installingDeviceNum)}}
+                    (<span class="orange">{{model.installingDeviceNum}}</span>)
+                    {{/if}}
+                    {{/link-to}}
+                    </li>
+                    <li> {{#link-to "dashboard.device.list" "failure"  }}安装失败的设备
+                    {{#if (not-eq 0 model.failureDeviceNum)}}(<span class="red">{{model.failureDeviceNum}}</span>)
+                    {{/if}}
+                    {{/link-to}}
+                     </li>
+                     
+                </ul>
+            </li>
 
-	        {{#if (eq "Administrator" model.session.Role)}}
-			<li class="">
-	            <a href="javascript:void(0);">
-	            	<i class="io-fa icon-networksegment"></i>
-	                <label>网段管理</label>
-	                <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-	            </a>
-	            <ul class="nav nav-sub">
-	            	<li>
-		               {{#link-to "dashboard.network.list"  }}应用网段管理{{/link-to}}
-	            	</li>
-	            	<li>
-		               {{#link-to "dashboard.manageNetwork.list"  }}管理网段管理{{/link-to}}
-	            	</li>
-			    </ul>
-			</li>
+            
 
-	        <li class="">
-	            <a href="javascript:void(0);">
-	            	<i class="io-fa icon-template"></i>
-	                <label>模板管理</label>
-	                <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-	            </a>
-	            <ul class="nav nav-sub">
-	            	<li>
-						{{#link-to "dashboard.os.list"  }}操作系统管理{{/link-to}}
-	            	</li>
-	            	<li>
-						{{#link-to "dashboard.systemTpl.list"  }}系统模板管理{{/link-to}}
-	            	</li>
-	            	<li> {{#link-to "dashboard.hardware.list"  }}硬件配置模板管理{{/link-to}} </li>
-	            	<li>
-						{{#link-to "dashboard.location.list" 0  }}位置管理{{/link-to}}
-	            	</li>
-			    </ul>
-			</li>
-			{{/if}}
-			
-			<!--
-			<li style="display: none">
-	            <a href="javascript:void(0);">
-	            	<i class="io-fa icon-server"></i>
-	                <label>虚拟机管理</label>
-	                <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-	            </a>
-	            <ul class="nav nav-sub">
-	                <li> {{#link-to "dashboard.vm.list" "all"  }}虚拟机列表{{/link-to}} </li>
-	                <li> {{#link-to "dashboard.vm.new"  }}申请虚拟机{{/link-to}} </li>
-	            </ul>
-	        </li>
-			
-	        {{#if (eq "Administrator" model.session.Role)}}
-	        <li class="">
-	            <a href="javascript:void(0);">
-	            	<i class="io-fa icon-brand"></i>
-	                <label>厂商及型号</label>
-	                <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-	            </a>
-	            <ul class="nav nav-sub">
-	                <li>  {{#link-to "dashboard.company.hardware.list"  }}设备型号管理{{/link-to}} </li>
-	                
-	            </ul>
-	        </li>
-	        {{/if}}	
-	        -->		
-			
-			<li class="">
-	            <a href="javascript:void(0);">
-	            	<i class="io-fa icon-statistics"></i>
-	                <label>统计报表</label>
-	                <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-	            </a>
-	            <ul class="nav nav-sub">
-	            	<li>{{#link-to "dashboard.main"}}平台数据报表{{/link-to}}</li>
-	                <li>{{#link-to "dashboard.report.status"}}设备状态报表{{/link-to}}</li>
-	                <li>{{#link-to "dashboard.report.install"}}装机统计报表{{/link-to}}</li>
-	            </ul>
-	        </li>
+            {{#if (eq "Administrator" model.session.Role)}}
+            <li class="">
+                <a href="javascript:void(0);">
+                    <i class="io-fa icon-networksegment"></i>
+                    <label>网段管理</label>
+                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+                </a>
+                <ul class="nav nav-sub">
+                    <li>
+                       {{#link-to "dashboard.network.list"  }}应用网段管理{{/link-to}}
+                    </li>
+                    <li>
+                       {{#link-to "dashboard.manageNetwork.list"  }}管理网段管理{{/link-to}}
+                    </li>
+                </ul>
+            </li>
 
-			<li class="">
-	            <a href="javascript:void(0);">
-	            	<i class="io-fa icon-manage"></i>
-	                <label>系统管理</label>
-	                <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-	            </a>
-	            <ul class="nav nav-sub">
-	            	{{#if (eq "Administrator" model.session.Role)}}
-	            	<li>
-		               {{#link-to "dashboard.user.list"}}用户管理{{/link-to}}
-	            	</li>
-	            	{{/if}}
-	            	<li>
-						{{#link-to "dashboard.user.my"}}个人信息管理{{/link-to}}
-	            	</li>
-			    </ul>
-			</li>
-			
-		</ul>
-		{{/common/io-sidebar}}
-		<!--
-		<a class="list-group-item list-group-item-info">帮助中心</a>
-		<a  >合作厂商</a>
-		<a class="list-group-item padding30">帮助文档</a>
-		-->
-	</nav>
-	<section class="page-body-main block content">
-		{{outlet}}
-	</section>
+            <li class="">
+                <a href="javascript:void(0);">
+                    <i class="io-fa icon-template"></i>
+                    <label>模板管理</label>
+                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+                </a>
+                <ul class="nav nav-sub">
+                    <li>
+                        {{#link-to "dashboard.os.list"  }}操作系统管理{{/link-to}}
+                    </li>
+                    <li>
+                        {{#link-to "dashboard.systemTpl.list"  }}系统模板管理{{/link-to}}
+                    </li>
+                    <li> {{#link-to "dashboard.hardware.list"  }}硬件配置模板管理{{/link-to}} </li>
+                    <li>
+                        {{#link-to "dashboard.location.list" 0  }}位置管理{{/link-to}}
+                    </li>
+                </ul>
+            </li>
+            {{/if}}
+            
+            <!--
+            <li style="display: none">
+                <a href="javascript:void(0);">
+                    <i class="io-fa icon-server"></i>
+                    <label>虚拟机管理</label>
+                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+                </a>
+                <ul class="nav nav-sub">
+                    <li> {{#link-to "dashboard.vm.list" "all"  }}虚拟机列表{{/link-to}} </li>
+                    <li> {{#link-to "dashboard.vm.new"  }}申请虚拟机{{/link-to}} </li>
+                </ul>
+            </li>
+            
+            {{#if (eq "Administrator" model.session.Role)}}
+            <li class="">
+                <a href="javascript:void(0);">
+                    <i class="io-fa icon-brand"></i>
+                    <label>厂商及型号</label>
+                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+                </a>
+                <ul class="nav nav-sub">
+                    <li>  {{#link-to "dashboard.company.hardware.list"  }}设备型号管理{{/link-to}} </li>
+                    
+                </ul>
+            </li>
+            {{/if}} 
+            -->     
+            
+            <li class="">
+                <a href="javascript:void(0);">
+                    <i class="io-fa icon-statistics"></i>
+                    <label>统计报表</label>
+                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+                </a>
+                <ul class="nav nav-sub">
+                    <li>{{#link-to "dashboard.report.main"}}平台数据报表{{/link-to}}</li>
+                    <li>{{#link-to "dashboard.report.status"}}设备状态报表{{/link-to}}</li>
+                    <li>{{#link-to "dashboard.report.install"}}装机统计报表{{/link-to}}</li>
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="javascript:void(0);">
+                    <i class="io-fa icon-manage"></i>
+                    <label>系统管理</label>
+                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+                </a>
+                <ul class="nav nav-sub">
+                    {{#if (eq "Administrator" model.session.Role)}}
+                    <li>
+                       {{#link-to "dashboard.user.list"}}用户管理{{/link-to}}
+                    </li>
+                    {{/if}}
+                    <li>
+                        {{#link-to "dashboard.user.my"}}个人信息管理{{/link-to}}
+                    </li>
+                </ul>
+            </li>
+            
+        </ul>
+        {{/common/io-sidebar}}
+        <!--
+        <a class="list-group-item list-group-item-info">帮助中心</a>
+        <a  >合作厂商</a>
+        <a class="list-group-item padding30">帮助文档</a>
+        -->
+    </nav>
+
+    <section class="page-body-main block content">
+        {{outlet}}
+    </section>
 </div>
-

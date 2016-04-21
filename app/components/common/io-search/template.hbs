@@ -1,0 +1,11 @@
+<form role="search" class="navbar-form navbar-left" method="{{method}}" {{action "search" query on="submit"}}>
+    <div class="left-inner-addon">
+        <i class="fa fa-search"></i>
+        {{input
+            value=query
+            type="text"
+            class="form-control"
+            placeholder=placeholder
+        }}
+    </div>
+</form>

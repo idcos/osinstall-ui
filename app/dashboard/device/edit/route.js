@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+import breadCrumbMixin from '../../../mixins/bread-crumb-mixin';
+export default Ember.Route.extend(breadCrumbMixin,{
+    breadCrumb: {
+        title: "修改设备信息",
+        isShow:true,
+    },
 	deviceSrv: Ember.inject.service('api/device/service'),
 	osConfigSrv: Ember.inject.service('api/os-config/service'),
 	hardwareSrv: Ember.inject.service('api/hardware/service'),

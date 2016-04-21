@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+import breadCrumbMixin from '../../../../mixins/bread-crumb-mixin';
+export default Ember.Route.extend(breadCrumbMixin,{
+    breadCrumb: {
+        title: "查看新设备详情",
+        isShow:true,
+    },
 	deviceSrv: Ember.inject.service('api/device/service'),
 	model: function(params) {
         return Ember.RSVP.hash({id:params.id,

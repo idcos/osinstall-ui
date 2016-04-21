@@ -1,29 +1,24 @@
 <div class="panel panel-default">
-    <div class="panel-heading paddingtop0">
-    	<!--
-        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
-        	<li>模板管理</li>
-            <li>网段管理</li>
-        </ol>
-        -->
+		<div class="paddingtop10 paddingright15" style="float:right;">
+	        	{{#link-to "dashboard.company.hardware.new" "new"}}<button type="button" class="btn btn-primary btn-xs">添加新设备型号</button>{{/link-to}}
+	        	&nbsp;
+	        	{{#link-to "dashboard.company.hardware.import"}}<button type="button" class="btn btn-primary btn-xs">导入设备型号</button>{{/link-to}}
+	        </div>
+    <!--
+    <div class="panel-heading paddingtop0" style="display:none">
         <div class="breadcrumb paddingtop3 paddingleft0">
 	        <div style="float: left;">
 	        	<h5>设备型号管理</h5>
 	        </div>
-	       	
 			<div style="float:right; position: relative; top: 7px; left: 16px;">
 	        	{{#link-to "dashboard.company.hardware.new" "new"}}<button type="button" class="btn btn-primary btn-xs">添加新设备型号</button>{{/link-to}}
 	        	&nbsp;
 	        	{{#link-to "dashboard.company.hardware.import"}}<button type="button" class="btn btn-primary btn-xs">导入设备型号</button>{{/link-to}}
 	        </div>
-	        
         </div>
-        
     </div>
+    -->
     <div class="panel-body">
-		<!--
-			<div class="text-right paddingbottom10">{{#link-to "dashboard.network.new"}}<button type="button" class="btn btn-primary">添加网段</button>{{/link-to}}</div>
-		-->
 		{{#common/io-form-validator submitForm="searchAction"}}
 		<form class="form-horizontal">
 		<div style="margin-bottom: 10px;">

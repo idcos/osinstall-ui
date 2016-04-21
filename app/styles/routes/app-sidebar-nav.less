@@ -3,11 +3,11 @@
  */
 
 @font-face {font-family: "io-cloudj";
-    src: url('../fonts/iconfont.eot'); /* IE9*/
-    src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../fonts/iconfont.woff') format('woff'), /* chrome, firefox */
-    url('../fonts/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-    url('../fonts/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('../fonts/iconfont.eot?t=1461116300'); /* IE9*/
+  src: url('../fonts/iconfont.eot?t=1461116300#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/iconfont.woff?t=1461116300') format('woff'), /* chrome, firefox */
+  url('../fonts/iconfont.ttf?t=1461116300') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../fonts/iconfont.svg?t=1461116300#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .io-fa {
@@ -34,6 +34,7 @@
 .icon-copy:before { content: "\e60d";font-size: 18px; }
 .icon-edit:before { content: "\e60c";font-size: 18px; }
 .icon-delete:before { content: "\e610";font-size: 18px;color:#FC6262; }
+.icon-logoutcloudboot:before { content: "\e611"; font-size: 35px;}
 
 @nav-backgroud-color: #304153;
 @nav-font-color: #C3D4E3;
@@ -50,7 +51,7 @@ body {
         .navbar-header {
             width: @pageBodyNavWidth;
             img {
-                width: 180px;
+                //width: 180px;
                 vertical-align: middle;
                 margin-left: -10px;
             }
@@ -100,6 +101,25 @@ body {
     .navbar-brand {
         &:hover, & {
             background: @nav-backgroud-color!important;
+        }
+    }
+
+    .navbar-profile {
+        .icon-logoutcloudboot {
+            position: relative;
+            top: 6px;
+            &:active {
+                color: #CDD2D8;
+            }
+            &:link {
+                color: #CDD2D8;
+            }
+            &:visited {
+                color: #CDD2D8;
+            }
+            &:hover {
+                color: #F76B5D;
+            }
         }
     }
 }

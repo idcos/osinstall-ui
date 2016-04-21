@@ -1,0 +1,7 @@
+{{#bread-crumbs tagName="ol" outputStyle="bootstrap" linkable=true as |component cow|}}
+	{{#if cow.isShow}}
+		{{#bread-crumb route=cow breadCrumbs=component}}
+		   	{{cow.title}}
+		{{/bread-crumb}}
+	{{/if}}
+{{/bread-crumbs}}

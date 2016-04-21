@@ -13,7 +13,7 @@
     "ember-resolver": "~0.1.18",
     "Faker": "~3.0.0",
     "font-awesome": "~4.4.0",
-    "jquery": "^1.11.3",
+    "jquery": "1.11.3",
     "loader.js": "ember-cli/loader.js#3.2.1",
     "lodash": "~3.7.0",
     "pretender": "~0.10.1",

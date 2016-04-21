@@ -1,0 +1,262 @@
+// Nav Header
+
+@page-nav-height: 100px;
+@page-nav-line-height: 100px;
+@page-nav-body-width: 260px;
+
+.top0 {
+    top: 0!important;
+}
+
+// menu链接块模式
+
+.io-menu a {
+    width: 100%;
+    display: block;
+}
+
+// 顶部导航
+.page-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: @page-nav-height;
+    line-height: @page-nav-line-height;
+
+    background: white;
+    border-bottom: none;
+    padding-right: 20px;
+    &:after {
+        position: absolute;
+        content: "";
+        height: 1px;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        background: rgba(78, 86, 104, 0.2);
+    }
+
+    .navbar-header {
+        width: @page-nav-body-width;
+
+        img {
+            //width: 180px;
+            vertical-align: middle;
+            margin-left: -10px;
+            margin-top: -12px;
+        }
+
+        small {
+            font-size: 12px;
+            font-weight: 700;
+            color: @nav-font-color;
+            vertical-align: bottom;
+            line-height: 85px;
+        }
+    }
+
+    .navbar-breadcrumb {
+        float: left;
+        width: 30%;
+        padding-left: 20px;
+
+        .breadcrumb {
+            padding: 0;
+            margin: 0;
+            border: none;
+            background: none;
+
+            &,
+            a {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .navbar-brand {
+        padding: 0;
+        font-size: 20px; 
+        text-align: center;
+        height: @page-nav-height;
+        line-height: @page-nav-line-height;
+
+        &:hover, & {
+            background: @nav-background-color;
+            a {
+                color: white;
+                text-decoration: none;
+            }
+        }
+        i {
+            margin-right: 5px;
+        }
+    }
+
+    .navbar-inverse{
+        border-color: @nav-background-color;
+    }
+
+    .nav-tabs {
+        li a {
+            color: #666;
+        }
+        li a.active {
+            color: @brand-primary;
+        }
+    }
+
+    .navbar-right {
+        margin-right: 8px;
+        a {
+            color: #666;
+            text-decoration: none;
+
+            i {
+                font-size: 14px;
+            }
+        }
+        a:hover {
+            text-decoration: none;
+        }
+    }
+
+    .btn-link {
+        color: #666;
+        i {
+            color: #dd5826;
+            font-size: 16px;
+        }
+        &:hover {
+            color: #333;
+            text-decoration: none;
+        }
+    }
+}
+
+// 页面主体
+.page-body {
+    width: 100%;
+    position: absolute;
+    top: @page-nav-height;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    .page-body-nav {
+        width: @page-nav-body-width;
+    }
+
+    .page-body-nav {
+        @background-color: @nav-background-color;
+        @background-color-d1: @nav-background-color-d1;
+        // @background-color-hover: darken(@background-color-d1, 3%);
+        @background-color-hover: @background-color-d1;
+        @border-color: darken(@background-color, 3%);
+        @font-hover-color: #4CADF8;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: @background-color;
+        transition: width 0.3s ease-in-out;
+
+        .io-menu {
+            &.io-menu-idcos-dark {
+                background: none;
+                border-bottom: none;
+                position: relative;
+                color: @nav-font-color;
+                padding-left: 25px;
+            }
+
+            &.io-menu-inline {
+                border-right: none;
+
+                .io-menu-selected,
+                .io-menu-item-selected {
+                    border-right: none;
+                }
+
+                .io-menu-submenu-title:hover {
+                    background-color: @nav-background-color-d1;
+                    color: @nav-font-color-d1;
+                }
+
+                .io-menu-item {
+                    border-right: none;
+                    font-size: 14px;
+                    background-color: @nav-background-color;
+                    border-bottom: none;
+                    padding-left: 60px;
+
+                    i {
+                        margin-right: 10px;
+                        font-size: 18px;
+                    }
+
+                    a {
+                        color: @nav-font-color;
+                    }
+
+                    // &.io-menu-submenu-active,
+                    &.io-menu-item-selected,
+                    &.io-menu-item-active {
+                        border-bottom: none;
+                        background-color: @nav-background-color-d1;
+                        color: @nav-font-color-d1;
+
+                        > a {
+                            color: @nav-font-color-d1;
+                        }
+                    }
+
+                    &.io-menu-submenu > .io-menu-submenu-title {
+                        font-size: 14px;
+                        padding-right: 20px;
+                        height: 50px;
+                        line-height: 50px;
+                    }
+
+                    @circle-radius: 8px;
+                    @circle-border: 2px;
+
+                    &.io-menu-submenu > .io-menu-sub > .io-menu-item {
+                        > a.active {
+                            color: #4CADF8;
+                        }
+
+                        > a:before {
+                            content: " ";
+                            margin-right: 10px;
+                            display: inline-block;
+                            background-color: transition;
+                            border-radius: @circle-radius;
+                            width: @circle-radius;
+                            height: @circle-radius;
+                            border: @circle-border solid @nav-font-color;
+                        }
+
+                        > a.active:before,
+                        > a:hover:before {
+                            background-color: @nav-font-color-d1;
+                            border-color: @nav-font-color-d1;
+                        }
+                    }
+                }
+            }
+        }
+
+        >.version{
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            color: rgba(195,212,227,0.2);
+            text-align: center;
+            font-size: 10px;
+        }
+
+        ::-webkit-scrollbar {
+            background-color: transparent;
+        }
+    }
+}
