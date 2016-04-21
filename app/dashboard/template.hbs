@@ -5,16 +5,12 @@
             <small>V1.2.1</small>
         {{/link-to}}
     </div>
-    
-    {{!-- <div class="navbar-breadcrumb">
-        <ol class="ember-view breadcrumb">
-            <li class="ember-view">
-                make IT easy
-            </li>
-        </ol>
-    </div> --}}
 
-    <div class="navbar-breadcrumb">
+    <div class="navbar-breadcrumb" style="display: inline-block;
+    float: left;
+    margin-left: 30px;
+    height: 100px;
+    overflow: hidden;">
         {{outlet "breadcrumb"}}
     </div>
 
@@ -31,9 +27,9 @@
 </div>
 
 <div {{bind-attr class=":section :page-body :block :align-items-stretch for_iframe:top0"}} id="middleDiv">
-    <nav class="page-body-nav block shrink content">
-        {{#common/io-sidebar}}
-        <ul class="nav">
+	<nav class="page-body-nav block shrink content">
+		{{#common/io-sidebar}}
+	    <ul class="nav">
             <li class="active">
                 <a href="javascript:void(0);">
                     <i class="io-fa icon-resourcepooling"></i>
@@ -44,32 +40,29 @@
                     <li> {{#link-to "dashboard.device.scan.list"  }}发现新设备{{/link-to}} </li>
                 </ul>
             </li>
-
-            <li class="active">
-                <a href="javascript:void(0);">
-                    <i class="io-fa icon-server"></i>
-                    <label>物理机管理</label>
-                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-                </a>
-                <ul class="nav nav-sub">
-                    <li> {{#link-to "dashboard.device.list" "all"  }}设备列表{{/link-to}} </li>
-                    <li> {{#link-to "dashboard.device.new"  }}录入新设备{{/link-to}} </li>
-                    <li> {{#link-to "dashboard.device.list" "installing"  }}正在安装的设备
-                    {{#if (not-eq 0 model.installingDeviceNum)}}
-                    (<span class="orange">{{model.installingDeviceNum}}</span>)
-                    {{/if}}
-                    {{/link-to}}
-                    </li>
-                    <li> {{#link-to "dashboard.device.list" "failure"  }}安装失败的设备
-                    {{#if (not-eq 0 model.failureDeviceNum)}}(<span class="red">{{model.failureDeviceNum}}</span>)
-                    {{/if}}
-                    {{/link-to}}
-                     </li>
-                     
-                </ul>
-            </li>
-
-            
+	        <li class="active">
+	            <a href="javascript:void(0);">
+	            	<i class="io-fa icon-server"></i>
+	                <label>物理机管理</label>
+	                <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+	            </a>
+	            <ul class="nav nav-sub">
+	                <li> {{#link-to "dashboard.device.list" "all"  }}设备列表{{/link-to}} </li>
+	                <li> {{#link-to "dashboard.device.new"  }}录入新设备{{/link-to}} </li>
+	                <li> {{#link-to "dashboard.device.list" "installing"  }}正在安装的设备
+					{{#if (not-eq 0 model.installingDeviceNum)}}
+	                (<span class="orange">{{model.installingDeviceNum}}</span>)
+					{{/if}}
+	                {{/link-to}}
+	                </li>
+	                <li> {{#link-to "dashboard.device.list" "failure"  }}安装失败的设备
+	                {{#if (not-eq 0 model.failureDeviceNum)}}(<span class="red">{{model.failureDeviceNum}}</span>)
+					{{/if}}
+	                {{/link-to}}
+	                 </li>
+	                 
+	            </ul>
+	        </li>
 
             {{#if (eq "Administrator" model.session.Role)}}
             <li class="">
@@ -170,14 +163,8 @@
             
         </ul>
         {{/common/io-sidebar}}
-        <!--
-        <a class="list-group-item list-group-item-info">帮助中心</a>
-        <a  >合作厂商</a>
-        <a class="list-group-item padding30">帮助文档</a>
-        -->
     </nav>
-
-    <section class="page-body-main block content">
+    <section class="page-body-main">
         {{outlet}}
     </section>
 </div>
