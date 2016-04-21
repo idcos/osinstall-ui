@@ -5,7 +5,9 @@
 /**
  * app structure
  */
-
+a {
+    outline: none !important;
+}
 body {
     @padding: 10px;
     @pageNavHeight: 50px;
@@ -29,10 +31,21 @@ body {
         right: 0;
         .page-body-nav {
             width: @pageBodyNavWidth;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+            box-sizing: content-box;
         }
         .page-body-main {
             background: white;
-            overflow-y: scroll;
+            overflow-y: auto;
+            position: absolute;
+            top: 0;
+            left: @pageBodyNavWidth;
+            right: 0;
+            bottom: 0;
             >.panel {
                 border: none;
                 box-shadow: none;
