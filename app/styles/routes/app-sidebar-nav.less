@@ -1,12 +1,137 @@
 /**
  * app side nav
  */
+
+@font-face {font-family: "io-cloudj";
+  src: url('../fonts/iconfont.eot?t=1461116300'); /* IE9*/
+  src: url('../fonts/iconfont.eot?t=1461116300#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/iconfont.woff?t=1461116300') format('woff'), /* chrome, firefox */
+  url('../fonts/iconfont.ttf?t=1461116300') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../fonts/iconfont.svg?t=1461116300#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.io-fa {
+    font-family:"io-cloudj" !important;
+    font-size:16px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-brand:before { content: "\e600"; }
+.icon-manage:before { content: "\e601"; }
+.icon-networksegment:before { content: "\e602"; }
+.icon-resourcepooling:before { content: "\e603"; }
+.icon-server:before { content: "\e604"; }
+.icon-statistics:before { content: "\e605"; }
+.icon-template:before { content: "\e606"; }
+.icon-iconfontexit:before { content: "\e607"; }
+.icon-modulemanagement:before { content: "\e608"; }
+.icon-resourcedefinition:before { content: "\e609"; }
+.icon-configuration:before { content: "\e60a"; }
+.icon-reportmanager:before { content: "\e60b"; }
+.icon-copy:before { content: "\e60d";font-size: 18px; }
+.icon-edit:before { content: "\e60c";font-size: 18px; }
+.icon-delete:before { content: "\e610";font-size: 18px;color:#FC6262; }
+.icon-logoutcloudboot:before { content: "\e611"; font-size: 35px;}
+
+@nav-backgroud-color: #304153;
+@nav-font-color: #C3D4E3;
+
+body {
+    @pageNavHeight: 100px;
+    @pageNavLineHeight: 100px;
+    @pageBodyNavWidth: 260px;
+
+    .page-nav {
+        height: @pageNavHeight !important;
+        line-height: @pageNavLineHeight;
+        box-shadow: 0 2px 4px rgba(52, 71, 90, 0.09);
+        .navbar-header {
+            width: @pageBodyNavWidth;
+            img {
+                //width: 180px;
+                vertical-align: middle;
+                margin-left: -10px;
+            }
+            small {
+                font-size: 12px;
+                font-weight: 700;
+                color: @nav-font-color;
+                vertical-align: bottom;
+                line-height: 85px;
+            }
+        }
+        .navbar-brand{
+            padding: 0;
+            height: @pageNavHeight !important;
+            line-height: @pageNavLineHeight;
+        }
+        .navbar-right {
+            margin-right: 8px;
+            a {
+                color: #666;
+                text-decoration: none;
+
+                i {
+                    font-size: 14px;
+                }
+            }
+            a:hover {
+                text-decoration: none;
+            }
+        }
+        .navbar-inverse{
+            border-color: @nav-backgroud-color;
+        }
+    }
+    .page-body {
+        top: @pageNavHeight!important;
+    }
+}
+
+.page-nav {
+    border-bottom: none!important;
+    &:after {
+        height: 1px!important;
+        bottom: 0!important;
+        background: rgba(78, 86, 104, 0.2)!important;
+    }
+    .navbar-brand {
+        &:hover, & {
+            background: @nav-backgroud-color!important;
+        }
+    }
+
+    .navbar-profile {
+        .icon-logoutcloudboot {
+            position: relative;
+            top: 6px;
+            &:active {
+                color: #CDD2D8;
+            }
+            &:link {
+                color: #CDD2D8;
+            }
+            &:visited {
+                color: #CDD2D8;
+            }
+            &:hover {
+                color: #F76B5D;
+            }
+        }
+    }
+}
+
 .page-body-nav {
-    @background-color: aliceblue;
-    @background-color-d1: #E5F3FF;
-    @background-color-hover: darken(@background-color-d1, 3%);
+    @background-color: @nav-backgroud-color;
+    @background-color-d1: @nav-backgroud-color;
+    // @background-color-hover: darken(@background-color-d1, 3%);
+    @background-color-hover: @background-color-d1;
     @border-color: darken(@background-color, 3%);
-    @font-color: #666;
+    @font-hover-color: #4CADF8;
+
     overflow-y: scroll;
     background: @background-color;
     transition: width 0.3s ease-in-out;
@@ -15,9 +140,11 @@
         background-color: inherit
     }
     >.nav {
-      > li {
-        border-bottom: solid 1px #0C305C;
-      }  
+        > li {
+            border-bottom: solid 1px #0C305C;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }  
     }
 
     .nav li {
@@ -28,13 +155,11 @@
         }
 
         li {
-            a {
-                padding-left: 55px
-            }
+
             ul {
                 display: none;
             }
-           
+
             &.active>ul {
                 display: block
             }
@@ -49,10 +174,14 @@
             position: relative;
             display: block;
             padding: 18px 20px;
-            font-weight: normal;
+            font-weight: normal!important;
             text-transform: none;
+            letter-spacing: 1px;
             -webkit-transition: background-color .2s ease-in-out 0s;
             transition: background-color .2s ease-in-out 0s;
+            > label {
+                font-weight: normal!important;
+            }
             >i {
                 position: relative;
                 float: left;
@@ -72,7 +201,7 @@
     }
 
     .nav {
-        padding-left: 0;
+        padding-left: 25px;
         margin-bottom: 0;
         list-style: none;
 
@@ -83,18 +212,20 @@
                 position: relative;
                 display: block;
                 padding: 14px 15px;
-                color: @font-color;
+                color: @nav-font-color;
                 &:hover, &:focus {
                     text-decoration: none;
                     background-color: @background-color-hover !important;
+                    color: @font-hover-color;
                 }
                 >i{
-                    color: @brand-color;
-                }
-                
-                .toggle i.fa {
+                    color: @brand-font-color;
                     font-size: 18px;
-                    font-weight: bold;
+                }
+
+                .toggle i.fa {
+                    font-size: 12px;
+                    font-weight: normal;
                 }
             }
 
@@ -133,21 +264,77 @@
         opacity: 0;
         -webkit-transition: all .2s ease-in-out 0s;
         transition: all .2s ease-in-out 0s;
+
+        li {
+            padding-left: 50px;
+
+            a {
+                padding: 12px 0 12px 10px;
+                display: inline-block;
+            }
+
+        }
+
+        @radius: 8px;
+        @border: 2px;
+
+        li:before {
+            content: " ";
+            display: inline-block;
+            background-color: transition;
+            border-radius: @radius;
+            width: @radius;
+            height: @radius;
+            border: @border solid @nav-font-color;
+        }
+
+        li:hover:before,
+        li.active:before {
+            background-color: @font-hover-color;
+            border-color: @font-hover-color;
+        }
+
         li.active a {
-            color: @brand-primary;
-            border-left: solid 3px;
+            color: @font-hover-color;
             background-color: @background-color-hover;
+            border-color: @font-hover-color;
         }
     }
 
     .active .nav-sub {
         height: auto;
-        margin-left: 0;
+        margin-left: 2px;
+        padding: 0;
         overflow: auto;
         opacity: 1;
     }
 
+    >.version{
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        padding-left: 16px;
+        color: rgba(195,212,227,0.2);
+        font-size: 10px;
+    }
 }
 .page-body-nav ::-webkit-scrollbar {
     background-color: transparent;
 }
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(11, 54, 106, 0.52); //rgb(9, 45, 89); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background-color: rgba(255, 255, 255, 0.07);
+}
+

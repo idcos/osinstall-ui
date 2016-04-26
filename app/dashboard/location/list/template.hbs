@@ -1,12 +1,39 @@
 <div class="panel panel-default">
-    <div class="panel-heading paddingtop0">
-    	<!--
-        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
-        	<li>模板管理</li>
-            <li class="active">网段管理</li>
-        </ol>
-        -->
-        <div class="breadcrumb paddingtop3">
+    
+    <div class="paddingleft10 paddingtop10 paddingright15">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: solid 0px #ddd;">
+            <tr>
+                <td width="50%" align="left">
+                    <h5>
+                    {{#if (not-eq "0" model.pid)}}
+                        顶级位置>{{model.locationName}}
+                    {{/if}}
+
+                    {{!-- {{#if (eq "0" model.pid)}}
+                        位置管理
+                    {{/if}} --}}
+                    </h5>
+                </td>
+                <td width="50%" align="right">
+                    {{#if model.info.ID}}
+                        {{#link-to "dashboard.location.list" model.info.Pid}}<button type="button" class="btn btn-default btn-xs">返回父级位置</button>{{/link-to}} &nbsp;&nbsp;
+                    {{/if}}
+                    {{#link-to "dashboard.location.new" pid}}<button type="button" class="btn btn-primary btn-xs">添加新位置</button>{{/link-to}}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!--
+    <div class="paddingtop10 paddingright15 paddingbottom10" style="float:right;">
+        {{#if model.info.ID}}
+                {{#link-to "dashboard.location.list" model.info.Pid}}<button type="button" class="btn btn-default btn-xs">返回父级位置</button>{{/link-to}} &nbsp;&nbsp;
+                {{/if}}
+                {{#link-to "dashboard.location.new" pid}}<button type="button" class="btn btn-primary btn-xs">添加新位置</button>{{/link-to}}
+    </div>
+    -->
+
+    {{!-- <div class="panel-heading paddingtop0">
+        <div class="breadcrumb paddingtop3 paddingleft0">
 	        <div style="float: left;">
                 <h5>
                 {{#if (not-eq "0" model.pid)}}
@@ -25,8 +52,7 @@
 	        	{{#link-to "dashboard.location.new" pid}}<button type="button" class="btn btn-primary btn-xs">添加新位置</button>{{/link-to}}
 	        </div>
         </div>
-        
-    </div>
+    </div> --}}
     <div class="panel-body">
 		<!--
 			<div class="text-right paddingbottom10">{{#link-to "dashboard.network.new"}}<button type="button" class="btn btn-primary">添加网段</button>{{/link-to}}</div>
@@ -40,7 +66,7 @@
                     <th>父级位置</th>
                     <th>位置名</th>
                     <th>子项</th>
-                    <th class="text-center" width="200px;">操作</th>
+                    <th width="200px;">操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,10 +84,14 @@
 					<td>
 					{{#link-to "dashboard.location.list" item.ID}}查看{{/link-to}}
 					</td>
-					<td class="text-center">
-					{{#link-to "dashboard.location.new" item.ID}}<button type="button" class="btn btn-xs btn-default">添加子位置</button>{{/link-to}}
-					{{#link-to "dashboard.location.edit" item.ID item.Pid}}<button type="button" class="btn btn-xs btn-default">修改</button>{{/link-to}}
-					<button type="button" {{action "deleteAction" item.ID}} class="btn btn-xs btn-default">删除</button>
+					<td>
+                        {{#link-to "dashboard.location.new" item.ID}}<i title="添加子位置" style="font-size: 16px;" class="fa fa-plus"></i>{{/link-to}}
+                        &nbsp;&nbsp;
+                        {{#link-to "dashboard.location.edit" item.ID item.Pid}}<i title="修改" class="io-fa icon-edit"></i>{{/link-to}}
+                        &nbsp;&nbsp;
+                        <a style="" href="javascript:void(0);" {{action "deleteAction" item.ID}}><i title="删除" class="io-fa icon-delete"></i></a>
+
+
 					</td>
 				</tr>
 				{{/each}}
@@ -69,7 +99,9 @@
             </tbody>
         </table>
         <div class="padding10">
-            {{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+            {{#if (not-eq 1 pageCount)}}
+                {{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+            {{/if}}
         </div>
     </div>
 </div>

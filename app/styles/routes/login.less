@@ -1,0 +1,169 @@
+
+/*
+ * 登录
+ */
+/**
+ * [background-color]
+  * @type {[type]}
+   */
+@brand-background-color: #EEEFF5;
+@brand-background-color-d1: #5F6374;
+@brand-background-color-d2: #2E323E;
+@brand-background-color-d3: #202027;
+@brand-background-color-d4: #17191A;
+
+/**
+ * font color
+  * @type {[type]}
+   */
+@brand-font-color: #989FB4;
+@brand-font-color-d1: #5B627C;
+
+.login {
+    background: url("../image/login/bg.jpg") no-repeat center center fixed;
+    // background-image: -webkit-linear-gradient(271deg, #99C4F3 10%, #42B5F3 96%);
+    // background-image: -o-linear-gradient(271deg, #99C4F3 10%, #42B5F3 96%);
+    // background-image: linear-gradient(1deg, #99C4F3 10%, #42B5F3 96%);
+    position: fixed;
+    margin: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: table;
+    font-weight: 200;
+    overflow: hidden;
+
+    .login-logo {
+        position: absolute;
+        top: 60px;
+        left: 100px;
+        img {
+            width: 158px;
+        }
+    }
+
+
+    .overlay {
+        display: table-cell;
+        vertical-align: middle;
+        padding: 0;
+        margin: 0;
+
+        .login-panel {
+            width: 382px;
+            height: 292px;
+            margin: 0 auto;
+            font-size: 12px;
+
+            .login-header {
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+
+                .login-title img {
+                    margin-top: -74px;
+                    //width: 271px;
+                }
+            }
+
+            .login-body {
+                width: 382px;
+                height: 292px;
+                background: white;
+                padding-top: 20px;
+                border-radius: 3px;
+
+                .login-body-banner {
+                    .login-left {
+                        width: 72px;
+                    }
+                    .login-banner {
+                        height: 21px;
+                        margin-top: 16px;
+                        padding-right: 34px;
+                    }
+                }
+
+                .login-content {
+                    padding: 40px 34px;
+
+                    .form-group {
+                        margin-bottom: 30px;
+                        input.form-control {
+                            height: auto;
+                            font-size: 14px;
+                            padding: 6px 10px;
+                            border-radius: 3px;
+                        }
+                    }
+
+                    .btn.submit {
+                        width: 81px;
+                        height: 34px;
+                        padding: 5px 10px 10px;
+                        text-align: center;
+                        background: #37A5FA;
+                        outline: none;
+                        box-shadow: none;
+                        border: none;
+                        color: white;
+                        font-size: 14px;
+                        border-radius: 3px;
+                    }
+
+                    .forget-helper {
+                        padding-top: 10px;
+                    }
+
+                }
+
+            }
+
+            a {
+                color: #51A3FF;
+                margin: 0 10px;
+            }
+
+            i.line {
+                width: 2px;
+                border-right: solid 1px #ddd;
+                margin-left: 8px;
+            }
+            .io-btn {
+                padding: 5px 20px;
+                border-radius: 0;
+            }
+
+        }
+
+        p.footer {
+            color: @brand-font-color-d1;
+            position: absolute;
+            left: 0;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+    }
+}
+
+.companyName {
+    /* 云霁科技: */
+    font-family: STHeitiSC-Light;
+    font-size: 14px;
+    color: #95F8C9;
+}
+
+.companyDescription{
+    font-family: STHeitiSC-Light;
+    font-size: 14px;
+    color: #E4EAEF;
+}
+
+.copyright{
+    font-family: ArialMT;
+    font-size: 14px;
+    color: #B5BFC9;
+}

@@ -28,7 +28,9 @@ export default Ember.Controller.extend({
 		saveAction: function() {
 			var self = this;
         	var form = this.get("model.info");
+            self.set("message","<span class='text-success'>数据正在处理中,请稍候...</span>");
         	self.get("networkSrv").update(form).then(function(data) {
+                self.set("message",null);
                 if(data.Status==="success"){
                     Ember.$.notify({
                     	message: "保存成功!"

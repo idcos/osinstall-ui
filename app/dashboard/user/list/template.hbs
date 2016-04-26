@@ -1,0 +1,70 @@
+<div class="panel panel-default">
+    <div class="paddingtop10 paddingright15 paddingbottom10" style="float:right;">
+        {{#link-to "dashboard.user.new"}}<button type="button" class="btn btn-primary btn-xs">添加新用户</button>{{/link-to}}
+    </div>
+    
+    {{!-- <div class="panel-heading paddingtop0">
+        <div class="breadcrumb paddingtop3 paddingleft0">
+	        <div style="float: left;">
+	        	<h5>用户管理</h5>
+	        </div>
+	        <div style="float:right; position: relative; top: 7px; left: 16px;">
+	        	{{#link-to "dashboard.user.new"}}<button type="button" class="btn btn-primary btn-xs">添加新用户</button>{{/link-to}}
+	        </div>
+        </div>
+    </div> --}}
+
+    <div class="panel-body">
+        <table class="table big">
+            <thead>
+                <tr>
+                	<th>ID</th>
+                    <th>用户名</th>
+                    <th>姓名</th>
+                    <th>手机号</th>
+                    <th>角色</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            	{{#each rowList as |item index|}}
+                <tr>
+                	<td>{{#link-to "dashboard.user.detail" item.ID}}{{item.ID}}{{/link-to}}</td>
+					<td>{{item.Username}}</td>
+					<td>{{item.Name}}</td>
+					<td>{{item.PhoneNumber}}</td>
+                    <td>
+                        {{#if (eq "Administrator" item.Role)}}
+                            <span class="text-danger font-size-14">超级管理员</span>
+                        {{/if}}
+
+                        {{#if (eq "User" item.Role)}}
+                            普通用户
+                        {{/if}}
+                    </td>
+					<td>
+						{{#if (eq "Enable" item.Status)}}
+							<span class="text-success font-size-14">正常</span>
+						{{/if}}
+
+						{{#if (eq "Disable" item.Status)}}
+							<span class="text-danger font-size-14">锁定</span>
+						{{/if}}
+					</td>
+					<td>
+                        {{#link-to "dashboard.user.edit" item.ID}}<i title="修改" class="io-fa icon-edit"></i>{{/link-to}}
+                        &nbsp;&nbsp;
+                        <a style="" href="javascript:void(0);" {{action "deleteAction" item.ID}}><i title="删除" class="io-fa icon-delete"></i></a>
+					</td>
+				</tr>
+				{{/each}}
+            </tbody>
+        </table>
+        <div class="padding10">
+            {{#if (not-eq 1 pageCount)}}
+                {{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+            {{/if}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="panel panel-default">
+    {{!-- <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>管理网段管理</li>
+            <li class="active">网段详情</li>
+        </ol>
+    </div> --}}
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="20%"><label for="Network">ID</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{model.info.ID}}</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="active" align="right" width="20%"><label for="Network">网段/掩码</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{model.info.Network}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label for='Netmask'>掩码</label></td>
+					<td>
+						<div class="col-md-5">{{model.info.Netmask}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label for='Gateway'>网关</label></td>
+					<td>
+						<div class="col-md-5">{{model.info.Gateway}}</div>
+					</td>
+				</tr>
+				<!--
+				<tr>
+					<td class="active" align="right"><b>vlan</b></td>
+					<td>
+						<div class="col-md-5">{{model.info.Vlan}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><b>trunk</b></td>
+					<td>
+						<div class="col-md-5">{{model.info.Trunk}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><b>bonding</b></td>
+					<td>
+						<div class="col-md-5">{{model.info.Bonding}}</div>
+					</td>
+				</tr>
+				-->
+			</tbody>
+		</table>
+		<div class="text-center">
+	        <button type="button" onclick="javascript:history.go(-1);" class="btn btn-default">返 回</button>
+		</div>
+    </div>
+</div>

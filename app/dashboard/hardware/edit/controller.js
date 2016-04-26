@@ -26,6 +26,41 @@ export default Ember.Controller.extend({
                 }
             }
         },
+
+        selectInputChangeAction:function(value){
+            var self = this;
+            var tpl = self.get("model.info.FormatTpl");
+            for(var i=0;i<tpl.length;i++) {
+                var data = tpl[i].data;
+                for(var j=0;j<data.length;j++) {
+                    var row = data[j];
+                    if(row.type === "select" && row.value === value && row.value !== row.default){
+                        for(var k=0;k<row.data.length;k++){
+                            var item = row.data[k];
+                            if(row.default === item.value){
+                                set(item,"value",row.value);
+                                set(row,"default",row.value);
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        selectChangeAction:function(value){
+            var self = this;
+            var tpl = self.get("model.info.FormatTpl");
+            for(var i=0;i<tpl.length;i++) {
+                var data = tpl[i].data;
+                for(var j=0;j<data.length;j++) {
+                    var row = data[j];
+                    if(row.default !== row.value){
+                        set(row,"value",row.default);
+                    }
+                }
+            }
+        },
+
         deleteItemAction:function(key){
             var self = this;
             var tpl = self.get("model.info.FormatTpl");
@@ -54,6 +89,8 @@ export default Ember.Controller.extend({
                     var row = tpl[i].data;
                     for(var j=0;j<row.length;j++) {
                         var row2 = row[j];
+                        delete row2.value;
+
                         var result3 = {};
                         result3.Name = row2.name;
                         result3.Value = row2.default;

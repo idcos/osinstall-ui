@@ -1,0 +1,93 @@
+<div class="panel panel-default">
+    {{!-- <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>用户管理</li>
+            <li class="active">添加用户</li>
+        </ol>
+    </div> --}}
+    {{#common/io-form-validator submitForm="addAction"}}
+	<form class="form-horizontal">
+    <div class="panel-body">
+        <table class="table no-border">
+			<tbody>
+				<tr>
+					<td align="right" width="20%"><label class="required" for="Username">用户名</label></td>
+					<td width="80%">
+						<div class="col-md-5">
+						{{input type="text" id="Username" value=model.info.Username required=true class="form-control input-md"}}
+						<span class="help-block with-errors"></span>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right"><label class="required" for="Password">密码</label></td>
+					<td>
+						<div class="col-md-5">
+						{{input type="password" id="Password" value=model.info.Password required=true class="form-control input-md"}}
+						<span class="help-block with-errors"></span>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right"><label class="required" for="Name">姓名</label></td>
+					<td>
+						<div class="col-md-5">
+						{{input type="text" id="Name" value=model.info.Name required=true class="form-control input-md"}}
+						<span class="help-block with-errors"></span>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right"><label for="PhoneNumber">手机号</label></td>
+					<td>
+						<div class="col-md-5">
+						{{input type="text" id="PhoneNumber" value=model.info.PhoneNumber class="form-control input-md"}}
+						<span class="help-block with-errors"></span>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right"><label class="required">状态</label></td>
+					<td>
+						<div class="col-md-5">
+							{{view "select" required=true class="form-control" prompt="请选择" content=model.statusData value=model.info.Status optionValuePath="content.id" optionLabelPath="content.name"}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right"><label class="required">角色</label></td>
+					<td>
+						<div class="col-md-5">
+							{{view "select" required=true class="form-control" prompt="请选择" content=model.roleData value=model.info.Role optionValuePath="content.id" optionLabelPath="content.name"}}
+							
+							<div style="font-size: 13px;margin-top: 10px;">
+								<span style="font-size: 14px;font-weight:bold;">超级管理员和普通用户的区别：</span>
+								<br>
+								1.超级管理员可以管理所有信息 <br>
+								2.普通用户只能管理自己录入的机器 <br>
+								3.普通用户无权使用【模板管理】功能 <br>
+								4.普通用户无权使用【用户管理】功能 <br>
+								5.普通用户无权使用【网段管理】功能
+							</div>
+						</div>
+						
+					</td>
+				</tr>
+				
+				
+			</tbody>
+		</table>
+		<div class="text-center">
+	        <button type="submit" class="btn btn-primary">提 交</button>
+	       	&nbsp;
+	        {{#link-to "dashboard.user.list"}}<button type="button" class="btn btn-default">取　消</button>{{/link-to}}
+		</div>
+    </div>
+    </form>
+	{{/common/io-form-validator}}
+</div>

@@ -44,6 +44,24 @@ export default Ember.Service.extend({
     },
 
     /*
+    * 取消安装操作系统
+    */
+    batchCancelInstall : function(form) {
+        var url = "/api/osinstall/v1/device/batchCancelInstall";
+		//生成发请求数据对象
+		var data = {};
+		data = form;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    /*
     * 批量删除
     */
     batchDelete : function(form) {
@@ -189,11 +207,130 @@ export default Ember.Service.extend({
     /*
     * 获取列表
     */
-    getNumByStatus : function(status) {
+    scanList : function(limit,offset,form) {
+        var url = "/api/osinstall/v1/device/scan/list";
+		//生成发请求数据对象
+		var data = form;
+		data.Limit = limit;
+		data.Offset = offset;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    getScan : function(id) {
+        var url = "/api/osinstall/v1/device/scan/view";
+		//生成发请求数据对象
+		var data = {};
+		data.ID = parseInt(id);
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    getScanByDeviceId : function(deviceId) {
+        var url = "/api/osinstall/v1/device/scan/viewByDeviceId";
+		//生成发请求数据对象
+		var data = {};
+		data.DeviceID = parseInt(deviceId);
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    scanCompanyList : function() {
+        var url = "/api/osinstall/v1/device/scan/company/list";
+		//生成发请求数据对象
+		var data = {};
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    scanProductList : function(form) {
+        var url = "/api/osinstall/v1/device/scan/product/list";
+		//生成发请求数据对象
+		var data = form;
+		
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    scanModelNameList : function(form) {
+        var url = "/api/osinstall/v1/device/scan/modelName/list";
+		//生成发请求数据对象
+		var data = form;
+		
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    //导出
+    exportScanDevice : function(param) {
+        var url = "/api/osinstall/v1/device/scan/export";
+        if(!Ember.isEmpty(param)){
+        	url += param;
+        }
+		location.href = url;
+		return ;
+    },
+
+    batchAssignScanDeviceUser : function(form) {
+        var url = "/api/osinstall/v1/device/scan/batchAssignOwner";
+		//生成发请求数据对象
+		var data = {};
+		data = form;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    /*
+    * 获取列表
+    */
+    getNumByStatus : function(status,userID) {
         var url = "/api/osinstall/v1/device/getNumByStatus";
 		//生成发请求数据对象
 		var data = {};
 		data.Status = status;
+		if(!Ember.isEmpty(userID)){
+			data.UserID = parseInt(userID);
+		}
 
 		//发送ajax请求
         return ajax({
@@ -241,6 +378,49 @@ export default Ember.Service.extend({
 		//生成发请求数据对象
 		var data = {};
 		data.Sn = sn;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    getInstallReport : function() {
+        var url = "/api/osinstall/v1/device/getInstallReport";
+		//生成发请求数据对象
+		var data = {};
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    reportInstallReport : function() {
+        var url = "/api/osinstall/v1/device/reportInstallReport";
+		//生成发请求数据对象
+		var data = {};
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    getInstallCallbackList : function(deviceId) {
+        var url = "/api/osinstall/v1/device/callback/list";
+		//生成发请求数据对象
+		var data = {};
+		data.DeviceId = parseInt(deviceId)
 
 		//发送ajax请求
         return ajax({

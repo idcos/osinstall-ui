@@ -1,0 +1,181 @@
+<div class="panel panel-default">
+	
+    <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>发现新设备</li>
+            <li class="active">配置安装信息</li>
+        </ol>
+    </div>
+    <!--
+    <ul class="nav nav-tabs"> 
+		<li class="active">{{#link-to "dashboard.device.list"}}所有设备列表{{/link-to}}</li>
+	    <li>{{#link-to "dashboard.device.preInstall"}}待安装{{/link-to}}</li>
+	    <li>{{#link-to "dashboard.device.installing"}}正在安装{{/link-to}}</li>
+	</ul>
+	-->
+    <div class="panel-body">
+        <table class="table big table-hover">
+            <thead>
+                <tr>
+                    <th width="10%">SN</th>
+					<th width="11%">主机名</th>
+					<th width="15%">IP</th>
+					<th width="13%">操作系统</th>
+					<th width="14%">硬件配置模板</th>
+					<th width="14%">系统安装模板</th>
+					<th width="12%">位置</th>
+					<th width="11%">财编</th>
+                </tr>
+            </thead>
+            <tbody>
+				<tr class="info">
+					<td>批量设置</td>
+					<td>
+						{{input type="text" required=true class="form-control input-md" placeholder="主机名"}}
+					</td>
+					<td>
+						{{input type="text" required=true class="form-control input-md" placeholder="IP"}}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					</td>
+					<td>
+						{{view "select" class="form-control" prompt="请选择"
+ content=model.hardwareData value=item.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.systemConfigData value=item.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择" content=model.locationTree value=item.LocationID optionValuePath="content.ID" optionLabelPath="content.ShowName" }}
+					</td>
+					<td>{{input type="text" required=true class="form-control input-md" placeholder="财编"}}</td>
+				</tr>
+
+				<tr>
+					<td>DFASF32</td>
+					<td>
+						{{input type="text" required=true class="form-control input-md" placeholder="主机名"}}
+					</td>
+					<td>
+						{{input type="text" required=true class="form-control input-md" placeholder="IP"}}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					</td>
+					<td>
+						{{view "select" class="form-control" prompt="请选择"
+ content=model.hardwareData value=item.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.systemConfigData value=item.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择" content=model.locationTree value=item.LocationID optionValuePath="content.ID" optionLabelPath="content.ShowName" }}
+					</td>
+					<td>{{input type="text" required=true class="form-control input-md" placeholder="财编"}}</td>
+				</tr>
+
+				<tr>
+					<td>DFASF33</td>
+					<td>
+						{{input type="text" required=true class="form-control input-md" placeholder="主机名"}}
+					</td>
+					<td>
+						{{input type="text" required=true class="form-control input-md" placeholder="IP"}}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					</td>
+					<td>
+						{{view "select" class="form-control" prompt="请选择"
+ content=model.hardwareData value=item.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.systemConfigData value=item.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择" content=model.locationTree value=item.LocationID optionValuePath="content.ID" optionLabelPath="content.ShowName" }}
+					</td>
+					<td>{{input type="text" required=true class="form-control input-md" placeholder="财编"}}</td>
+				</tr>
+
+				<tr>
+					<td>DFASF34</td>
+					<td>
+						{{input type="text" required=true class="form-control input-md" placeholder="主机名"}}
+					</td>
+					<td>
+						{{input type="text" required=true class="form-control input-md" placeholder="IP"}}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					</td>
+					<td>
+						{{view "select" class="form-control" prompt="请选择"
+ content=model.hardwareData value=item.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.systemConfigData value=item.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择" content=model.locationTree value=item.LocationID optionValuePath="content.ID" optionLabelPath="content.ShowName" }}
+					</td>
+					<td>{{input type="text" required=true class="form-control input-md" placeholder="财编"}}</td>
+				</tr>
+
+				<tr>
+					<td>DFASF35</td>
+					<td>
+						{{input type="text" required=true class="form-control input-md" placeholder="主机名"}}
+					</td>
+					<td>
+						{{input type="text" required=true class="form-control input-md" placeholder="IP"}}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					</td>
+					<td>
+						{{view "select" class="form-control" prompt="请选择"
+ content=model.hardwareData value=item.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.systemConfigData value=item.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					</td>
+					<td>
+						{{view "select" required=true class="form-control" prompt="请选择" content=model.locationTree value=item.LocationID optionValuePath="content.ID" optionLabelPath="content.ShowName" }}
+					</td>
+					<td>{{input type="text" required=true class="form-control input-md" placeholder="财编"}}</td>
+				</tr>
+				
+            </tbody>
+        </table>
+        	<div class="row padding0">
+					<div class="col-sm-7">
+						{{#link-to "dashboard.device.scan"}}<button type="button" class="btn btn-default btn-sm">上一步</button>{{/link-to}}
+						&nbsp;&nbsp;
+			       		<button type="button" class="btn btn-primary btn-sm">确认安装</button>
+					</div>
+					<div class="col-sm-5">
+						{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6"></div>
+					<div class="col-sm-6">
+						{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+					</div>
+				</div>
+    </div>
+</div>

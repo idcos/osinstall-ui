@@ -15,8 +15,8 @@ export default Ember.Controller.extend({
       self.set('model.modelNameData', null);
       self.set('Product', null);
       self.set('ModelName', null);
-        this.get("hardwareSrv").getProductByCompanyAndGroup(company).then(function(data){
-            self.set('model.productData', data.Content);
+        this.get("hardwareSrv").getModelNameByCompanyAndGroup(company,'').then(function(data){
+            self.set('model.modelNameData', data.Content);
         });
     }.observes("Company"),
 
@@ -84,6 +84,65 @@ export default Ember.Controller.extend({
                     }
                 });
             }
+        },
+        checkOnlineUpdateAction:function(){
+            var self = this;
+            this.get('hardwareSrv').checkOnlineUpdate().then(function(data){
+                self.set('model.isLastestVersion',false);
+                if(data.Status === 'success'){
+                    if(!Ember.isEmpty(data.Content) && data.Content.length > 0){
+                        var versions = data.Content;
+                        var lastestVersion = versions[versions.length-1];
+                        self.set('model.lastestVersion',lastestVersion);
+                    }else{
+                        self.set('model.lastestVersion',null);
+                    }
+
+                    if(Ember.isEmpty(data.Content) && Ember.isEmpty(data.Message)){
+                        self.set('model.isLastestVersion',true);
+                    }
+
+                    if(!Ember.isEmpty(data.CurrentVersion)){
+                        self.set('model.currentVersion',data.CurrentVersion);
+                    }
+                    self.set('model.versionMessage',data.Message);
+                }else{
+                    self.set('model.lastestVersion',null);
+                    self.set('model.currentVersion',null);
+                }
+            });
+        },
+        onlineUpdateAction: function(id) {
+                var self = this;
+                self.get("hardwareSrv").runOnlineUpdate().then(function(data) {
+                    if(data.Status === "success"){
+                        Ember.$.notify({
+                            message: "操作成功!"
+                        }, {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            type: 'success'
+                        });
+
+                        self.send("pageChanged",self.get("page"));
+                        window.setTimeout(function(){
+                            self.send("checkOnlineUpdateAction");
+                        }, 500);
+                    } else {
+                        Ember.$.notify({
+                            title: "<strong>操作失败:</strong>",
+                            message: data.Message
+                        }, {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            type: 'danger'
+                        });
+                    }
+                });
         },
 	}
 });

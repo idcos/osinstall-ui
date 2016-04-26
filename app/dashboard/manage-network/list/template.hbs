@@ -1,0 +1,67 @@
+<div class="panel panel-default">
+    <div class="paddingtop10 paddingright15 paddingbottom10" style="float:right;">
+        {{#link-to "dashboard.manageNetwork.new" "new"}}<button type="button" class="btn btn-primary btn-xs">添加网段</button>{{/link-to}}
+    </div>
+
+    {{!-- <div class="panel-heading paddingtop0">
+        <div class="breadcrumb paddingtop3 paddingleft0">
+	        <div style="float: left;">
+	        	<div class="panel-heading paddingleft0">
+                    <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+                        <li>网段管理</li>
+                        <li class="active">管理网段管理</li>
+                    </ol>
+                </div>
+	        </div>
+	        <div style="float:right; position: relative; top: 7px; left: 16px;">
+	        	{{#link-to "dashboard.manageNetwork.new" "new"}}<button type="button" class="btn btn-primary btn-xs">添加网段</button>{{/link-to}}
+	        </div>
+        </div>
+    </div> --}}
+
+    <div class="panel-body">
+        <table class="table big">
+            <thead>
+                <tr>
+                	<th>ID</th>
+                    <th>IP/掩码位</th>
+                    <th>掩码</th>
+					<th>网关</th>
+					<!--
+                    <th>vlan</th>
+                    <th>trunk</th>
+                    <th>bonding</th>
+                    -->
+					<th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            	{{#each rowList as |item index|}}
+                <tr>
+                	<td>{{#link-to "dashboard.manageNetwork.detail" item.ID}}{{item.ID}}{{/link-to}}</td>
+					<td>{{item.Network}}</td>
+					<td>{{item.Netmask}}</td>
+					<td>{{item.Gateway}}</td>
+					<!--
+                    <td>{{item.Vlan}}</td>
+                    <td>{{item.Trunk}}</td>
+                    <td>{{item.Bonding}}</td>
+                    -->
+					<td>
+					   {{#link-to "dashboard.manageNetwork.new" item.ID}}<i title="克隆" class="io-fa icon-copy"></i>{{/link-to}}
+                        &nbsp;&nbsp;
+                        {{#link-to "dashboard.manageNetwork.edit" item.ID}}<i title="修改" class="io-fa icon-edit"></i>{{/link-to}}
+                        &nbsp;&nbsp;
+                        <a style="" href="javascript:void(0);" {{action "deleteAction" item.ID}}><i title="删除" class="io-fa icon-delete"></i></a>
+					</td>
+				</tr>
+				{{/each}}
+            </tbody>
+        </table>
+        <div class="padding10">
+            {{#if (not-eq 1 pageCount)}}
+        	   {{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+            {{/if}}
+        </div>
+    </div>
+</div>

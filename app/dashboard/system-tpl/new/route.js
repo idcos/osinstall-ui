@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+import breadCrumbMixin from '../../../mixins/bread-crumb-mixin';
+export default Ember.Route.extend(breadCrumbMixin,{
+    breadCrumb: {
+        title: "添加系统模板",
+        isShow:true,
+    },
 	systemConfigSrv: Ember.inject.service('api/system-config/service'),
 	model: function(params) {
         if(params.id === "new"){

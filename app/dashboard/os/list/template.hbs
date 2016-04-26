@@ -1,54 +1,57 @@
 <div class="panel panel-default">
-    <div class="panel-heading paddingtop0">
-    	<!--
-        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
-        	<li>模板管理</li>
-            <li class="active">网段管理</li>
-        </ol>
-        -->
-        <div class="breadcrumb paddingtop3">
+    <div class="paddingtop10 paddingright15 paddingbottom10" style="float:right;">
+        {{#link-to "dashboard.os.new" "new"}}<button type="button" class="btn btn-primary btn-xs">添加新操作系统</button>{{/link-to}}
+    </div>
+
+    {{!-- <div class="panel-heading paddingtop0">
+        <div class="breadcrumb paddingtop3 paddingleft0">
 	        <div style="float: left;">
-	        	<h5>模板管理/操作系统管理</h5>
+	        	<div class="panel-heading paddingleft0">
+                    <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+                        <li>模板管理</li>
+                        <li class="active">操作系统管理</li>
+                    </ol>
+                </div>
 	        </div>
 	        <div style="float:right; position: relative; top: 7px; left: 16px;">
 	        	{{#link-to "dashboard.os.new" "new"}}<button type="button" class="btn btn-primary btn-xs">添加新操作系统</button>{{/link-to}}
 	        </div>
         </div>
-        
-    </div>
+    </div> --}}
+    
     <div class="panel-body">
-		<!--
-			<div class="text-right paddingbottom10">{{#link-to "dashboard.network.new"}}<button type="button" class="btn btn-primary">添加网段</button>{{/link-to}}</div>
-		-->
-		
         <table class="table big">
             <thead>
                 <tr>
                 	<th width="7%">ID</th>
                     <th width="20%">操作系统版本</th>
                     <th width="43%">PXE配置</th>
-                    <th width="30%" class="text-center">操作</th>
+                    <th width="30%" class="text-left">操作</th>
                 </tr>
             </thead>
             <tbody>
             	{{#each rowList as |item index|}}
                 <tr>
-                	<td>{{#link-to "dashboard.os.detail" item.ID}}{{item.ID}}{{/link-to}}</td>
+                	<td>{{item.ID}}</td>
 					<td>{{item.Name}}</td>
 					<td>
                          {{#link-to "dashboard.os.detail" item.ID}}查看{{/link-to}}          
                     </td>
-					<td class="text-center">
-					{{#link-to "dashboard.os.new" item.ID}}<button type="button" class="btn btn-default btn-xs">克隆</button>{{/link-to}}
-					{{#link-to "dashboard.os.edit" item.ID}}<button type="button" class="btn btn-xs btn-default">修改</button>{{/link-to}}
-					<button type="button" {{action "deleteAction" item.ID}} class="btn btn-xs btn-default">删除</button>
+					<td class="text-left">
+                        {{#link-to "dashboard.os.new" item.ID}}<i title="克隆" class="io-fa icon-copy"></i>{{/link-to}}
+                        &nbsp;&nbsp;
+                        {{#link-to "dashboard.os.edit" item.ID}}<i title="修改" class="io-fa icon-edit"></i>{{/link-to}}
+                        &nbsp;&nbsp;
+                        <a style="" href="javascript:void(0);" {{action "deleteAction" item.ID}}><i title="删除" class="io-fa icon-delete"></i></a>
 					</td>
 				</tr>
 				{{/each}}
             </tbody>
         </table>
         <div class="padding10">
-            {{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+            {{#if (not-eq 1 pageCount)}}
+                {{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+            {{/if}}
         </div>
     </div>
 </div>

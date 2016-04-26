@@ -7,8 +7,8 @@ const {
 
 export default Ember.Controller.extend({
 	deviceSrv: Ember.inject.service('api/device/service'),
-    vmInstallSrv: Ember.inject.service('api/vmInstall/service'),
     networkSrv: Ember.inject.service('api/network/service'),
+    userSrv: Ember.inject.service('api/user/service'),
 	page:1,
 	pageCount:1,
 	pageSize:7,
@@ -19,17 +19,6 @@ export default Ember.Controller.extend({
     autoRefresh:true,//是否自动刷新
     autoRefreshTimer:null,
     autoRefreshTime:20000,
-    //虚拟机装机
-    vmInstallSrv: Ember.inject.service('api/vmInstall/service'),
-    currentStep: 1,
-    nextStep:2,
-    lastStep:0,
-    isShowMemoryMore:false,
-    isShowDiskMore:false,
-    isShowingModal: false,
-
-    //批量安装虚拟机
-    isShowingModal2:false,
 
     ipChanged: function() {
         var self = this;
@@ -120,300 +109,6 @@ export default Ember.Controller.extend({
         }.observes("selectAll"),
 
 	actions:{
-        installVmAction:function(deviceId){
-            set(this,"model.vmInfo.DeviceId",deviceId);
-            set(this,"isShowingModal",true);
-            //console.log(this.get("model.vmInfo"));
-        },
-        batchInstallVmAction:function(deviceId){
-            var self = this;
-            var rowList = self.get("rowList");
-            var ids = [];
-            var isValidate = true;
-            Object.keys(rowList).forEach(function (key) {
-                var re = /^[0-9]*]*$/;
-                if(re.test(key)){
-                    var row = rowList[key];
-                    if(row.checked === true){
-                        /*
-                        if(row.Status !== "success"){
-                            Ember.$.notify({
-                                title: "<strong>操作失败:</strong>",
-                                message: "设备(SN:"+row.Sn+ ")不能安装虚拟机!",
-                            }, {
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight'
-                                },
-                                type: 'danger'
-                            });
-                            isValidate = false;
-                        }
-                        */
-                        var currentData = {};
-                        currentData.ID = row.ID;
-                        ids.pushObject(currentData);
-                    }
-                }
-            });
-            
-            if(isValidate !== true){
-                return ;
-            }
-
-            if(ids.length === 0){
-                Ember.$.notify({
-                                title: "<strong>操作失败:</strong>",
-                                message: "请先选中要操作的设备!",
-                            }, {
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight'
-                                },
-                                type: 'danger'
-                            });
-                return ;
-            }
-            set(this,"isShowingModal2",true);
-            //console.log(this.get("model.vmInfo"));
-        },
-        goToStep: function(step){
-            this.set('currentStep', step);
-            this.set('nextStep', step+1);
-            this.set('lastStep', step-1);
-        },
-        toggleModal: function() {
-            this.toggleProperty('isShowingModal');
-        },
-        toggleModal2: function() {
-            this.toggleProperty('isShowingModal2');
-        },
-        copyHostAction:function(key){
-          var self = this;
-          var data = this.get("model.vmInfo.Host");
-          var newData = [];
-          self.get("vmInstallSrv").createNewMacAddress().then(function(response) {
-                if(response.Status==="success"){
-                    for(var i=0;i<data.length;i++){
-                        newData.pushObject(data[i]);
-                        if(i === key){
-                            var row = {};
-                            //row.Hostname = data[i].Hostname;
-                            //row.Ip = data[i].Ip;
-                            row.Os = data[i].Os;
-                            row.Mac = response.Content;
-                            newData.pushObject(row);
-                        }
-                      }
-                      set(self,"model.vmInfo.Host",newData);
-                } else {
-                    Ember.$.notify({
-                        title: "<strong>保存失败:</strong>",
-                        message: response.Message
-                    }, {
-                        animate: {
-                            enter: 'animated fadeInRight',
-                            exit: 'animated fadeOutRight'
-                        },
-                        type: 'danger'
-                    });
-                }
-            });
-        },
-        cancelHostAction:function(key){
-          var data = this.get("model.vmInfo.Host");
-          var newData = [];
-          for(var i=0;i<data.length;i++){
-            if(i !== key){
-                newData.pushObject(data[i]);
-            }
-          }
-          set(this,'model.vmInfo.Host',newData);
-        },
-        saveVmInstallAction:function(){
-          var self = this;
-          var vmInfo = this.get("model.vmInfo");
-          var hosts = vmInfo.Host;
-          var rows = [];
-          for(var i=0;i<hosts.length;i++){
-            var row = {};
-            var host = hosts[i];
-            row.DeviceID = parseInt(vmInfo.DeviceId);
-            row.Hostname = host.Hostname;
-            row.Mac = host.Mac;
-            row.Ip = host.Ip;
-            if(!Ember.isEmpty(host.NetworkID)){
-                row.NetworkID = parseInt(host.NetworkID);
-            }
-            if(!Ember.isEmpty(host.OsID)){
-                row.OsID = parseInt(host.OsID);
-            }
-            if(!Ember.isEmpty(vmInfo.Cpu.CoresNumber)){
-                row.CpuCoresNumber = parseInt(vmInfo.Cpu.CoresNumber);
-            }
-            
-            row.CpuHotPlug = 'No';
-            row.CpuPassthrough = 'No';
-            if(vmInfo.Cpu.isShowCpuMore === true){
-                row.CpuHotPlug = vmInfo.Cpu.HotPlug === true ? 'Yes' : 'No';
-                row.CpuPassthrough = vmInfo.Cpu.Passthrough === true ? 'Yes' : 'No';
-            }
-
-            if(vmInfo.Cpu.isShowCpuTopBlock === true){
-                row.CpuTopSockets = parseInt(vmInfo.Cpu.TopSockets);
-                row.CpuTopCores = parseInt(vmInfo.Cpu.TopCores);
-                row.CpuTopThreads = parseInt(vmInfo.Cpu.TopThreads);
-            }
-
-            if(vmInfo.Cpu.isShowCpuPinningBlock === true){
-                row.CpuPinning = vmInfo.Cpu.Pinning;
-            }
-
-            if(!Ember.isEmpty(vmInfo.Memory.Current)){
-                row.MemoryCurrent = parseInt(vmInfo.Memory.Current);
-            }
-            if(!Ember.isEmpty(vmInfo.Memory.Max)){
-                row.MemoryMax = parseInt(vmInfo.Memory.Max);
-            }
-            row.MemoryKsm = "No";
-            if(vmInfo.Memory.isShowMemoryMore === true){
-                row.MemoryKsm = vmInfo.Memory.Ksm === true ? 'Yes' : 'No';
-            }
-
-            row.DiskType = vmInfo.Disk.Type;
-            if(!Ember.isEmpty(vmInfo.Disk.Size)){
-                row.DiskSize = parseInt(vmInfo.Disk.Size);
-            }
-            if(vmInfo.Disk.isShowDiskMore === true){
-                row.DiskBusType = vmInfo.Disk.BusType;
-                row.DiskCacheMode = vmInfo.Disk.CacheMode;
-                row.DiskIoMode = vmInfo.Disk.IOMode;
-            }
-            row.NetworkType = vmInfo.Network.Type;
-            row.NetworkDeviceType = vmInfo.Network.DeviceType;
-            row.DisplayType = vmInfo.Display.Type;
-            if(row.DisplayType !== "serialPorts"){
-                row.DisplayPassword = vmInfo.Display.Password;
-                row.DisplayUpdatePassword = vmInfo.Display.UpdatePassword === true ? 'Yes' : 'No';
-            }
-            rows.pushObject(row);
-          }
-          self.get("vmInstallSrv").batchAdd(rows).then(function(data) {
-                if(data.Status==="success"){
-                    /*
-                    Ember.$.notify({
-                        message: "保存成功!"
-                    }, {
-                        animate: {
-                            enter: 'animated fadeInRight',
-                            exit: 'animated fadeOutRight'
-                        },
-                        type: 'success'
-                    });
-                    self.transitionToRoute('dashboard.device.list',"all");
-                    */
-                    alert("操作成功！");
-                } else {
-                    /*
-                    Ember.$.notify({
-                        title: "<strong>保存失败:</strong>",
-                        message: data.Message
-                    }, {
-                        animate: {
-                            enter: 'animated fadeInRight',
-                            exit: 'animated fadeOutRight'
-                        },
-                        type: 'danger'
-                    });
-                    */
-                    alert("操作失败："+data.Message);
-                }
-            });
-        },
-
-        saveBatchVmInstallAction: function(){
-            var self = this;
-
-            var rowList = self.get("rowList");
-            var ids = [];
-            var isValidate = true;
-            Object.keys(rowList).forEach(function (key) {
-                var re = /^[0-9]*]*$/;
-                if(re.test(key)){
-                    var row = rowList[key];
-                    if(row.checked === true){
-                        /*
-                        if(row.Status !== "success"){
-                            Ember.$.notify({
-                                title: "<strong>操作失败:</strong>",
-                                message: "设备(SN:"+row.Sn+ ")不能安装虚拟机!",
-                            }, {
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight'
-                                },
-                                type: 'danger'
-                            });
-                            isValidate = false;
-                        }
-                        */
-                        var currentData = {};
-                        currentData.ID = parseInt(row.ID);
-                        ids.pushObject(currentData);
-                    }
-                }
-            });
-            
-            if(isValidate !== true){
-                return ;
-            }
-
-            if(ids.length === 0){
-                Ember.$.notify({
-                                title: "<strong>操作失败:</strong>",
-                                message: "请先选中要操作的设备!",
-                            }, {
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight'
-                                },
-                                type: 'danger'
-                            });
-                return ;
-            }
-
-            var batchVmInfo = self.get("model.batchVmInfo");
-            self.set("model.batchVmInfo.Message",null);
-            if(Ember.isEmpty(batchVmInfo.VmNumber) 
-                || Ember.isEmpty(batchVmInfo.OsID) 
-                || Ember.isEmpty(batchVmInfo.CpuCoresNumber)
-                || Ember.isEmpty(batchVmInfo.MemoryCurrent)
-                || Ember.isEmpty(batchVmInfo.DiskSize)
-            ){
-                self.set("model.batchVmInfo.Message","<span class='text-danger'>请将各信息填写完整!</span>");
-                return ;
-            }
-            var info = {};
-            info.Devices = ids;
-            info.VmNumber = parseInt(batchVmInfo.VmNumber);
-            info.OsID = parseInt(batchVmInfo.OsID);
-            info.CpuCoresNumber = parseInt(batchVmInfo.CpuCoresNumber);
-            info.MemoryCurrent = parseInt(batchVmInfo.MemoryCurrent);
-            info.DiskSize = parseInt(batchVmInfo.DiskSize);
-
-            self.get("vmInstallSrv").create(info).then(function(data) {
-                if(data.Status==="success"){
-                    self.set("model.batchVmInfo.Message","<span class='text-success'>操作成功!</span>");
-                    self.transitionToRoute('dashboard.vm.list','all');
-                } else {
-                    self.set("model.batchVmInfo.Message","<span class='text-danger'>"+data.Message+"</span>");
-                }
-            });
-        },
-
-        
-
-
 		showMultiSearchBlockAction:function(){
 			set(this,'isShowMultiSearchBlock',true);
 		},
@@ -455,6 +150,7 @@ export default Ember.Controller.extend({
 			}else{
 				self.set('isShowInstallInfoCol',false);
 			}
+
 			this.get("deviceSrv").list(pageSize,(page-1)*pageSize,form).then(function(data){
                 self.set('rowList', data.Content.list);
                 var pageCount = Math.ceil(data.Content.recordCount/pageSize);
@@ -468,6 +164,12 @@ export default Ember.Controller.extend({
             var self = this;
             var rowList = self.get("rowList");
             var datas = [];
+            var isHasSuccessDevice = false;
+
+            var session = this.get("model.session");
+            var accessToken = session.AccessToken;
+            var isNoPurviewOperation = false;
+
             Object.keys(rowList).forEach(function (key) {
                 var re = /^[0-9]*]*$/;
                 if(re.test(key)){
@@ -475,10 +177,25 @@ export default Ember.Controller.extend({
                     if(row.checked === true){
                         var currentData = {};
                         currentData.ID = row.ID;
+                        currentData.AccessToken = accessToken;
                         datas.pushObject(currentData);
+                        if(row.Status === "success"){
+                            isHasSuccessDevice = true;
+                        }
+
+                        if(!Ember.isEmpty(session)){
+                            if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                                if(!Ember.isEmpty(session.ID) && row.UserID !== session.ID){
+                                    isNoPurviewOperation = true;
+                                }
+                            }
+                        }
                     }
+
+
                 }
             });
+
             if(datas.length === 0){
                 Ember.$.notify({
                                 title: "<strong>操作失败:</strong>",
@@ -492,7 +209,124 @@ export default Ember.Controller.extend({
                             });
                 return ;
             }
+
+            
+            if(isNoPurviewOperation === true){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "您无权操作其他人的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+            
+
+            if(isHasSuccessDevice === true){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "安装成功的设备不允许直接重装!<br>请使用【录入新设备】的功能，重新录入后再安装!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
+            
+
+
             self.get("deviceSrv").batchReInstall(datas).then(function(data) {
+                    if(data.Status==="success"){
+                        Ember.$.notify({
+                            message: "操作成功!"
+                        }, {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            type: 'success'
+                        });
+                        self.send("pageChanged",self.get("page"));
+                    } else {
+                        Ember.$.notify({
+                            title: "<strong>保存失败:</strong>",
+                            message: data.Message
+                        }, {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            type: 'danger'
+                        });
+                    }
+                });
+        },
+        cancelInstallAction:function(){
+            var self = this;
+            var rowList = self.get("rowList");
+            var datas = [];
+
+            var session = this.get("model.session");
+            var accessToken = session.AccessToken;
+            var isNoPurviewOperation = false;
+
+            Object.keys(rowList).forEach(function (key) {
+                var re = /^[0-9]*]*$/;
+                if(re.test(key)){
+                    var row = rowList[key];
+                    if(row.checked === true){
+                        var currentData = {};
+                        currentData.ID = row.ID;
+                        currentData.AccessToken = accessToken;
+                        datas.pushObject(currentData);
+
+                        if(!Ember.isEmpty(session)){
+                            if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                                if(!Ember.isEmpty(session.ID) && row.UserID !== session.ID){
+                                    isNoPurviewOperation = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            if(datas.length === 0){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "请先选中要取消安装的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
+            if(isNoPurviewOperation === true){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "您无权操作其他人的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
+            self.get("deviceSrv").batchCancelInstall(datas).then(function(data) {
                     if(data.Status==="success"){
                         Ember.$.notify({
                             message: "操作成功!"
@@ -523,6 +357,11 @@ export default Ember.Controller.extend({
             var self = this;
             var rowList = self.get("rowList");
             var datas = [];
+
+            var session = this.get("model.session");
+            var isNoPurviewOperation = false;
+
+            var accessToken = session.AccessToken;
             Object.keys(rowList).forEach(function (key) {
                 var re = /^[0-9]*]*$/;
                 if(re.test(key)){
@@ -530,14 +369,47 @@ export default Ember.Controller.extend({
                     if(row.checked === true){
                         var currentData = {};
                         currentData.ID = row.ID;
+                        currentData.AccessToken = accessToken;
                         datas.pushObject(currentData);
+
+                        if(!Ember.isEmpty(session)){
+                            if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                                if(!Ember.isEmpty(session.ID) && row.UserID !== session.ID){
+                                    isNoPurviewOperation = true;
+                                }
+                            }
+                        }
                     }
                 }
             });
             if(datas.length === 0){
-                alert("请先选中要删除的设备!");
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "请先选中要删除的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
                 return ;
             }
+
+            if(isNoPurviewOperation === true){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "您无权操作其他人的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
             if(confirm("确定删除吗?")){
                 self.get("deviceSrv").batchDelete(datas).then(function(data) {
                     if(data.Status==="success"){

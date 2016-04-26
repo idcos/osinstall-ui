@@ -13,6 +13,8 @@ html {
     }
 }
 
+
+
 ::selection {
     background: @blue-l2;
     color: #fff;
@@ -81,6 +83,9 @@ ol.breadcrumb {
     a {
         color: @brand-primary;
     }
+    a.active {
+        color: @brand-primary;
+    }
 }
 
 .form-control {
@@ -102,6 +107,95 @@ h3 {
         color: @brand-primary;
         border-left: solid 4px @brand-primary;
     }
+}
+
+table span{
+    font-size: 12px;
+}
+
+table.table.no-border{
+    border: none;
+    td {
+        border: none;
+    }
+}
+
+table.table.light-title{
+    tr {
+        td:first-child{
+            color:#666;
+            padding-right: 0px;
+        }
+        td{
+            color:#000;
+            padding-right: 0px;
+        }
+    }
+}
+
+table.table.no-light-title{
+    tr {
+        td:first-child{
+            color:#666;
+            padding-right: 0px;
+        }
+    }
+}
+
+.brand-ul li {
+    width: 12%;
+    margin: 0 0px;
+}
+
+.os-ul li {
+    width: 15%;
+    margin: 0 3px;
+}
+
+.breadcrumb {
+    color:#777777;
+}
+
+.breadcrumb .active{
+    color:#000000;
+}
+
+/*
+.text-muted{
+    font-size: 14px;
+}
+
+.text-primary{
+    font-size: 14px;
+}
+
+.text-success{
+    font-size: 14px;
+}
+
+.text-info{
+    font-size: 14px;
+}
+
+.text-warning{
+    font-size: 14px;
+}
+
+.text-danger{
+    font-size: 14px;
+}
+*/
+
+.font-size-14{
+    font-size: 14px;
+}
+
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight:normal;
 }
 
 label.required:before {

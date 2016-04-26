@@ -25,8 +25,24 @@ Router.map(function() {
       this.route('detail', {
         path: 'detail/:id'
       });
+      this.route('manufacturer', {
+        path: 'manufacturer/:id'
+      });
       this.route('edit', {
         path: 'edit/:id'
+      });
+      this.route('scan', function() {
+        this.route('detail', {
+          path: 'detail/:id'
+        });
+        this.route('list');
+      });
+      this.route('scanInstall');
+
+      this.route('callback', function() {
+        this.route('list', {
+          path: 'list/:id'
+        });
       });
     });
 
@@ -91,6 +107,8 @@ Router.map(function() {
 
     this.route('report', function() {
       this.route('status');
+      this.route('install');
+      this.route('main');
     });
     this.route('location', function() {
       this.route('list', {
@@ -149,6 +167,31 @@ Router.map(function() {
         });
       this.route('new');
       this.route('guideNew');
+    });
+
+    this.route('user', function() {
+      this.route('list');
+      this.route('detail', {
+        path: 'detail/:id'
+      });
+      this.route('edit', {
+        path: 'edit/:id'
+      });
+      this.route('new');
+      this.route('my');
+    });
+
+    this.route('manageNetwork', function() {
+      this.route('list');
+      this.route('new', {
+        path: 'new/:id',
+      });
+      this.route('edit', {
+        path: 'edit/:id'
+      });
+      this.route('detail', {
+        path: 'detail/:id'
+      });
     });
   });
   this.route('login');

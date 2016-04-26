@@ -1,26 +1,52 @@
 <div class="panel panel-default">
-	<div class="panel-body" style="padding: 60px;">
-		<div >
+	<div class="panel-body" style="padding: 0px;">
+		
+		<div id="div_silde" class="carousel slide">
+		   <ol class="carousel-indicators">
+		      <li data-target="#div_silde" data-slide-to="0" class="active"></li>
+		      <li data-target="#div_silde" data-slide-to="1"></li>
+		      <li data-target="#div_silde" data-slide-to="2"></li>
+		   </ol>   
+		   <div class="carousel-inner">
+		      <div class="item active">
+		         <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="400" src="./image/slide/cloudboot_anima1.html"></iframe>
+		      </div>
+		      <div class="item">
+		         <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="400" src="./image/slide/cloudboot_anima2.html"></iframe>
+		      </div>
+		      <div class="item">
+		         <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="400" src="./image/slide/cloudboot_anima3.html"></iframe>
+		      </div>
+		   </div>
+		   <!--
+		   <a class="carousel-control left" href="#div_silde" 
+		      data-slide="prev">&lsaquo;</a>
+		   <a class="carousel-control right" href="#div_silde" 
+		      data-slide="next">&rsaquo;</a>
+		   -->
+		</div> 
+		<script type="text/javascript">
+			$('#div_silde').carousel({
+			  interval: 5000
+			});
+		</script>
+		{{!-- {{#if (not-eq report.Count 0)}}
+		<div>
 			<div id="div_chart" style="height:400px"></div>
 			<script type="text/javascript">
+					var companyData = {{model.companyData}}
+					var osData = {{model.osData}}
 			        var myChart = echarts.init(document.getElementById("div_chart"));
 			        var option = {
 					    title : {
-					        text: 'IDCOS 物理机装机平台数据统计',
-					        subtext: "累计使用 180 天\n累计安装 20000 台",
+					        text: 'CloudBoot 云启装机平台数据统计',
+					        subtext: "累计安装 {{report.Count}} 台/次",
 					        x:'center'
 					    },
 					    tooltip : {
 					        trigger: 'item',
 					        formatter: "{a} <br/>{b} : {c} ({d}%)"
 					    },
-					    /*
-					    legend: {
-					        orient : 'vertical',
-					        x : 'left',
-					        data:['安装失败(100)','等待安装(2000)','正在安装(1000)','安装成功(4999)']
-					    },
-					    */
 					    toolbox: {
 					        show : true,
 					        feature : {
@@ -49,27 +75,14 @@
 					            type:'pie',
 					            radius : '55%',
 					            center: ['25%', '60%'],
-					            data:[
-					            	{value:9000, name:'H3C(9000)'},
-					                {value:4000, name:'惠普(4000)'},
-					                {value:2000, name:'华为(2000)'},
-					                {value:1000, name:'Dell(1000)'},
-					                {value:2000, name:'联想(2000)'},
-					                {value:1000, name:'IBM(1000)'},
-					                {value:1000, name:'宝德(1000)'},
-					            ]
+					            data:companyData
 					        },
 					        {
 					            name:'',
 					            type:'pie',
 					            radius : '55%',
 					            center: ['75%', '60%'],
-					            data:[
-					            	{value:8000, name:'RedHat(8000)'},
-					                {value:4000, name:'SuSE(4000)'},
-					                {value:6000, name:'Windows(6000)'},
-					                {value:2000, name:'VMware(2000)'}
-					            ]
+					            data:osData
 					        }
 					    ]
 					};           
@@ -77,62 +90,100 @@
 			    </script>
 			</div>
 			<br><br>
+			{{/if}} --}}
 			<div>
-				<h4 style="color:#0088cc">支持厂商及型号</h4>
-				<div class="rows">
-					<div class="col-md-1">
-						{{#link-to "dashboard.hardware.list"}}
-						<img src="image/h3c.png" />
+				<h4 style="color:#A0A5AC">支持设备厂商</h4>
+				<div class="rows" style="text-align: center;">
+					<ul class="list-inline brand-ul" style="display: inline-block;">
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="128" height="128" src="image/logo/huawei.png" />
 						{{/link-to}}
-					</div>
+					  </li>
 
-					<!--
-					<div class="col-md-2">
-						{{#link-to "dashboard.hardware.list"}}
-						<img style="margin-top: 13px;" width="109" height="33" src="image/inspur.jpg" />
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img src="image/logo/h3c.png" width="128" height="128" />
 						{{/link-to}}
-					</div>
-					-->
+					  </li>
 
-					<div class="col-md-1" style="margin-right: 30px;">
-						{{#link-to "dashboard.hardware.list"}}
-						<img src="image/dell.png" />
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="150" height="99" src="image/logo/inspur.png" />
 						{{/link-to}}
-					</div>
+					  </li>
 
-					<div class="col-md-2">
-						{{#link-to "dashboard.hardware.list"}}
-						<img style="margin-top: 13px;" width="109" height="33" src="image/huawei.png" />
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img src="image/logo/dell.png" width="128" height="128" />
 						{{/link-to}}
-					</div>
-
-					
-
-					<div class="col-md-2">
-						{{#link-to "dashboard.hardware.list"}}
-						<img style="margin-top: 12px;" src="image/lenovo.png" />
+					  </li>
+					  
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="128" height="99" src="image/logo/lenovo.png" />
 						{{/link-to}}
-					</div>
-
-
-					<div class="col-md-1" style="margin-left: 10px;">
-						{{#link-to "dashboard.hardware.list"}}
-						<img style="margin-top: 5px;" src="image/hp.png" />
+					  </li>
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="128" height="128" src="image/logo/hp.png" />
 						{{/link-to}}
-					</div>
-					
-					<div class="col-md-1" style="margin-right: 30px;">
-						{{#link-to "dashboard.hardware.list"}}
-						<img style="margin-top: 7px;" src="image/ibm.png" />
+					  </li>
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="128" height="128" src="image/logo/ibm.png" />
 						{{/link-to}}
-					</div>
-					
+					  </li>
+					  <li>
+					  	{{#link-to "dashboard.hardware.list"}}
+						<img width="128" height="99" src="image/logo/powerleader.png" />
+						{{/link-to}}
+					  </li>
+					 	
+					</ul>
+				</div>
+			</div>
+			<br>
+			<div>
+				<h4 style="color:#A0A5AC">支持应用系统</h4>
+				<div class="rows" style="text-align: center;">
+					<ul class="list-inline os-ul" style="display: inline-block;">
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="151" height="100" src="image/logo/redhat.png" />
+						{{/link-to}}
+					  </li>
 
-					<div class="col-md-1" style="margin-left: 20px;">
-						{{#link-to "dashboard.hardware.list"}}
-						<img src="image/powerleader.png" />
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="141" height="100" src="image/logo/centos.png" />
 						{{/link-to}}
-					</div>
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="100" height="100" src="image/logo/suse.png" />
+						{{/link-to}}
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="151" height="65" src="image/logo/ubuntu.png" />
+						{{/link-to}}
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="178" height="100" src="image/logo/windowsserver.png" />
+						{{/link-to}}
+					  </li>
+
+					  <li>
+					  	{{#link-to "dashboard.os.list"}}
+						<img width="155" height="100" src="image/logo/vmware.png" />
+						{{/link-to}}
+					  </li>
+					</ul>
 				</div>
 			</div>
 	</div>

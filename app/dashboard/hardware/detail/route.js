@@ -11,7 +11,6 @@ export default Ember.Route.extend({
     setupController: function(controller, model) {
         if(!Ember.isEmpty(model.info.Data)){
             model.info.FormatData = $.parseJSON(model.info.Data);
-            console.log(model.info.FormatData);
         }
     	//model.info.FormatTpl = $.parseJSON(model.info.Tpl);
     	

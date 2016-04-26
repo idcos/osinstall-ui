@@ -1,0 +1,99 @@
+<div class="panel panel-default">
+    {{!-- <div class="panel-heading">
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>用户管理</li>
+            <li class="active">用户详情</li>
+        </ol>
+    </div> --}}
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="20%"><label for="Network">ID</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{model.info.ID}}</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="active" align="right" width="20%"><label for="Name">用户名</label></td>
+					<td width="80%">
+						<div class="col-md-5">
+						{{model.info.Username}}
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="active" align="right"><label for="Pxe">姓名</label></td>
+					<td colspan=3>
+						<div class="col-md-12">
+						{{model.info.Name}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label for="Pxe">手机号</label></td>
+					<td colspan=3>
+						<div class="col-md-12">
+						{{model.info.PhoneNumber}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label for="Pxe">角色</label></td>
+					<td colspan=3>
+						<div class="col-md-12">
+							{{#if (eq "Administrator" model.info.Role)}}
+	                            <span class="text-danger font-size-14">超级管理员</span>
+	                        {{/if}}
+
+	                        {{#if (eq "User" model.info.Role)}}
+	                            普通用户
+	                        {{/if}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label for="Pxe">状态</label></td>
+					<td colspan=3>
+						<div class="col-md-12">
+							{{#if (eq "Enable" model.info.Status)}}
+								<span class="text-success font-size-14">正常</span>
+							{{/if}}
+
+							{{#if (eq "Disable" model.info.Status)}}
+								<span class="text-danger font-size-14">锁定</span>
+							{{/if}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label for="Pxe">添加时间</label></td>
+					<td colspan=3>
+						<div class="col-md-12">
+						{{model.info.CreatedAt}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label for="Pxe">最后更新时间</label></td>
+					<td colspan=3>
+						<div class="col-md-12">
+						{{model.info.UpdatedAt}}
+						</div>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+		<div class="text-center">
+			<button type="button" onclick="javascript:history.go(-1);" class="btn btn-default">返 回</button>
+		</div>
+    </div>
+</div>

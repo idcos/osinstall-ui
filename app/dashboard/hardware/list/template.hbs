@@ -1,52 +1,72 @@
 <div class="panel panel-default">
-    <div class="panel-heading paddingtop0">
-    	<!--
-        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
-        	<li>模板管理</li>
-            <li class="active">网段管理</li>
-        </ol>
-        -->
-        <div class="breadcrumb paddingtop3">
+	<div class="paddingtop10 paddingright15" style="float:right;">
+		{{#link-to "dashboard.hardware.import"}}<button type="button" class="btn btn-primary btn-xs">导入硬件配置</button>{{/link-to}}
+	</div>
+	
+	<!--
+    <div class="panel-heading paddingtop0" style="display:none">
+        <div class="breadcrumb paddingtop3 paddingleft0">
 	        <div style="float: left;">
-	        	<h5>硬件配置管理</h5>
+	        	<div class="panel-heading paddingleft0">
+                    <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+                        <li>模板管理</li>
+                        <li class="active">硬件配置模板管理</li>
+                    </ol>
+                </div>
 	        </div>
-	       	<!--
-	        <div style="float:right">
-	        	{{#link-to "dashboard.hardware.new"}}<button type="button" class="btn btn-primary">添加新硬件配置</button>{{/link-to}}
-	        </div>
-	        -->
 
 	        <div style="float:right; position: relative; top: 7px; left: 16px;">
 	        	{{#link-to "dashboard.hardware.import"}}<button type="button" class="btn btn-primary btn-xs">导入硬件配置</button>{{/link-to}}
 	        </div>
         </div>
-        
     </div>
+    -->
+
     <div class="panel-body">
-		<!--
-			<div class="text-right paddingbottom10">{{#link-to "dashboard.network.new"}}<button type="button" class="btn btn-primary">添加网段</button>{{/link-to}}</div>
-		-->
 		{{#common/io-form-validator submitForm="searchAction"}}
 		<form class="form-horizontal">
+			{{#if (eq model.lastestVersion null)}}
+				{{#if model.currentVersion.Version}}
+					<div style="margin-bottom: 20px;text-align: center;font-size: 13px;">
+						<span style="color: #FF0000">当前硬件配置库版本：{{model.currentVersion.Version}}({{model.currentVersion.Date}})
+						{{#if model.isLastestVersion}}
+							，已是最新版本
+						{{/if}}
+						{{#if model.versionMessage}}
+							，{{model.versionMessage}}
+						{{/if}}
+						</span>
+					</div>
+				{{/if}}
+			{{/if}}
+			{{#if model.lastestVersion}}
+			<div style="margin-bottom: 20px;text-align: center;font-size: 13px;">
+				<span style="color: #FF0000">提示：有新版本的硬件配置库({{model.lastestVersion.Version}} {{model.lastestVersion.Date}})可更新。</span>
+				<button {{action "onlineUpdateAction"}} type="button" class="btn btn-primary btn-xs">点击按钮在线更新</button>
+				(注:只更新系统配置，用户自己添加的配置不会被修改)
+			</div>
+			{{/if}}
+
 		<div style="margin-bottom: 10px;">
-			<table class="table table-bordered">
+			<table class="table no-border">
 			<tbody>
 				<tr>
-					<td width="15%" class="active" align="right"><b>搜索</b></td>
+					<td width="15%" align="right">搜索</td>
 					<td width="85%" colspan=3>
 
 							<div class="col-md-3">
 								{{view "select" class="form-control" prompt="--请选择厂商--"
 			 content=model.companyData value=Company optionValuePath="content.Company" optionLabelPath="content.Company" }}
 							</div>
-
+							<!--
 							<div class="col-md-3">
 								{{view "select" class="form-control" prompt="--请选择产品名称--"
 			 content=model.productData value=Product optionValuePath="content.Product" optionLabelPath="content.Product" }}
 							</div>
+							-->
 
 							<div class="col-md-3">
-								{{view "select" class="form-control" prompt="--请选择服务器型号--"
+								{{view "select" class="form-control" prompt="--请选择产品型号--"
 			 content=model.modelNameData value=ModelName optionValuePath="content.ModelName" optionLabelPath="content.ModelName" }}
 							</div>
 						
@@ -66,11 +86,11 @@
         <table class="table  big">
             <thead>
                 <tr>
-                	<th>ID</th>
-                    <th>服务器厂商</th>
-                    <th>产品名称</th>
-                    <th>服务器型号</th>
-                    <th class="text-center" width="300px;">操作</th>
+                	<th width="10%">ID</th>
+                    <th width="30%">服务器厂商</th>
+                    <!--<th>产品名称</th>-->
+                    <th width="30%">产品型号</th>
+                    <th width="30%">操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -78,24 +98,31 @@
                 <tr>
                 	<td>{{#link-to "dashboard.hardware.detail" item.ID}}{{item.ID}}{{/link-to}}</td>
 					<td>{{item.Company}}</td>
-					<td>{{item.Product}}</td>
+					<!--<td>{{item.Product}}</td>-->
 					<td>{{item.ModelName}}</td>
 					<td>
-						{{#link-to "dashboard.hardware.new" item.ID}}<button type="button" class="btn btn-xs btn-default">克隆</button>{{/link-to}}
+						{{#link-to "dashboard.hardware.new" item.ID}}<i title="克隆" class="io-fa icon-copy"></i>{{/link-to}}
 						{{#if (eq "Yes" item.IsSystemAdd)}}
+						&nbsp;&nbsp;
 						<span class="text-danger">非用户添加的配置不允许修改删除</span>
 						{{/if}}
+
 						{{#if (eq "No" item.IsSystemAdd)}}
-						{{#link-to "dashboard.hardware.edit" item.ID}}<button type="button" class="btn btn-xs btn-default">修改</button>{{/link-to}}
-						<button type="button" {{action "deleteAction" item.ID}} class="btn btn-xs btn-default">删除</button>
-						{{/if}}
+	                        &nbsp;&nbsp;
+	                        {{#link-to "dashboard.hardware.edit" item.ID}}<i title="修改" class="io-fa icon-edit"></i>{{/link-to}}
+	                        &nbsp;&nbsp;
+	                        <a style="" href="javascript:void(0);" {{action "deleteAction" item.ID}}><i title="删除" class="io-fa icon-delete"></i></a>
+                        {{/if}}
+
 					</td>
 				</tr>
 				{{/each}}
             </tbody>
         </table>
         <div class="padding10">
-            {{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+        	{{#if (not-eq 1 pageCount)}}
+            	{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+            {{/if}}
         </div>
     </div>
 </div>

@@ -1,10 +1,10 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
+    {{!-- <div class="panel-heading">
         <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
         	<li>网段管理</li>
             <li class="active">网段详情</li>
         </ol>
-    </div>
+    </div> --}}
     <div class="panel-body">
         <table class="table table-bordered">
 			<tbody>
@@ -34,23 +34,25 @@
 						<div class="col-md-5">{{model.info.Gateway}}</div>
 					</td>
 				</tr>
-
+				
+				<!--
 				<tr>
 					<td class="active" align="right"><b>vlan</b></td>
 					<td>
 						<div class="col-md-5">{{model.info.Vlan}}</div>
 					</td>
 				</tr>
+				-->
 
 				<tr>
-					<td class="active" align="right"><b>trunk</b></td>
+					<td class="active" align="right">trunk</td>
 					<td>
 						<div class="col-md-5">{{model.info.Trunk}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><b>bonding</b></td>
+					<td class="active" align="right">bonding</td>
 					<td>
 						<div class="col-md-5">{{model.info.Bonding}}</div>
 					</td>

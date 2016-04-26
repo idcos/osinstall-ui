@@ -1,18 +1,20 @@
 <div class="panel panel-default">
-	<!--
-    <div class="panel-heading">
-        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
-        	<li>装机管理</li>
-            <li class="active">录入新设备</li>
-        </ol>
-    </div>
-    -->
     <div class="panel-body">
-	    <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
-        	<li>设备列表</li>
-            <li class="active">设备详情</li>
-        </ol>
+    	
+	   	<ul class="nav nav-tabs nav-tabs-bare">
+			<li class="active">{{#link-to "dashboard.device.detail" item.ID}}查看设备信息{{/link-to}}</li>
+			{{#if model.manufacturer}}
+				{{#if (eq model.manufacturer.Sn item.Sn)}}
+			    <li>{{#link-to "dashboard.device.manufacturer" item.ID}}查看硬件信息{{/link-to}}</li>
+			    {{/if}}
+		    {{/if}}
+
+		    {{#if model.callbackList.list}}
+				<li>{{#link-to "dashboard.device.callback.list" item.ID}}查看脚本执行信息{{/link-to}}</li>
+		    {{/if}}
+		</ul>
 		<br>
+		
         <table class="table table-bordered">
 			<tbody>
 				<tr>
@@ -43,23 +45,26 @@
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>IP</label></td>
+					<td class="active" align="right"><label>应用IP</label></td>
 					<td>
 						<div class="col-md-5">
-							{{item.Ip}}
+							{{item.Ip}} (网段:{{item.NetworkName}})
 						</div>
 					</td>
 				</tr>
-
 
 				<tr>
-					<td class="active" align="right"><label>匹配到网段</label></td>
+					<td class="active" align="right"><label>管理IP</label></td>
 					<td>
 						<div class="col-md-5">
-							{{item.NetworkName}}
+							{{item.ManageIp}}
+							{{#if item.ManageNetworkName}}
+							(网段:{{item.ManageNetworkName}})
+							{{/if}}
 						</div>
 					</td>
 				</tr>
+
 
 				<tr>
 					<td class="active" align="right"><label>操作系统</label></td>
@@ -115,15 +120,15 @@
 							{{/if}}
 
 							{{#if (eq "installing" item.Status)}}
-								<span class="text-info">正在安装</span>
+								<span class="text-info font-size-14">正在安装</span>
 							{{/if}}
 
 							{{#if (eq "success" item.Status)}}
-								<span class="text-success">安装成功</span>
+								<span class="text-success font-size-14">安装成功</span>
 							{{/if}}
 
 							{{#if (eq "failure" item.Status)}}
-								<span class="text-danger">安装失败</span>
+								<span class="text-danger font-size-14">安装失败</span>
 							{{/if}}
 						</div>
 					</td>
@@ -157,9 +162,10 @@
 						</div>
 					</td>
 				</tr>
-
+				
+				<!--
 				<tr>
-					<td class="active" align="right"><label>是否支持安装虚拟机</label></td>
+					<td align="right"><label>是否支持安装虚拟机</label></td>
 					<td>
 						<div class="col-md-5">
 							{{#if (eq "Yes" item.IsSupportVm)}}
@@ -172,10 +178,7 @@
 						</div>
 					</td>
 				</tr>
-
-
-
-
+				-->
 
 				<tr>
 					<td class="active" align="right"><label>添加时间</label></td>
@@ -199,9 +202,14 @@
 		</table>
 
 		<div class="text-center">
-			
-	        {{#link-to "dashboard.device.edit" item.ID}}<button type="button" class="btn btn-default">修改设备信息</button>{{/link-to}}
-			
+			{{#if model.hasPurviewOperation}}
+				{{#if (not-eq "success" item.Status)}}
+					{{#if (not-eq "installing" item.Status)}}
+		        		{{#link-to "dashboard.device.edit" item.ID}}<button type="button" class="btn btn-default">修改设备信息</button>{{/link-to}}
+		        		&nbsp;&nbsp;
+		        	{{/if}}
+				{{/if}}
+			{{/if}}
 	
 			<button type="button" class="btn btn-default" onclick="javascript:history.go(-1);">返回</button>
 		</div>

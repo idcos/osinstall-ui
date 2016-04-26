@@ -73,12 +73,29 @@ export default Ember.Service.extend({
         });
     },
 
-    getModelNameByCompanyAndProductAndGroup : function(company,product) {
+    getModelNameByCompanyAndGroup : function(company,isSystemAdd) {
+        var url = "/api/osinstall/v1/hardware/getModelNameByWhereAndGroup";
+		//生成发请求数据对象
+		var data = {};
+		data.Company = company;
+		data.IsSystemAdd = isSystemAdd;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    getModelNameByCompanyAndProductAndGroup : function(company,product,isSystemAdd) {
         var url = "/api/osinstall/v1/hardware/getModelNameByWhereAndGroup";
 		//生成发请求数据对象
 		var data = {};
 		data.Company = company;
 		data.Product = product;
+		data.IsSystemAdd = isSystemAdd;
 
 		//发送ajax请求
         return ajax({
@@ -150,6 +167,34 @@ export default Ember.Service.extend({
 		if(!Ember.isEmpty(isSystemAdd)){
 			data.IsSystemAdd = isSystemAdd;
 		}
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    checkOnlineUpdate : function() {
+        var url = "/api/osinstall/v1/hardware/checkOnlineUpdate";
+		//生成发请求数据对象
+		var data = {};
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    runOnlineUpdate : function() {
+        var url = "/api/osinstall/v1/hardware/runOnlineUpdate";
+		//生成发请求数据对象
+		var data = {};
 
 		//发送ajax请求
         return ajax({

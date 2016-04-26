@@ -1,11 +1,12 @@
 <div class="panel panel-default">
-	
+	<!--
     <div class="panel-heading">
         <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
         	<li>装机管理</li>
             <li class="active">修改设备信息</li>
         </ol>
     </div>
+    -->
    	
 	{{#common/io-form-validator submitForm="saveAction"}}
 	<form class="form-horizontal">
@@ -14,93 +15,159 @@
     	{{#if (eq true isMultiDevice)}}
     	<h5>第 {{int-add index 1}} 台：</h5>
     	{{/if}}
-        <table class="table table-bordered">
+        <table class="table no-border">
 			<tbody>
 				<tr>
-					<td class="active" align="right" width="20%"><label class="required">SN</label></td>
+					<td align="right" width="20%"><label class="required">SN</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{item.Sn}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label class="required">主机名</label></td>
+					<td align="right"><label class="required">主机名</label></td>
 					<td>
 						<div class="col-md-5">{{input value=item.Hostname required=true type="text" class="form-control input-md"}}</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label class="required">IP</label></td>
+					<td align="right"><label class="required">应用IP</label></td>
 					<td>
 						<div class="col-md-5">
 							{{input type="text" value=item.Ip required=true class="form-control input-md"}}
 						</div>
-						<div class="col-md-5" style="margin-top: 5px;">
+						<div class="col-md-7" style="margin-top: 5px; font-size: 12px;">
 							{{html-safe item.messageIp}}
+							{{#if item.isShowNetworkInfo}}
+								<span class="text-success" style="margin-left: 10px;">
+								匹配到网段:{{item.Network}}
+								</span>
+							{{/if}}
 						</div>
 					</td>
 				</tr>
 
-				{{#if item.isShowNetworkInfo}}
 				<tr>
-					<td class="active" align="right"><b>匹配到网段</b></td>
+					<td align="right"><label>管理IP</label></td>
 					<td>
 						<div class="col-md-5">
-							{{item.Network}}
+							{{input type="text" value=item.ManageIp class="form-control input-md"}}
+						</div>
+						<div class="col-md-7" style="margin-top: 5px; font-size: 12px;">
+							{{html-safe item.messageManageIp}}
+							{{#if item.isShowManageNetworkInfo}}
+								<span class="text-success" style="margin-left: 10px;">
+								匹配到网段:{{item.ManageNetwork}}
+								</span>
+							{{/if}}
+
+							{{#if (eq "" item.messageManageIp)}}
+								带外管理IP。<a href="javascript:void(0)" {{action "toggleModal"}}>点击此处查看使用方法>></a>
+							{{/if}}
 						</div>
 					</td>
 				</tr>
-				{{/if}}
+
+				
 
 				<tr>
-					<td class="active" align="right"><label class="required">操作系统</label></td>
+					<td align="right"><label class="required">操作系统</label></td>
 					<td>
 						<div class="col-md-5">
 							{{view "select" required=true class="form-control" prompt="请选择操作系统"
  content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
 						</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								请提前在【模板管理】->【操作系统管理】里录入操作系统信息
+							</span>
+						</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>硬件配置模板</label></td>
+					<td align="right"><label>硬件配置模板</label></td>
 					<td>
 						<div class="col-md-5">
 							{{view "select" class="form-control" prompt="请选择硬件配置模板"
  content=model.hardwareData value=item.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
 						</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								请提前在【模板管理】->【硬件配置模板管理】里录入配置信息
+							</span>
+						</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label class="required">系统安装模板</label></td>
+					<td align="right"><label class="required">系统安装模板</label></td>
 					<td>
 						<div class="col-md-5">
 							{{view "select" required=true class="form-control" prompt="请选择系统安装模板"
  content=model.systemConfigData value=item.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
 						</div>
-					</td>
-				</tr>
-
-				<tr>
-					<td class="active" align="right"><label class="required">位置</label></td>
-					<td>
-						<div class="col-md-5">
-							{{view "select" required=true class="form-control" prompt="请选择位置" content=model.locationTree value=item.LocationID optionValuePath="content.ID" optionLabelPath="content.ShowName" }}
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								请提前在【模板管理】->【系统模板管理】里录入系统模板信息
+							</span>
 						</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label>财编</label></td>
+					<td align="right"><label class="required">位置</label></td>
 					<td>
-						<div class="col-md-5">{{input type="text" value=item.AssetNumber class="form-control input-md"}}</div>
+						<div class="col-md-5">
+							{{view "select" required=true class="form-control" prompt="请选择位置" content=model.locationTree value=item.LocationID optionValuePath="content.ID" optionLabelPath="content.ShowName" }}
+						</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								请提前在【模板管理】->【位置管理】里录入位置信息
+							</span>
+						</div>
 					</td>
 				</tr>
 
+				<tr>
+					<td align="right"><label>财编</label></td>
+					<td>
+						<div class="col-md-5">{{input type="text" value=item.AssetNumber class="form-control input-md"}}</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								资产编号，可自定义
+							</span>
+						</div>
+					</td>
+				</tr>
+				
+				<!--
+				<tr>
+					<td align="right"><label>装机完执行脚本</label></td>
+					<td>
+						<div class="col-md-8">
+						{{textarea placeholder="填写标准的shell脚本,支持以下占位符:
+SN:<{sn}>
+主机名:<{hostname}>
+IP:<{ip}>
+网关:<{gateway}>
+掩码:<{netmask}>
+管理IP:<{manage_ip}>
+管理网关:<{manage_gateway}>
+管理掩码:<{manage_netmask}>
+" value=item.Callback rows="9" class="form-control input-md"}}
+						</div>
+						<div class="col-md-4" style="margin-top: 5px;">
+							<span class="text-muted">
+								装机完成后，此脚本会在CloudBoot服务器中执行，而非要安装操作系统的服务器中
+							</span>
+						</div>
+					</td>
+				</tr>
+				
 				<tr style="display:none">
-					<td class="active" align="right"><label class="required">是否支持安装虚拟机</label></td>
+					<td align="right"><label class="required">是否支持安装虚拟机</label></td>
 					<td>
 						<div class="col-md-5">
 							{{view "select" required=true class="form-control" prompt="请选择"
@@ -108,6 +175,7 @@
 						</div>
 					</td>
 				</tr>
+				-->
 
 			</tbody>
 		</table>
@@ -116,6 +184,7 @@
 		
 		<div class="text-center">
 	        <button type="submit" class="btn btn-primary">提 交</button>
+	        &nbsp;&nbsp;
 	        <button type="button" onclick="javascript:history.go(-1);" class="btn btn-default">取　消</button>
 		</div>
 
@@ -124,3 +193,31 @@
     </form>
 	{{/common/io-form-validator}}
 </div>
+
+{{#common/io-modal show=isShowingModal close="toggleModal"}}
+<div class="modal fade" data-backdrop="static">
+  <div class="modal-dialog" style="width:700px;height:600px;">
+    <div class="modal-content">
+      <div class="modal-header">
+				<button type="button" class="close" {{action "toggleModal"}}>×</button>
+				<h4 class="modal-title">信息提示</h4>
+			</div>
+      <div style="margin-left: 12px; margin-top: 10px; margin-bottom: 10px;">
+        1、请提前在【网段管理】->【管理网段管理】里录入网段信息。
+        <br><br>
+        2、录入管理IP，提交。<br><br>
+        3、在设备型号页面修改OOB配置项，填写如下IP、Netmask、Gateway占位符：<br>
+        <img src="./image/oob_static_ip.png" width="560px" height="142px" /> <br>
+        <span style="font-size: 12px;">
+        如：{{html-safe "/opt/yunji/osinstall/dell/oob.sh -n static -i <{manage_ip}> -m <{manage_netmask}> -g <{manage_gateway}>"}}
+        </span> <br><br>
+        4、获取硬件配置的接口，会自动替换为如下信息：<br>
+        <span style="font-size: 12px;">/opt/yunji/osinstall/dell/oob.sh -n static -i 192.168.100.2 -m 255.255.255.0 -g 192.168.100.1</span>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-default" {{action "toggleModal"}}  data-dismiss="modal">返回</a>
+      </div>
+    </div>
+  </div>
+</div>
+{{/common/io-modal}}
