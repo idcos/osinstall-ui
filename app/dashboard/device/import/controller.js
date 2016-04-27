@@ -1,11 +1,31 @@
 import Ember from 'ember';
 import uploadFn from 'ui/utils/file-uploader';
+import ajaxUploadFile from 'ui/components/common/io-file-upload/ajax-file-upload';
 
 export default Ember.Controller.extend({
 	actions:{
 		saveAction:function(){
 			var self = this;
 			var files = $('.file-uploader')[0].files;
+
+               ajaxUploadFile({
+                    url: '/api/osinstall/v1/device/upload',
+                    fileElement: $('.file-uploader')[0],
+                    data: {
+                         a: 'hello'
+                    },
+                    onStart() {
+                         console.log('onStart');
+                    },
+                    onSuccess(response) {
+                         console.log('onSuccess', response);
+                    },
+                    onError(err) {
+                         console.log('onError', ev);
+                    }
+               });
+
+               return;
                if(files.length <= 0){
                     Ember.$.notify({
                               title: "<strong>上传失败:</strong>",
