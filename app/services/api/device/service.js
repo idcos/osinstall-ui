@@ -416,4 +416,19 @@ export default Ember.Service.extend({
         });
     },
 
+    getInstallCallbackList : function(deviceId) {
+        var url = "/api/osinstall/v1/device/callback/list";
+		//生成发请求数据对象
+		var data = {};
+		data.DeviceId = parseInt(deviceId)
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
 });

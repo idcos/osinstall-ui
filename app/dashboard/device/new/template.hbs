@@ -170,6 +170,29 @@
 				</tr>
 				
 				<!--
+				<tr>
+					<td align="right"><label>装机完执行脚本</label></td>
+					<td>
+						<div class="col-md-8">
+						{{textarea placeholder="填写标准的shell脚本,支持以下占位符:
+SN:<{sn}>
+主机名:<{hostname}>
+IP:<{ip}>
+网关:<{gateway}>
+掩码:<{netmask}>
+管理IP:<{manage_ip}>
+管理网关:<{manage_gateway}>
+管理掩码:<{manage_netmask}>
+" value=item.Callback rows="9" class="form-control input-md"}}
+						</div>
+						<div class="col-md-4" style="margin-top: 5px;">
+							<span class="text-muted">
+								装机完成后，此脚本会在CloudBoot服务器中执行，而非要安装操作系统的服务器中
+							</span>
+						</div>
+					</td>
+				</tr>
+				
 				<tr style="display: none">
 					<td align="right"><label class="required">是否支持安装虚拟机</label></td>
 					<td>

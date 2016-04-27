@@ -1,0 +1,62 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div>
+			<div id="div_chart" style="height:400px"></div>
+			<script type="text/javascript">
+					var companyData = {{model.companyData}}
+					var osData = {{model.osData}}
+			        var myChart = echarts.init(document.getElementById("div_chart"));
+			        var option = {
+					    title : {
+					        text: 'CloudBoot 云启装机平台数据统计',
+					        subtext: "累计安装 {{report.Count}} 台/次",
+					        x:'center'
+					    },
+					    tooltip : {
+					        trigger: 'item',
+					        formatter: "{a} <br/>{b} : {c} ({d}%)"
+					    },
+					    toolbox: {
+					        show : true,
+					        feature : {
+					            mark : {show: true},
+					            dataView : {show: true, readOnly: false},
+					            magicType : {
+					                show: true, 
+					                type: ['pie', 'funnel'],
+					                option: {
+					                    funnel: {
+					                        x: '25%',
+					                        width: '50%',
+					                        funnelAlign: 'left',
+					                        max: 1548
+					                    }
+					                }
+					            },
+					            restore : {show: true},
+					            saveAsImage : {show: true}
+					        }
+					    },
+					    calculable : true,
+					    series : [
+					        {
+					            name:'',
+					            type:'pie',
+					            radius : '55%',
+					            center: ['25%', '60%'],
+					            data:companyData
+					        },
+					        {
+					            name:'',
+					            type:'pie',
+					            radius : '55%',
+					            center: ['75%', '60%'],
+					            data:osData
+					        }
+					    ]
+					};           
+			        myChart.setOption(option);
+			    </script>
+			</div>
+	</div>
+</div>

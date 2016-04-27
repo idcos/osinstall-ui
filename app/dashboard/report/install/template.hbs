@@ -60,13 +60,37 @@
 						</div>
 					</td>
 				</tr>
+
+				<tr>
+					<td class="active" align="right" width="20%"><label>硬件配置模板</label></td>
+					<td width="80%">
+						<div class="col-md-8">
+							<table class="table table-hover no-light-title">
+			                    <thead>
+				                    <tr>
+				                      <th width="50%">硬件配置模板</th>
+				                      <th width="50%">安装台/次</th>
+				                    </tr>
+			                    </thead>
+			                    <tbody>
+			                    	{{#each report.HardwareReport as |item index|}}
+									<tr>
+										<td>{{item.HardwareName}}</td>
+										<td>{{item.Count}}</td>
+									</tr>
+									{{/each}}
+			                    </tbody>
+		                    </table>
+						</div>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 
 		<div class="text-center">
 			<input id="btnCopy" class="btn btn-primary" type="button" data-clipboard-text="{{strReport}}" value="复制到剪贴板">
 			&nbsp;&nbsp;
-			<button {{action "reportAction"}} type="button" class="btn btn-primary">分享给X86开发组</button> &nbsp;&nbsp;
+			<button {{action "reportAction"}} type="button" class="btn btn-primary">分享给CloudBoot开发组</button> &nbsp;&nbsp;
 
 			<button type="button" class="btn btn-default" onclick="javascript:history.go(-1);">返回</button>
 		</div>
@@ -78,6 +102,6 @@
 	ZeroClipboard.config( { swfPath: '/clipboard/ZeroClipboard.swf' } );
 	var clip = new ZeroClipboard( document.getElementById("btnCopy") );
 	clip.on( "aftercopy", function( event ) {
-	    alert("复制成功，请粘贴分享给X86开发组!");
+	    alert("复制成功，请粘贴分享给CloudBoot开发组!");
   	});
 </script>

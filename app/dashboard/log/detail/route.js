@@ -1,7 +1,12 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
-	deviceLogSrv: Ember.inject.service('api/device-log/service'),
+import breadCrumbMixin from '../../../mixins/bread-crumb-mixin';
+export default Ember.Route.extend(breadCrumbMixin,{
+    breadCrumb: {
+        title: "查看设备安装日志",
+        isShow:true,
+    },
+    deviceLogSrv: Ember.inject.service('api/device-log/service'),
 	model: function(params) {
         return Ember.RSVP.hash({
         	deviceId:params.deviceId,

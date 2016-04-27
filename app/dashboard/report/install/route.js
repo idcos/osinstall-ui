@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+import breadCrumbMixin from '../../../mixins/bread-crumb-mixin';
+export default Ember.Route.extend(breadCrumbMixin,{
+    breadCrumb: {
+        title: "装机统计报表",
+        isShow:true,
+    },
 	deviceSrv: Ember.inject.service('api/device/service'),
 	model: function(params) {
         return Ember.RSVP.hash({
@@ -26,6 +31,16 @@ export default Ember.Route.extend({
                 str += "\n\n操作系统:\n";
                 for(var i=0;i<data.OsReport.length;i++){
                     str += data.OsReport[i].OsName + ' ' + data.OsReport[i].Count + "台/次\n";
+                }
+             }
+
+             if(data.Count > 0 && data.HardwareReport.length > 0){
+                str += "\n\n硬件配置模板:\n";
+                for(var i=0;i<data.HardwareReport.length;i++){
+                    if(Ember.isEmpty(data.HardwareReport[i].HardwareName)){
+                        data.HardwareReport[i].HardwareName = '无模板信息';
+                    }
+                    str += data.HardwareReport[i].HardwareName + ' ' + data.HardwareReport[i].Count + "台/次\n";
                 }
              }
              controller.set("strReport",str);

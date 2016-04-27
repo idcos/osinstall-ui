@@ -1,0 +1,66 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+	   	<ul class="nav nav-tabs nav-tabs-bare">
+			<li>{{#link-to "dashboard.device.detail" item.ID}}查看设备信息{{/link-to}}</li>
+			{{#if model.manufacturer}}
+				{{#if (eq model.manufacturer.Sn item.Sn)}}
+			    <li>{{#link-to "dashboard.device.manufacturer" item.ID}}查看硬件信息{{/link-to}}</li>
+			    {{/if}}
+		    {{/if}}
+
+		    {{#if model.callbackList.list}}
+				<li class="active">{{#link-to "dashboard.device.callback.list" item.ID}}查看脚本执行信息{{/link-to}}</li>
+		    {{/if}}
+		</ul>
+
+		{{#each model.callbackList.list as |item index|}}
+		<br>
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="20%"><label>脚本类型</label></td>
+					<td width="80%">
+						<div class="col-md-5">
+							{{#if (eq item.CallbackType "after_install")}}
+								安装完执行
+							{{/if}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right" width="20%"><label>脚本内容</label></td>
+					<td width="80%">
+						<div class="col-md-5">
+							{{html-safe item.Content}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right" width="20%"><label>执行时间</label></td>
+					<td width="80%">
+						<div class="col-md-5">
+							{{item.RunTime}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right" width="20%"><label>执行结果</label></td>
+					<td width="80%">
+						<div class="col-md-12">
+							{{html-safe item.RunResult}}
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		{{/each}}
+
+		<div class="text-center">
+			<button type="button" class="btn btn-default" onclick="javascript:history.go(-1);">返回</button>
+		</div>
+
+    </div>
+</div>

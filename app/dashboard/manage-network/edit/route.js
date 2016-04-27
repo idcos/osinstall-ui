@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+import breadCrumbMixin from '../../../mixins/bread-crumb-mixin';
+export default Ember.Route.extend(breadCrumbMixin,{
+    breadCrumb: {
+        title: "修改管理网段",
+        isShow:true,
+    },
 	networkSrv: Ember.inject.service('api/manageNetwork/service'),
 	model: function(params) {
         return Ember.RSVP.hash({id:params.id,
