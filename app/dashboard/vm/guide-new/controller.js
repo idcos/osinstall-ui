@@ -22,7 +22,6 @@ export default Ember.Controller.extend({
     searchForm:{Status:"success",Keyword:null},
 	selectAllDevice:true,
 	currentDeviceIndex:0,
-    isShowMultiSearchBlock:false,
 
 	selectAllDeviceChange: function() {
             var self = this;
@@ -438,12 +437,6 @@ export default Ember.Controller.extend({
                 }
             });
         },
-		showMultiSearchBlockAction:function(){
-			set(this,'isShowMultiSearchBlock',true);
-		},
-		hideMultiSearchBlockAction:function(){
-			set(this,'isShowMultiSearchBlock',false);
-		},
         searchBatchNumberAction:function(batchNumber){
             //set(this,'form.BatchNumber',batchNumber);
             var keyword = this.get("form.Keyword");
