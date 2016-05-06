@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
     userSrv: Ember.inject.service('api/user/service'),
 	page:1,
 	pageCount:1,
-	pageSize:7,
+	pageSize:20,
 	form:{Status:null,OsID:null,HardwareID:null,SystemID:null,Keyword:null,BatchNumber:null},
 	isShowMultiSearchBlock:false, //是否显示复杂查询区块
 	isShowInstallInfoCol:false,
@@ -150,6 +150,15 @@ export default Ember.Controller.extend({
 			}else{
 				self.set('isShowInstallInfoCol',false);
 			}
+
+            if(!Ember.isEmpty(this.get("model.status")) && this.get("model.status") !== "all"){
+                var session = this.get("model.session");
+                if(!Ember.isEmpty(session)){
+                    if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                        form.UserID = session.ID;
+                    }
+                }
+            }
 
 			this.get("deviceSrv").list(pageSize,(page-1)*pageSize,form).then(function(data){
                 self.set('rowList', data.Content.list);

@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
 	userSrv: Ember.inject.service('api/user/service'),
 	page:1,
 	pageCount:1,
-	pageSize:7,
+	pageSize:20,
 	form:{Status:null,Keyword:null},
     selectAll:false,//是否全选
     isShowMultiSearchBlock:false, //是否显示复杂查询区块
