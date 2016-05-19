@@ -169,6 +169,44 @@ export default Ember.Controller.extend({
                 self.set('pageCount',pageCount);
             });
 		},
+
+        exportAction:function(){
+            var self = this;
+            var form = this.get("form");
+            var url = "?method=get";
+            if(!Ember.isEmpty(this.get("model.status")) && this.get("model.status") !== "all"){
+                var session = this.get("model.session");
+                if(!Ember.isEmpty(session)){
+                    if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                        form.UserID = session.ID;
+                        url += "&UserID="+form.UserID;
+                    }
+                }
+            }
+
+            if(!Ember.isEmpty(form.Keyword)){
+                url += "&Keyword="+form.Keyword;
+            }
+            if(!Ember.isEmpty(form.OsID)){
+                url += "&OsID="+form.OsID;
+            }
+            if(!Ember.isEmpty(form.HardwareID)){
+                url += "&HardwareID="+form.HardwareID;
+            }
+            if(!Ember.isEmpty(form.SystemID)){
+                url += "&SystemID="+form.SystemID;
+            }
+            if(!Ember.isEmpty(form.Status)){
+                url += "&Status="+form.Status;
+            }
+            if(!Ember.isEmpty(form.BatchNumber)){
+                url += "&BatchNumber="+form.BatchNumber;
+            }
+            this.get("deviceSrv").export(url);
+        },
+
+
+
         reInstallAction:function(){
             var self = this;
             var rowList = self.get("rowList");

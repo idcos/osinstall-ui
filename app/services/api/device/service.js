@@ -205,6 +205,18 @@ export default Ember.Service.extend({
     },
 
     /*
+    * 导出
+    */
+    export : function(param) {
+        var url = "/api/osinstall/v1/device/export";
+		if(!Ember.isEmpty(param)){
+        	url += param;
+        }
+		location.href = url;
+		return ;
+    },
+
+    /*
     * 获取列表
     */
     scanList : function(limit,offset,form) {
