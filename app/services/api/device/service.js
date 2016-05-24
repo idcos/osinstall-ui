@@ -333,6 +333,24 @@ export default Ember.Service.extend({
     },
 
     /*
+    * 批量删除
+    */
+    batchDeleteScanDevice : function(form) {
+        var url = "/api/osinstall/v1/device/scan/batchDelete";
+		//生成发请求数据对象
+		var data = {};
+		data = form;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    /*
     * 获取列表
     */
     getNumByStatus : function(status,userID) {

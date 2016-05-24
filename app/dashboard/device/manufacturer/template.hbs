@@ -28,16 +28,32 @@
 					</td>
 				</tr>
 
-				<!--
+				
 				<tr>
-					<td class="active" align="right"><label>IP</label></td>
+					<td class="active" align="right"><label>BootOS IP</label></td>
 					<td>
 						<div class="col-md-5">
-							{{item.Ip}}
+							{{#if (eq "installing" device.Status)}}
+								{{#if (lte 0 device.InstallProgress)}}
+									{{#if (gt 0.6 device.InstallProgress)}}
+										{{item.Ip}}
+									{{/if}}
+								{{/if}}
+							{{/if}}
+							
+							{{#if (eq "pre_install" device.Status)}}
+								{{#if (lte 0 device.InstallProgress)}}
+									{{#if (gt 0.6 device.InstallProgress)}}
+										{{item.Ip}}
+									{{/if}}
+								{{/if}}
+							{{/if}}
+							 (临时IP，仅在进入BootOS时有效)
 						</div>
 					</td>
 				</tr>
-
+				
+				<!--
 				<tr>
 					<td class="active" align="right"><label>Mac</label></td>
 					<td>

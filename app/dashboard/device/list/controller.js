@@ -140,6 +140,10 @@ export default Ember.Controller.extend({
             //console.log(this.get("form"));
 			this.send("pageChanged",this.get("page"));
 		},
+        pageSizeChanged:function(pageSize){
+            this.set("pageSize",pageSize);
+            this.send("pageChanged",this.get("page"));
+        },
 		pageChanged:function(page){
 			var self = this;
 			this.set("page",page);

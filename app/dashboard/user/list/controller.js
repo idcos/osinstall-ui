@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
 	userSrv: Ember.inject.service('api/user/service'),
 	page:1,
 	pageCount:1,
-	pageSize:10,
+	pageSize:20,
 
 	actions:{
 		queryAction:function(){

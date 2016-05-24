@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
 	locationSrv: Ember.inject.service('api/location/service'),
 	page:1,
 	pageCount:1,
-	pageSize:10,
+	pageSize:20,
 	pid:0,
 
 	actions:{

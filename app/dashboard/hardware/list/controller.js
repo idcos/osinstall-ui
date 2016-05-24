@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
 	hardwareSrv: Ember.inject.service('api/hardware/service'),
 	page:1,
 	pageCount:1,
-	pageSize:10,
+	pageSize:20,
     Company:null,
     Product:null,
     ModelName:null,

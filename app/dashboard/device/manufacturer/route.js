@@ -10,7 +10,8 @@ export default Ember.Route.extend(breadCrumbMixin,{
 	model: function(params) {
         return Ember.RSVP.hash({id:params.id,
 			info:this.get('deviceSrv').getScanByDeviceId(params.id).then(function(data){return data.Content;}),
-		});
+		    deviceInfo:this.get('deviceSrv').getFull(params.id).then(function(data){return data.Content;}),
+        });
     },
 
     setupController: function(controller, model) {
@@ -36,5 +37,6 @@ export default Ember.Route.extend(breadCrumbMixin,{
        		row.MotherboardFormat = $.parseJSON(row.Motherboard);
         }
     	controller.set("item",row);
+        controller.set("device",model.deviceInfo);
     }
 });

@@ -20,6 +20,8 @@ export default Ember.Component.extend({
   urlTemplate: '#',
   lastPage: alias('count'),
   count: 1,
+  pageSizeData:[{'key':20},{'key':50},{'key':100},{'key':500}],
+  pageSize:100,
 
   previousUrl: computed('urlTemplate', 'current', 'firstPage', function () {
     var urlTemplate = this.get('urlTemplate');
@@ -140,6 +142,10 @@ export default Ember.Component.extend({
     event.preventDefault();
   },
 
+  _pageSizeChanged: function() {
+    this.send('pageSizeChanged');
+  }.observes("pageSize"),
+
   actions: {
     next: function () {
       if (!this.get('isLast')) {
@@ -162,6 +168,13 @@ export default Ember.Component.extend({
     pageChanged: function (page, previous) {
       this.set('current', page);
       this.sendAction('change', page, previous);
+    },
+
+    pageSizeChanged: function () {
+      var pageSize = this.get('pageSize');
+      if(!Ember.isEmpty(pageSize) && pageSize > 0){
+        this.sendAction('pageSizeChange', pageSize);
+      }
     }
   }
 });

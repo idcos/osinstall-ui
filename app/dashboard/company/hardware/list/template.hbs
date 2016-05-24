@@ -79,13 +79,13 @@
 					<td>{{item.ModelName}}</td>
 					<td>
 						{{#if (eq "Pending" item.Status)}}
-							<span class="font-size-14">待审核</span>
+							<span>待审核</span>
 						{{/if}}
 						{{#if (eq "Success" item.Status)}}
-							<span class="text-success font-size-14">审核成功</span>
+							<span class="text-success">审核成功</span>
 						{{/if}}
 						{{#if (eq "Failure" item.Status)}}
-							<span class="text-danger font-size-14">审核失败</span>
+							<span class="text-danger">审核失败</span>
 						{{/if}}
 					</td>
 					<td>

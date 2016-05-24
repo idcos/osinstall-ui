@@ -219,7 +219,6 @@ export default Ember.Controller.extend({
       */
 		},
     deleteDeviceAction:function(key){
-      console.log(key);
       var rows = this.get('rows');
       var data = {};
       if(!Ember.isEmpty(rows)){
