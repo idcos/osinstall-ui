@@ -165,7 +165,8 @@ export default Ember.Service.extend({
     	data.Username = window.sessionStorage.getItem("osinstallAuthUsername");
     	data.Name = window.sessionStorage.getItem("osinstallAuthName");
         data.Role = window.sessionStorage.getItem("osinstallAuthRole");
-    	data.AccessToken = window.sessionStorage.getItem("osinstallAuthAccessToken");
+        data.AccessToken = window.sessionStorage.getItem("osinstallAuthAccessToken");
+    	data.IsShowVmFunction = window.sessionStorage.getItem("osinstallIsShowVmFunction");
     	return data;
     },
 

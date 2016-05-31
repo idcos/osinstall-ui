@@ -1,0 +1,145 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+    	{{#if model.isShowStep1}}
+		<h4>第一步：设置DHCP</h4>
+		{{#common/io-form-validator submitForm="saveDHCPAction"}}
+		<form class="form-horizontal">
+	        <table class="table no-border">
+				<tbody>
+					<tr>
+						<td width="20%" align="right" ><label class="required" for="StartIp">起始IP</label></td>
+						<td width="80%">
+							<div class="col-md-5">
+								{{input id="StartIp" value=model.dhcpFormData.StartIp required=true type="text" class="form-control input-md"}}
+							</div>
+							<div class="col-md-6" style="margin-top: 5px;">
+								<span>完整的IP格式，如：192.168.0.101</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%" align="right"><label class="required" for="EndIp">结束IP</label></td>
+						<td width="80%">
+							<div class="col-md-5">
+								{{input id="EndIp" value=model.dhcpFormData.EndIp required=true type="text" class="form-control input-md"}}
+							</div>
+							<div class="col-md-6" style="margin-top: 5px;">
+								<span>完整的IP格式，如：192.168.0.200</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%" align="right"><label class="required" for="Gateway">默认网关</label></td>
+						<td width="80%">
+							<div class="col-md-5">
+								{{input id="Gateway" value=model.dhcpFormData.Gateway required=true type="text" class="form-control input-md"}}
+							</div>
+							<div class="col-md-6" style="margin-top: 5px;">
+								<span>完整的IP格式，如：192.168.0.1</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%" align="right"></td>
+						<td width="80%" style="padding-top: 25px;">
+							<div class="col-md-1"></div>
+							<div class="col-md-10">
+								<button type="submit" class="btn btn-primary">下一步</button>
+								&nbsp;&nbsp;
+								<button type="button" class="btn btn-default" {{action "skipStep1Action"}}>跳过此步</button>
+								&nbsp;&nbsp;
+								{{html-safe model.dhcpMessage}}
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		{{/common/io-form-validator}}
+		{{/if}}
+		
+
+		{{#if model.isShowStep2}}
+		<h4>第二步：设置虚拟机相关</h4>
+		{{#common/io-form-validator submitForm="saveVmInfoAction"}}
+		<form class="form-horizontal">
+	        <table class="table no-border">
+				<tbody>
+					<tr>
+						<td width="20%" align="right" ><label class="required" for="StartIP">是否要创建虚拟机</label></td>
+						<td width="80%">
+							<div class="col-md-3">
+								{{view "select" required=true class="form-control" prompt="请选择"
+ content=model.isCreateVmData value=model.vmFormData.IsShowVmFunction optionValuePath="content.id" optionLabelPath="content.name" }}
+							</div>
+							<div class="col-md-6" style="margin-top: 5px;">
+								<span>如选择“否”，CloudBoot平台将不再显示任何虚拟机相关的信息</span>
+							</div>
+						</td>
+					</tr>
+					
+					{{#if (eq "Yes" model.vmFormData.IsShowVmFunction)}}
+					<!--
+					<tr>
+						<td width="20%" align="right"><label class="required" for="VirtualizationRate">宿主机最大虚拟化比率</label></td>
+						<td width="80%">
+							<div class="col-md-2" style="padding-right: 0px;">
+								{{input id="VirtualizationRate" value=model.vmFormData.VirtualizationRate required=true type="number" class="form-control input-md"}}
+							</div>
+							<div class="col-md-1" style="margin-top: 5px;padding-left: 15px; font-size: 18px;font-weight: bold;">
+							%
+							</div>
+							<div class="col-md-6" style="margin-top: 5px;">
+								<span>1-100的整数，宿主机CPU、磁盘、内存能分配的最大比率</span>
+							</div>
+						</td>
+					</tr>
+					
+
+					<tr>
+						<td width="20%" align="right"><label class="required" for="EndIp">网络实现方案</label></td>
+						<td width="80%">
+							<div class="col-md-5">
+								
+							</div>
+							<div class="col-md-6" style="margin-top: 5px;">
+								
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td width="20%" align="right"><label class="required" for="EndIp">磁盘实现方案</label></td>
+						<td width="80%">
+							<div class="col-md-5">
+								
+							</div>
+							<div class="col-md-6" style="margin-top: 5px;">
+								
+							</div>
+						</td>
+					</tr>
+					-->
+					{{/if}}
+
+					
+					<tr>
+						<td width="20%" align="right" height="100"></td>
+						<td width="80%" style="padding-top: 25px;">
+							<div class="col-md-1"></div>
+							<div class="col-md-10">
+								<button type="submit" class="btn btn-primary">提交</button>
+								&nbsp;&nbsp;
+								<button type="button" class="btn btn-default" {{action "skipStep2Action"}}>跳过此步</button>
+								&nbsp;&nbsp;
+								{{html-safe model.vmInfoMessage}}
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		{{/common/io-form-validator}}
+		{{/if}}
+    </div>
+</div>

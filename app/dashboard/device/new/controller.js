@@ -148,7 +148,7 @@ export default Ember.Controller.extend({
           if(!Ember.isEmpty(row.Sn)){
             eachFunction(row);
           }else{
-              set(row,"messageSn","<span class='text-muted'>请填写真实的序列号</span>");
+              set(row,"messageSn","<span class='text-danger'>请填写真实的序列号，没有SN则无法进行装机</span>");
           }
         }
   }.observes("rows.@each.Sn"),

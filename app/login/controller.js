@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 	userSrv: Ember.inject.service('api/user/service'),
+    platformConfigSrv: Ember.inject.service('api/platformConfig/service'),
 	actions:{
 		loginAction: function() {
 			var self = this;
@@ -17,7 +18,15 @@ export default Ember.Controller.extend({
                     }else{
                         window.localStorage.clear();
                     }
-                    self.transitionToRoute('dashboard.main');
+                    window.sessionStorage.setItem("osinstallIsShowVmFunction","No");
+                    self.get('platformConfigSrv').getByName("IsShowVmFunction").then(function(response){
+                        if(Ember.isEmpty(response.Content) || Ember.isEmpty(response.Content.Content)){
+                            self.transitionToRoute('dashboard.guide');
+                        }else{
+                            window.sessionStorage.setItem("osinstallIsShowVmFunction",response.Content.Content);
+                            self.transitionToRoute('dashboard.main');
+                        }
+                    });
                 } else {
                     Ember.$.notify({
                     	title: "<strong>登录失败:</strong>",

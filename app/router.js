@@ -164,8 +164,13 @@ Router.map(function() {
       this.route('detail', {
           path: 'detail/:id'
         });
-      this.route('new');
+      this.route('new', {
+          path: 'new/:deviceId',
+      });
       this.route('guideNew');
+      this.route('hostList', {
+          path: 'hostList/:status',
+      });
     });
 
     this.route('user', function() {
@@ -192,6 +197,7 @@ Router.map(function() {
         path: 'detail/:id'
       });
     });
+    this.route('guide');
   });
   this.route('login');
 });

@@ -25,8 +25,9 @@ export default Ember.Route.extend(breadCrumbMixin,{
     },
 
 	setupController: function(controller, model) {
+		model.session = this.get("userSrv").getLocalSession();
 		controller.set("model",model);
-		var data = [{id:0,LocationID:null,IsSupportVm:"Yes",messageHostname:"<span class='text-muted'>主机名可自定义</span>",messageIp:"请提前在【网段管理】->【应用网段管理】里录入网段信息",messageManageIp:"",AccessToken:model.session.AccessToken}];
+		var data = [{id:0,LocationID:null,IsSupportVm:"No",messageHostname:"<span class='text-muted'>主机名可自定义</span>",messageIp:"请提前在【网段管理】->【应用网段管理】里录入网段信息",messageManageIp:"",AccessToken:model.session.AccessToken}];
 		controller.set('rows', data);
 	}
 });

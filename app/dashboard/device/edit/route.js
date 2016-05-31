@@ -11,6 +11,7 @@ export default Ember.Route.extend(breadCrumbMixin,{
 	hardwareSrv: Ember.inject.service('api/hardware/service'),
 	systemConfigSrv: Ember.inject.service('api/system-config/service'),
 	locationSrv: Ember.inject.service('api/location/service'),
+	userSrv: Ember.inject.service('api/user/service'),
 	model: function(params) {
         return Ember.RSVP.hash({id:params.id,
 			info:this.get('deviceSrv').getFull(params.id).then(function(data){return data.Content;}),
@@ -23,6 +24,7 @@ export default Ember.Route.extend(breadCrumbMixin,{
     },
 
     setupController: function(controller, model) {
+    	model.session = this.get("userSrv").getLocalSession();
     	var data = [];
     	model.info.messageManageIp = "";
     	data.pushObject(model.info);
