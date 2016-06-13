@@ -16,6 +16,13 @@
         <table class="table table-bordered">
 			<tbody>
 				<tr>
+					<td class="active" align="right" width="20%"><label>所在宿主机SN</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{item.DeviceSn}}</div>
+					</td>
+				</tr>
+
+				<tr>
 					<td class="active" align="right" width="20%"><label>ID</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{item.ID}}</div>
@@ -26,13 +33,6 @@
 					<td class="active" align="right"><label>Mac</label></td>
 					<td>
 						<div class="col-md-5">{{item.Mac}}</div>
-					</td>
-				</tr>
-
-				<tr>
-					<td class="active" align="right" width="20%"><label>物理机SN</label></td>
-					<td width="80%">
-						<div class="col-md-5">{{item.DeviceSn}}</div>
 					</td>
 				</tr>
 
@@ -52,6 +52,15 @@
 					</td>
 				</tr>
 
+				<tr>
+					<td class="active" align="right"><label>VNC 端口</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.VncPort}}
+						</div>
+					</td>
+				</tr>
+
 
 				<tr>
 					<td class="active" align="right"><label>匹配到网段</label></td>
@@ -64,7 +73,7 @@
 
 
 				<tr>
-					<td class="active" align="right"><label>操作系统</label></td>
+					<td class="active" align="right"><label>PXE模板</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.OsName}}
@@ -72,9 +81,17 @@
 					</td>
 				</tr>
 
+				<tr>
+					<td class="active" align="right"><label>系统安装模板</label></td>
+					<td>
+						<div class="col-md-5">
+							{{item.SystemName}}
+						</div>
+					</td>
+				</tr>
 				
 
-				<tr>
+				{{!-- <tr>
 					<td class="active" align="right"><label>CPU</label></td>
 					<td>
 						<table class="table table-hover">
@@ -285,16 +302,40 @@
 			 				</tbody>
 			 			</table>
 					</td>
-				</tr>
+				</tr> --}}
 
-
-				
 				<tr>
-					<td class="active" align="right"><label>状态</label></td>
+					<td class="active" align="right"><label>运行状态</label></td>
 					<td>
 						<div class="col-md-5">
+							{{#if (eq "running" item.RunStatus)}}
+								<span class="text-success">运行中</span>
+							{{/if}}
+							{{#if (eq "stop" item.RunStatus)}}
+								<span class="text-danger">已停止</span>
+							{{/if}}
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="active" align="right"><label>装机状态</label></td>
+					<td>
+						<div class="col-md-5">
+							{{#if (eq "pre_create" item.Status)}}
+								<span class="text-muted">等待创建</span>
+							{{/if}}
+
+							{{#if (eq "creating" item.Status)}}
+								<span class="text-info">正在创建</span>
+							{{/if}}
+
+							{{#if (eq "create_failure" item.Status)}}
+								<span class="text-danger">创建失败</span>
+							{{/if}}
+
 							{{#if (eq "pre_install" item.Status)}}
-								等待安装
+								<span class="text-muted">等待安装</span>
 							{{/if}}
 
 							{{#if (eq "installing" item.Status)}}

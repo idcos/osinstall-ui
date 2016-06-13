@@ -276,7 +276,6 @@ export default Ember.Controller.extend({
                 return ;
             }
             
-
             if(isHasSuccessDevice === true){
                 Ember.$.notify({
                                 title: "<strong>操作失败:</strong>",
@@ -290,8 +289,6 @@ export default Ember.Controller.extend({
                             });
                 return ;
             }
-
-            
 
 
             self.get("deviceSrv").batchReInstall(datas).then(function(data) {
@@ -308,7 +305,7 @@ export default Ember.Controller.extend({
                         self.send("pageChanged",self.get("page"));
                     } else {
                         Ember.$.notify({
-                            title: "<strong>保存失败:</strong>",
+                            title: "<strong>操作失败:</strong>",
                             message: data.Message
                         }, {
                             animate: {
@@ -391,7 +388,7 @@ export default Ember.Controller.extend({
                         self.send("pageChanged",self.get("page"));
                     } else {
                         Ember.$.notify({
-                            title: "<strong>保存失败:</strong>",
+                            title: "<strong>操作失败:</strong>",
                             message: data.Message
                         }, {
                             animate: {
@@ -476,7 +473,7 @@ export default Ember.Controller.extend({
                         self.send("pageChanged",self.get("page"));
                     } else {
                         Ember.$.notify({
-                            title: "<strong>保存失败:</strong>",
+                            title: "<strong>操作失败:</strong>",
                             message: data.Message
                         }, {
                             animate: {
@@ -509,7 +506,7 @@ export default Ember.Controller.extend({
                         self.send("pageChanged",self.get("page"));
                     } else {
                         Ember.$.notify({
-                        	title: "<strong>保存失败:</strong>",
+                        	title: "<strong>操作失败:</strong>",
                         	message: data.Message
                         }, {
                         	animate: {

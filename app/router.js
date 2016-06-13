@@ -171,6 +171,27 @@ Router.map(function() {
       this.route('hostList', {
           path: 'hostList/:status',
       });
+
+      this.route('host', function() {
+        this.route('list', {
+          path: 'list/:status',
+        });
+        this.route('detail', {
+          path: 'detail/:sn',
+        });
+        this.route('log', {
+          path: 'log/:deviceId/:type',
+        });
+      });
+
+      this.route('log', function() {
+        this.route('detail', {
+          path: 'detail/:deviceId/:type',
+        });
+        this.route('cmd', {
+          path: 'cmd/:deviceId/:type',
+        });
+      });
     });
 
     this.route('user', function() {

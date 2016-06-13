@@ -1,168 +1,114 @@
 <div class="panel panel-default">
-	{{#common/io-form-validator submitForm="saveBatchVmInstallAction"}}
+	{{#common/io-form-validator submitForm="saveVmAction"}}
 	<form class="form-horizontal">
     <div class="panel-body">
-	    <ul class="nav nav-tabs nav-tabs-bare">
-			<li class="active">{{#link-to "dashboard.vm.new"}}快捷模式{{/link-to}}</li>
-		    <li>{{#link-to "dashboard.vm.guideNew"}}向导模式{{/link-to}}</li>
-		</ul>
-		<br>
-		<h4>Step 1：选择物理机</h4>
-        <table class="table table-bordered">
+        <table class="table no-border">
 			<tbody>
 				<tr>
-					<td class="active" align="right" width="20%"><label>搜索物理机</label></td>
+					<td align="right" width="20%"><label>宿主机</label></td>
 					<td width="80%">
-						<div class="block">
-							<div class="col-md-5">
-								{{input class="form-control" placeholder="可根据批次号、SN、主机名、IP等查询" value=searchForm.Keyword}}
-							</div>
-							<div class="col-md-2">
-								<button {{action "searchDeviceAction"}} type="button" class="btn btn-default">搜 索</button>
-							</div>
-							<div class="col-md-3" style="margin-top: 6px;">
-								{{#if (eq false isShowMultiSearchBlock)}}
-								&nbsp;&nbsp;
-								<a {{action "showMultiSearchBlockAction"}} href="javascript::void(0);">展开更多条件</a>
-								{{/if}}
-							</div>
-							<div class="col-md-3" style="margin-top: 5px;">
-								{{html-safe searchDeviceMessage}}
-							</div>
-						</div>
-					</td>
-				</tr>
-
-				{{#if isShowMultiSearchBlock}}
-				<tr>
-					<td width="15%" class="active" align="right"><b>操作系统</b></td>
-					<td width="85%">
 						<div class="col-md-5">
-							{{view "select" class="form-control" prompt="请选择操作系统"
- content=model.osConfigData value=searchForm.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
-						</div>
-					</td>
-				</tr>
-
-				<tr>
-					<td width="15%" class="active" align="right"><b>硬件配置模板</b></td>
-					<td width="85%">
-						<div class="col-md-5">
-							{{view "select" class="form-control" prompt="请选择硬件配置模板"
- content=model.hardwareData value=searchForm.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
-						</div>
-					</td>
-				</tr>
-
-				<tr>
-					<td width="15%" class="active" align="right"><b>系统安装模板</b></td>
-					<td width="85%">
-						<div class="col-md-5">
-							{{view "select" class="form-control" prompt="请选择系统安装模板" content=model.systemConfigData value=searchForm.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
-						</div>
-						
-							{{#if (eq true isShowMultiSearchBlock)}}
-							<div class="col-md-2">
-								<a {{action "hideMultiSearchBlockAction"}} href="javascript::void(0);">收起</a>
-							</div>
-							{{/if}}
-						
-					</td>
-				</tr>
-				{{/if}}
-
-
-
-
-				{{#if deviceList}}
-				<tr>
-					<td class="active" align="right" width="20%"><label class="required">选择物理机</label></td>
-					<td width="80%">
-						<div class="block" style="margin-left: 15px;">
-							{{input type="checkbox" checked=selectAllDevice}} &nbsp;
-							<label>选择全部</label>
-						</div>
-						<div class="block" style="margin-left: 15px;">
-							<ul class="list-inline">
-								{{#each deviceList as |item index|}}
-								<li style="width:200px; line-height: 30px;">
-									{{input type="checkbox" checked=item.checked}}
-									{{item.Sn}}
-								</li>
-								{{/each}}
-							</ul>
-						</div>
-					</td>
-				</tr>
-				{{/if}}
-			</tbody>
-		</table>
-
-				{{#if (not-eq true isShowVmBlock)}}
-				<div class="text-center">
-			        <button {{action "showVmBlockAction"}} type="button" class="btn btn-primary">下一步</button>
-			        &nbsp;&nbsp;
-			        {{html-safe model.batchVmInfo.SelectDeviceMessage}}
-				</div>
-				{{/if}}
-
-		
-		<br>
-
-		{{#if isShowVmBlock}}
-		<h4>Step 2：创建虚拟机</h4>
-        <table class="table table-bordered">
-			<tbody>
-				<tr>
-					<td class="active" align="right" width="20%"><label class="required">虚拟机个数</label></td>
-					<td width="80%">
-						<div class="col-md-3">
-							{{input class="form-control" type="number" value=model.batchVmInfo.VmNumber}}
+							{{model.deviceInfo.Sn}}
 						</div>
 						<div class="col-md-5" style="margin-top: 5px;">
 							
 						</div>
 					</td>
 				</tr>
-
 				<tr>
-					<td class="active" align="right"><label class="required">操作系统</label></td>
-					<td>
-						<div class="col-md-3">
-							{{view "select" required=true class="form-control" prompt="请选择操作系统"
- content=model.osConfigData value=model.batchVmInfo.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+					<td align="right" width="20%"><label class="required">主机名</label></td>
+					<td width="80%">
+						<div class="col-md-5">
+							{{input class="form-control" required=true value=model.vmInfo.Hostname}}
 						</div>
 						<div class="col-md-5" style="margin-top: 5px;">
-							{{input type="checkbox" checked=model.batchVmInfo.isShowMore}}
+							<span>可自定义</span>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right" width="20%"><label class="required">Mac地址</label></td>
+					<td width="80%">
+						<div class="col-md-5">
+							{{input class="form-control" required=true value=model.vmInfo.Mac}}
+						</div>
+						<div class="col-md-5" style="margin-top: 5px;">
+							<span>可自定义，必须以"52:54:00"开头</span>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right" width="20%"><label class="required">IP</label></td>
+					<td width="80%">
+						<div class="col-md-5">
+							{{input class="form-control" required=true value=model.vmInfo.Ip}}
+						</div>
+						<div class="col-md-7" style="margin-top: 5px;font-size: 12px;">
+							{{html-safe model.vmInfo.messageIp}}
+							{{#if model.vmInfo.isShowNetworkInfo}}
+								<span class="text-success" style="margin-left: 10px;">
+								匹配到网段:{{model.vmInfo.Network}}
+								</span>
+							{{/if}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right"><label class="required">PXE模板</label></td>
+					<td>
+						<div class="col-md-3">
+							{{view "select" required=true class="form-control" prompt="请选择PXE模板"
+ content=model.osConfigData value=model.vmInfo.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right"><label class="required">系统安装模板</label></td>
+					<td>
+						<div class="col-md-3">
+ 							{{view "select" required=true class="form-control" prompt="请选择系统安装模板"
+ content=model.systemConfigData value=model.vmInfo.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+						<div class="col-md-5" style="margin-top: 5px;">
+							{{input type="checkbox" checked=model.vmInfo.isShowMore}}
 							<label>高级设置</label>
 						</div>
 					</td>
 				</tr>
 				
-				{{#if model.batchVmInfo.isShowMore}}
+				{{#if model.vmInfo.isShowMore}}
 				<tr>
-					<td class="active" align="right"><label class="required">CPU核数</label></td>
+					<td align="right"><label class="required">CPU核数</label></td>
 					<td>
 						<div class="col-md-3">
-							{{input class="form-control" type="number" value=model.batchVmInfo.CpuCoresNumber}}
+							{{view "select" required=true class="form-control" prompt="请选择CPU核数"
+ content=model.cpuData value=model.vmInfo.CpuCoresNumber optionValuePath="content.ID" optionLabelPath="content.Name" }}
 						</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label class="required">分配内存</label></td>
+					<td align="right"><label class="required">分配内存</label></td>
 					<td>
 						<div class="col-md-3">
-							{{input class="form-control" type="number" value=model.batchVmInfo.MemoryCurrent}}
+							{{view "select" required=true class="form-control" prompt="请选择内存大小"
+ content=model.memoryData value=model.vmInfo.MemoryCurrent optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+						<div class="col-md-1" style="padding-right: 0px;margin-top:6px;">
+							GB
 						</div>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="active" align="right"><label class="required">磁盘大小</label></td>
+					<td align="right"><label class="required">磁盘大小</label></td>
 					<td>
 						<div class="col-md-3">
-							{{input class="form-control" type="number" value=model.batchVmInfo.DiskSize}}
+							{{input class="form-control" type="number" value=model.vmInfo.DiskSize}}
 						</div>
 						<div class="col-md-1" style="padding-right: 0px;margin-top:6px;">
 							GB
@@ -170,18 +116,6 @@
 					</td>
 				</tr>
 				{{/if}}
-
-				<tr>
-					<td class="active" align="right"><label>温馨提示</label></td>
-					<td>
-						<div class="col-md-10">
-							1、虚拟机个数和操作系统必填 <br />
-							2、选择多台物理机时，虚拟机会轮询创建在各物理机上 <br />
-							3、IP、Mac等会自动从对应的资源池分配 
-
-						</div>
-					</td>
-				</tr>
 			</tbody>
 		</table>
 
@@ -190,12 +124,11 @@
 	        <button type="submit" class="btn btn-primary">提 交</button>
 	        &nbsp;&nbsp;
 	        <button type="button" onclick="javascript:history.go(-1);" class="btn btn-default">取　消</button>
-	        {{html-safe model.batchVmInfo.Message}}
+	        &nbsp;&nbsp;
+	        {{html-safe model.vmInfo.Message}}
 		</div>
-		{{/if}}
 
     </div>
-
     </form>
 	{{/common/io-form-validator}}
 </div>

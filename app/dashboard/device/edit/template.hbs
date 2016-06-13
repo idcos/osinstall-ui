@@ -72,10 +72,10 @@
 				
 
 				<tr>
-					<td align="right"><label class="required">操作系统</label></td>
+					<td align="right"><label class="required">PXE模板</label></td>
 					<td>
 						<div class="col-md-5">
-							{{view "select" required=true class="form-control" prompt="请选择操作系统"
+							{{view "select" required=true class="form-control" prompt="请选择PXE模板"
  content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
 						</div>
 						<div class="col-md-7" style="margin-top: 5px;">
@@ -173,6 +173,14 @@ IP:<{ip}>
 						<div class="col-md-5">
 							{{view "select" required=true class="form-control" prompt="请选择"
  content=model.whetherData value=item.IsSupportVm optionValuePath="content.id" optionLabelPath="content.name" }}
+						</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								要成为可用的宿主机需满足以下条件：
+								1.BIOS VT必须打开；
+								2.使用单独的LVM分区；
+								3.SSH能连接上
+							</span>
 						</div>
 					</td>
 				</tr>

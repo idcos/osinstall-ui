@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+    <div class="panel-heading paddingtop0">
+    	<!--
+        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
+        	<li>模板管理</li>
+            <li class="active">网段管理</li>
+        </ol>
+        -->
+        
+    </div>
+    <div class="panel-body">
+    	<ul class="nav nav-tabs">
+            <li>{{#link-to "dashboard.vm.log.detail" model.deviceId "install"}}列表模式{{/link-to}}</li> 
+            <li class="active">{{#link-to "dashboard.vm.log.cmd" model.deviceId "install"}}滚动模式{{/link-to}}</li>
+        </ul>
+        <br>
+		
+        
+		<div>
+			{{common/io-editor height="500px" data=model key='cmd' editable=false}}
+		</div>
+    
+       
+
+        <div class="padding10">
+            <button type="button" onclick="javascript:history.go(-1);" class="btn btn-default">返 回</button>
+        </div>
+    </div>
+</div>

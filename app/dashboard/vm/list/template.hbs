@@ -1,34 +1,4 @@
 <div class="panel panel-default">
-	
-   <div class="panel-heading paddingtop0">
-    	<!--
-        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
-        	<li>装机管理</li>
-            <li class="active">虚拟机列表</li>
-        </ol>
-        -->
-        <div class="breadcrumb paddingtop3">
-        	<div style="float: left;">
-	        	<h5>装机管理/虚拟机列表</h5>
-	        </div>
-	        <!--
-	        {{#if model.deviceId}}
-	        <div style="float:right; position: relative; top: 7px; left: 16px;">
-	        	<button {{action "installVmAction" model.deviceId}} type="button" class="btn btn-primary btn-xs"> <i class="fa fa-plus"></i> 安装虚拟机</button> &nbsp;&nbsp;
-	        	<button onclick="javascript:history.go(-1);" type="button" class="btn btn-default btn-sm">返回</button>
-	        </div>
-	        {{/if}}
-	        -->
-	    </div>
-    </div>
-    
-    <!--
-    <ul class="nav nav-tabs"> 
-		<li class="active">{{#link-to "dashboard.device.list"}}所有设备列表{{/link-to}}</li>
-	    <li>{{#link-to "dashboard.device.preInstall"}}待安装{{/link-to}}</li>
-	    <li>{{#link-to "dashboard.device.installing"}}正在安装{{/link-to}}</li>
-	</ul>
-	-->
     <div class="panel-body">
 		<div style="margin-bottom: 10px;">
 			{{#common/io-form-validator submitForm="searchAction"}}
@@ -96,11 +66,14 @@
                 <tr>
                 	<th>{{input type="checkbox" checked=selectAll}}</th>
 					<th>主机名</th>
-					<th>物理机</th>
+					<th>宿主机</th>
 					<th>Mac</th>
 					<th>IP</th>
-					<th>操作系统</th>
-					<th>状态</th>
+					<th>PXE模板</th>
+					<th>运行状态</th>
+					<th>装机状态</th>
+					<th>安装进度</th>
+					<th>操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -108,13 +81,31 @@
                 <tr>
                 	<td>{{input type="checkbox" checked=item.checked}}</td>
 					<td>{{#link-to "dashboard.vm.detail" item.ID}}{{item.Hostname}}{{/link-to}}</td>
-					<td>{{#link-to "dashboard.device.detail" item.DeviceID}}{{item.DeviceSn}}{{/link-to}}</td>
+					<td>{{#link-to "dashboard.vm.host.list" item.DeviceID}}{{item.DeviceSn}}{{/link-to}}</td>
 					<td>{{#link-to "dashboard.vm.detail" item.ID}}{{item.Mac}}{{/link-to}}</td>
 					<td>{{#link-to "dashboard.network.detail" item.NetworkID}}{{item.Ip}}{{/link-to}}</td>
 					<td>{{#link-to "dashboard.os.detail" item.OsID}}{{item.OsName}}{{/link-to}}</td>
-					
 					<td>
-						
+						{{#if (eq "running" item.RunStatus)}}
+							<span class="text-success">运行中</span>
+						{{/if}}
+						{{#if (eq "stop" item.RunStatus)}}
+							<span class="text-danger">已停止</span>
+						{{/if}}
+					</td>
+					<td>
+						{{#if (eq "pre_create" item.Status)}}
+							<span class="text-muted">等待创建</span>
+						{{/if}}
+
+						{{#if (eq "creating" item.Status)}}
+							<span class="text-info">正在创建</span>
+						{{/if}}
+
+						{{#if (eq "create_failure" item.Status)}}
+							<span class="text-danger">创建失败</span>
+						{{/if}}
+
 						{{#if (eq "pre_install" item.Status)}}
 							<span class="text-muted">等待安装</span>
 						{{/if}}
@@ -130,7 +121,20 @@
 						{{#if (eq "failure" item.Status)}}
 							<span class="text-danger">安装失败</span>
 						{{/if}}
-						
+					</td>
+					<td>
+						{{#link-to "dashboard.vm.log.detail" item.ID "install"}}
+							<div class="progress progress-striped active" title="{{item.InstallLog}}" style="height: 17px;">
+							   <div title="{{item.InstallLog}}" class="progress-bar progress-bar-success" role="progressbar" 
+							      aria-valuemin="0" aria-valuemax="100" 
+							      style="width: {{percentage item.InstallProgress}};">
+							      <span class="sr-only">{{item.InstallLog}}</span>
+							   </div>
+							</div>
+						{{/link-to}}
+					</td>
+					<td>
+						<a href="">控制台</a>
 					</td>
 				</tr>
 				{{/each}}
@@ -138,613 +142,25 @@
         </table>
         	<div class="row padding0">
 					<div class="col-sm-6">
-						
-			       		<button {{action "reInstallAction"}} type="button" class="btn btn-default btn-sm">重新安装</button>
-						&nbsp;&nbsp;
-			       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
-			       	
+						<button {{action "batchStartAction"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-default btn-sm">启动</button> &nbsp;&nbsp;
+			       		<button {{action "batchStopAction"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-default btn-sm">停止</button> &nbsp;&nbsp;
+			       		<button {{action "batchReStartAction"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-default btn-sm">重启</button> &nbsp;&nbsp;
+			       		<button {{action "batchReInstallAction"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-default btn-sm">重装</button> &nbsp;&nbsp;
+			       		<button {{action "batchDeleteAction"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-danger btn-sm">销毁</button>
+			       		&nbsp;&nbsp;
+			       		{{#if model.isButtonLock}}
+			       			<a href="javascript:void(0);" {{action "unlockAction"}}><i class="fa fa-unlock" aria-hidden="true" style="font-size: 16px;"></i></a>
+			       		{{/if}}
+
+			       		{{#if (eq false model.isButtonLock)}}
+			       			<a href="javascript:void(0);" {{action "lockAction"}}><i class="fa fa-lock" aria-hidden="true" style="font-size: 16px;"></i></a>
+			       		{{/if}}
 					</div>
 					<div class="col-sm-6">
-						{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+						{{#if (not-eq 1 pageCount)}}
+							{{#common/io-pagination count=pageCount current=page pageSize=pageSize change='pageChanged' pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
+						{{/if}}
 					</div>
 				</div>
     </div>
 </div>
-
-
-
-{{#common/io-modal show=isShowingModal close="toggleModal"}}
-<div class="modal fade modal-vs-install" data-backdrop="static">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" {{action "toggleModal"}}>×</button>
-				<h4 class="modal-title">虚拟机安装</h4>
-			</div>
-			<div class="block align-items-stretch content-body">
-				 <div class="block content shrink steps-navigator">
-				 	<ul>
-				 		{{#if (eq 1 currentStep)}}
-							<li class="active" {{action "goToStep" 1}}>填写主机列表</li>
-				 		{{/if}}
-				 		{{#if (not-eq 1 currentStep)}}
-							<li class="disable" {{action "goToStep" 1}}>填写主机列表</li>
-				 		{{/if}}
-
-				 		{{#if (eq 2 currentStep)}}
-							<li class="active" {{action "goToStep" 2}}>处理器</li>
-				 		{{/if}}
-				 		{{#if (not-eq 2 currentStep)}}
-							<li class="disable" {{action "goToStep" 2}}>处理器</li>
-				 		{{/if}}
-
-				 		{{#if (eq 3 currentStep)}}
-							<li class="active" {{action "goToStep" 3}}>内存</li>
-				 		{{/if}}
-				 		{{#if (not-eq 3 currentStep)}}
-							<li class="disable" {{action "goToStep" 3}}>内存</li>
-						{{/if}}
-
-						{{#if (eq 4 currentStep)}}
-							<li class="active" {{action "goToStep" 4}}>硬盘</li>
-				 		{{/if}}
-				 		{{#if (not-eq 4 currentStep)}}
-							<li class="disable" {{action "goToStep" 4}}>硬盘</li>
-						{{/if}}
-
-						{{#if (eq 5 currentStep)}}
-							<li class="active" {{action "goToStep" 5}}>网络</li>
-				 		{{/if}}
-				 		{{#if (not-eq 5 currentStep)}}
-							<li class="disable" {{action "goToStep" 5}}>网络</li>
-						{{/if}}
-				 		
-				 		{{#if (eq 6 currentStep)}}
-							<li class="active" {{action "goToStep" 6}}>显示</li>
-				 		{{/if}}
-				 		{{#if (not-eq 6 currentStep)}}
-							<li class="disable" {{action "goToStep" 6}}>显示</li>
-						{{/if}}
-				 	</ul>
-				 </div>
-				 <div class="block vertical" style="background: whitesmoke;">
-					<div class="block content main-content">
-						{{#if (eq currentStep 1)}}
-						<h2>主机列表 <div class="btn btn-xs btn-primary"><i class="fa fa-plus"></i></div>
-			
-						</h2>
-						<table class="table">
-							<thead>
-								<tr>
-									<th width="20%">
-										主机名 {{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"> <i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</th>
-									<th width="19%">IP</th>
-									<th width="23%">Mac地址</th>
-									<th width="22%">操作系统</th>
-									<th width="15%"></th>
-								</tr>
-							</thead>
-							<tbody>
-								{{#each model.vmInfo.Host as |item index|}}
-								<tr>
-									<td>
-										<div class="form-group">
-											{{input type="text" value=item.Hostname required=true class="form-control input-md" placeholder="主机名"}}
-										</div>
-									</td>
-									<td>
-										<div class="form-group">
-											{{input type="text" value=item.Ip required=true class="form-control input-md" placeholder="IP"}}
-										</div>
-									</td>
-									<td>
-										<div class="form-group">
-											{{input type="text" value=item.Mac required=true class="form-control input-md" placeholder="Mac地址"}}
-										</div>
-									</td>
-
-									<td>
-										<div class="form-group">
-			 								{{view "select" required=true class="form-control" prompt="请选择操作系统"
- content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
-										</div>
-									</td>
-									<td>
-										<button style="margin-top: 5px;" {{action "copyHostAction" index}} type="button" class="btn btn-default btn-xs"><i class="fa fa-plus"></i></button>
-										{{#if (not-eq 0 index)}}
-										<button style="margin-top: 5px;" type="button" {{action "cancelHostAction" index}} class="btn btn-default btn-xs"><i class="fa fa-minus"></i></button>
-										{{/if}}
-									</td>
-								</tr>
-								{{/each}}
-							</tbody>
-						</table>
-						{{/if}}
-
-						{{#if (eq currentStep 2)}}
-						<h2>处理器</h2>
-						<!--
-						<h3>cpus</h3>
-						-->
-						<div class="section">
-							<!--
-							<div class="form-group">
-								<label for="">当前处理机总核数: 24</label>
-							</div>
-							-->
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;margin-top:6px;">
-										<label for="">分配CPU核数: </label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
-										{{input class="form-control" type="number" value=model.vmInfo.Cpu.CoresNumber}}
-									</div>
-									
-									<div class="col-md-3" style="padding-left: 40px; padding-right: 0px; margin-top:6px;">
-										{{input type="checkbox" checked=model.vmInfo.Cpu.isShowCpuMore}}
-										<label for="">高级选项</label>
-									</div>
-								</div>
-							</div>
-
-							<!--
-							<div class="form-group">
-								<label for="">Maximum Allocation: </label>
-								<input type="number" class="form-group" style="width: 80px" value="1"/>
-							</div>
-							-->
-						</div>
-
-
-						{{#if model.vmInfo.Cpu.isShowCpuMore}}
-						<h3>拓扑结构</h3>
-						<div class="section">
-							<div class="form-group">
-								{{input type="checkbox" checked=model.vmInfo.Cpu.isShowCpuTopBlock}} <label for="">手动设置</label>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								{{input type="checkbox" checked=model.vmInfo.Cpu.HotPlug class="form-group"}} <label for="">热插</label>
-								
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								{{input type="checkbox" checked=model.vmInfo.Cpu.Passthrough class="form-group"}} <label for="">passthrough</label>
-								
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-							</div>
-							
-							<div class="form-group">
-								{{#if model.vmInfo.Cpu.isShowCpuTopBlock}}
-								<div class="block">
-									<div class="col-md-1" style="padding-left: 0px;padding-right: 0px; margin-top:6px;">
-										<label for="">插槽: </label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-										{{input class="form-control" type="number" value=model.vmInfo.Cpu.TopSockets}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-								
-								<div class="block" style="margin-top: 10px;">
-									<div class="col-md-1" style="padding-left: 0px;padding-right: 0px; margin-top:6px;">
-										<label for="">核数: </label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-										{{input class="form-control" type="number" value=model.vmInfo.Cpu.TopCores}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-
-
-								<div class="block" style="margin-top: 10px;">
-									<div class="col-md-1" style="padding-left: 0px;padding-right: 0px; margin-top:6px;">
-										<label for="">线程: </label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-										{{input class="form-control" type="number" value=model.vmInfo.Cpu.TopThreads}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-								{{/if}}
-
-								<!--
-								<div class="block">
-									{{input type="checkbox" class="form-group"}} <label for="">热插拔</label>
-								</div>
-								<div class="block">
-									{{input type="checkbox" class="form-group"}} <label for="">passthrough</label>
-								</div>
-								-->
-								<!--
-								<div class="block">
-									{{input type="checkbox" class="form-group"}} <label for="">热插拔</label>
-								</div>
-								-->
-							</div>
-						</div>
-						<h3>CPU绑定</h3>
-						<div class="section">
-							<div class="form-group">
-								{{input type="checkbox" checked=model.vmInfo.Cpu.isShowCpuPinningBlock}} 手动设置
-							</div>
-							
-							{{#if model.vmInfo.Cpu.isShowCpuPinningBlock}}
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top:6px;">
-										<label for="">默认设置: </label>
-									</div>
-									<div class="col-md-3" style="padding-left: 0px;padding-right: 0px;">
-										{{input class="form-control" value=model.vmInfo.Cpu.Pinning}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-							</div>
-							{{/if}}
-						</div>
-						{{/if}}
-						{{/if}}
-
-
-						{{#if (eq currentStep 3)}}
-						<h2>内存</h2>
-						<!--
-						<h3>cpus</h3>
-						-->
-						<div class="section">
-							<!--
-							<div class="form-group">
-								<label for="">当前处理机总核数: 24</label>
-							</div>
-							-->
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top:6px;">
-										<label for="">当前分配内存: </label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-										{{input class="form-control" type="number" value=model.vmInfo.Memory.Current}}
-									</div>
-									<div class="col-md-1" style="padding-right: 0px;margin-top:6px;">
-										MB
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top:6px;">
-										<label for="">最大分配内存: </label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-										{{input class="form-control" type="number" value=model.vmInfo.Memory.Max}}
-									</div>
-
-									<div class="col-md-1" style="padding-right: 0px;margin-top:6px;">
-										MB
-									</div>
-								
-									<div class="col-md-3" style="padding-right: 0px;margin-top:6px;">
-										{{input type="checkbox" checked=model.vmInfo.Memory.isShowMemoryMore}}
-										<label for="">高级选项</label>
-									</div>
-
-								</div>
-							</div>
-							
-							{{#if model.vmInfo.Memory.isShowMemoryMore}}
-							<div class="form-group">
-								<div class="block">
-								{{input type="checkbox" class="form-group" checked=model.vmInfo.Memory.Ksm}}
-								&nbsp;
-								<label for="">内存压缩</label>
-								&nbsp;
-										{{#common/io-tooltip}}
-											<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-										{{/common/io-tooltip}}
-								</div>
-							</div>
-							{{/if}}
-							<!--
-							<div class="form-group">
-								<label for="">Maximum Allocation: </label>
-								<input type="number" class="form-group" style="width: 80px" value="1"/>
-							</div>
-							-->
-						</div>
-						
-						{{/if}}
-
-
-
-						{{#if (eq currentStep 4)}}
-						<h2>硬盘</h2>
-						<!--
-						<h3>cpus</h3>
-						-->
-						<div class="section">
-							<!--
-							<div class="form-group">
-								<label for="">当前处理机总核数: 24</label>
-							</div>
-							-->
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;margin-top:6px;">
-									<label for="">磁盘类型: </label>
-									</div>
-
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-										{{view "select" class="form-control" prompt="请选择"
-			 content=model.diskTypeData required=true value=model.vmInfo.Disk.Type optionValuePath="content.id" optionLabelPath="content.name"}}
-									</div>
-
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top:6px;">
-										<label for="">磁盘大小: </label>
-									</div>
-									
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-									{{input class="form-control" type="number" value=model.vmInfo.Disk.Size}}
-									</div>
-									<div class="col-md-1" style="padding-left: 5px;margin-top: 6px;">
-										GB
-									</div>
-
-									<div class="col-md-3" style="padding-left: 0px;padding-right: 0px;margin-top: 6px;">
-									{{input type="checkbox" checked=model.vmInfo.Disk.isShowDiskMore}}
-									<label for="">高级选项</label>
-									</div>
-								</div>
-							</div>
-							<!--
-							<div class="form-group">
-								<label for="">Maximum Allocation: </label>
-								<input type="number" class="form-group" style="width: 80px" value="1"/>
-							</div>
-							-->
-						</div>
-						
-						{{#if model.vmInfo.Disk.isShowDiskMore}}
-						<h3>高级选项</h3>
-						<div class="section">
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;margin-top:6px;">
-										<label for="">磁盘总线类型：</label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
-										{{view "select" class="form-control" prompt="请选择"
-			 content=model.diskBusTypeData required=true value=model.vmInfo.Disk.BusType optionValuePath="content.id" optionLabelPath="content.name"}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-							</div>
-						</div>
-						<h3>性能选项</h3>
-						<div class="section">
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;margin-top:6px;">
-										<label for="">缓存模式：</label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
-										{{view "select" class="form-control" prompt="请选择"
-			 content=model.diskCacheModeData required=true value=model.vmInfo.Disk.CacheMode optionValuePath="content.id" optionLabelPath="content.name"}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;margin-top:6px;">
-										<label for="">IO模式：</label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
-										{{view "select" class="form-control" prompt="请选择"
-			 content=model.diskIOModeData required=true value=model.vmInfo.Disk.IOMode optionValuePath="content.id" optionLabelPath="content.name"}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-							</div>
-						</div>
-						{{/if}}
-						{{/if}}
-
-
-
-						{{#if (eq currentStep 5)}}
-						<h2>网络</h2>
-						<!--
-						<h3>cpus</h3>
-						-->
-						<div class="section">
-							<!--
-							<div class="form-group">
-								<label for="">当前处理机总核数: 24</label>
-							</div>
-							-->
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top: 6px;">
-										<label for="">网络类型: </label>
-									</div>
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-										{{view "select" class="form-control" prompt="请选择"
-			 content=model.networkTypeData required=true value=model.vmInfo.Network.Type optionValuePath="content.id" optionLabelPath="content.name"}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top: 6px;">
-										<label for="">设备类型</label>
-									</div>
-									
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;">
-										{{view "select" class="form-control" prompt="请选择"
-			 content=model.networkDeviceTypeData required=true value=model.vmInfo.Network.DeviceType optionValuePath="content.id" optionLabelPath="content.name"}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-							</div>
-							
-							<!--
-							<div class="form-group">
-								{{input type="checkbox"}}
-								<label for="">sr-iov</label>
-							</div>
-
-							<div class="form-group">
-								{{input type="checkbox"}}
-								<label for="">passthrough</label>
-							</div>
-							-->
-							
-						</div>
-						{{/if}}
-
-
-						{{#if (eq currentStep 6)}}
-						<h2>显示</h2>
-						<!--
-						<h3>cpus</h3>
-						-->
-						<div class="section">
-							<!--
-							<div class="form-group">
-								<label for="">当前处理机总核数: 24</label>
-							</div>
-							-->
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top: 6px;">
-										<label for="">类型: </label>
-									</div>
-									<div class="col-md-3" style="padding-left: 0px;padding-right: 0px;">
-										{{view "select" class="form-control" prompt="请选择"
-			 content=model.displayTypeData required=true value=model.vmInfo.Display.Type optionValuePath="content.id" optionLabelPath="content.name"}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-							</div>
-
-							{{#if (not-eq "serialPorts" model.vmInfo.Display.Type)}}
-							<div class="form-group">
-								<div class="block">
-									<div class="col-md-2" style="padding-left: 0px;padding-right: 0px;margin-top: 6px;">
-										<label for="">密码：</label>
-									</div>
-									<div class="col-md-3" style="padding-left: 0px;padding-right: 0px;">
-										{{input class="col-md-10 form-control" value=model.vmInfo.Display.Password placeholder="密码"}}
-									</div>
-									<div class="col-md-2" style="padding-left: 10px;padding-right: 0px; margin-top: 6px;">
-									{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="block">
-								{{input type="checkbox" checked=model.vmInfo.Display.UpdatePassword class="form-group"}}
-								&nbsp;
-								<label for="">更新密码</label>
-								&nbsp;
-								{{#common/io-tooltip}}
-										<b class="btn btn-circle btn-default btn-xs btn-icon-only" data-toggle="tooltip" data-placement="bottom" title="提示信息"><i class="fa fa-info"></i></b>
-									{{/common/io-tooltip}}
-								</div>
-							</div>
-							{{/if}}
-							
-						</div>
-						{{/if}}
-
-						
-
-					</div>
-					
-					<div class="block content shrink content-footer main-content">
-						<div class="block pull-right">
-						{{#if (not-eq 0 lastStep)}}
-						<button type="button" class="btn btn-default" {{action "goToStep" lastStep}}>上一步</button> &nbsp;&nbsp;&nbsp;&nbsp;
-						{{/if}}
-
-						{{#if (not-eq 6 currentStep)}}
-						<button class="btn btn-default" {{action "goToStep" nextStep}}>下一步</button>
-						{{/if}}
-
-						{{#if (eq 6 currentStep)}}
-						<button type="button" {{action "saveVmInstallAction"}} class="btn btn-default">提交</button>
-						{{/if}}
-						
-						</div>
-					</div>
-				 </div>
-			</div>
-		</div>
-	</div>
-</div>
-{{/common/io-modal}}
