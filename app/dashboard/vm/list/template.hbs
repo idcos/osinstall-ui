@@ -39,9 +39,17 @@
 					</td>
 				</tr>
 
+				<tr>
+					<td width="15%" class="active" align="right"><b>运行状态</b></td>
+					<td width="85%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择状态" content=model.runStatusData value=form.RunStatus optionValuePath="content.ID" optionLabelPath="content.Name"}}
+						</div>
+					</td>
+				</tr>
 				
 				<tr>
-					<td width="15%" class="active" align="right"><b>状态</b></td>
+					<td width="15%" class="active" align="right"><b>装机状态</b></td>
 					<td width="85%">
 						<div class="col-md-5">
 							{{view "select" class="form-control" prompt="请选择状态" content=model.statusData value=form.Status optionValuePath="content.ID" optionLabelPath="content.Name"}}
@@ -134,7 +142,9 @@
 						{{/link-to}}
 					</td>
 					<td>
-						<a href="">控制台</a>
+						{{#if (eq "running" item.RunStatus)}}
+							<a href="/novnc/vnc_auto.html?token={{str-replace-risk item.Hostname}}" target="_blank">控制台</a>
+						{{/if}}
 					</td>
 				</tr>
 				{{/each}}

@@ -18,7 +18,8 @@ export default Ember.Route.extend(breadCrumbMixin,{
 			osConfigData:this.get('osConfigSrv').list(10000,0).then(function(data){return data.Content.list;}),
 			hardwareData:this.get('hardwareSrv').list(10000,0).then(function(data){return data.Content.list;}),
 			systemConfigData:this.get('systemConfigSrv').list(10000,0).then(function(data){return data.Content.list;}),
-			statusData:[{ID:"pre_install",Name:"等待安装"},{ID:"installing",Name:"正在安装"},{ID:"success",Name:"安装成功"},{ID:"failure",Name:"安装失败"}],
+            statusData:[{ID:"pre_install",Name:"等待安装"},{ID:"installing",Name:"正在安装"},{ID:"success",Name:"安装成功"},{ID:"failure",Name:"安装失败"}],
+			isAvailableData:[{ID:"Yes",Name:"可用"},{ID:"No",Name:"不可用"}],
 		    session:this.get("userSrv").getLocalSession(),
         });
     },

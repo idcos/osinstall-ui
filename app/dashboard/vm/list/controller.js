@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
 	page:1,
 	pageCount:1,
 	pageSize:20,
-	form:{DeviceID:null,OsID:null,Keyword:null},
+	form:{DeviceID:null,OsID:null,Keyword:null,Status:null,RunStatus:null},
 	isShowMultiSearchBlock:false, //是否显示复杂查询区块
     selectAll:false,//是否全选
     //虚拟机装机
@@ -81,6 +81,7 @@ export default Ember.Controller.extend({
             var session = this.get("model.session");
             var accessToken = session.AccessToken;
             var isNoPurviewOperation = false;
+            var hasRuningVmHostname = "";
 
             Object.keys(rowList).forEach(function (key) {
                 var re = /^[0-9]*]*$/;
@@ -98,6 +99,9 @@ export default Ember.Controller.extend({
                                     isNoPurviewOperation = true;
                                 }
                             }
+                        }
+                        if(row.RunStatus === "running"){
+                            hasRuningVmHostname += row.Hostname+",";
                         }
                     }
                 }
@@ -122,6 +126,20 @@ export default Ember.Controller.extend({
                 Ember.$.notify({
                                 title: "<strong>操作失败:</strong>",
                                 message: "您无权操作其他人的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
+            if(hasRuningVmHostname !== ""){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "虚拟机(主机名:"+hasRuningVmHostname.substring(0,hasRuningVmHostname.length - 1)+")已启动!",
                             }, {
                                 animate: {
                                     enter: 'animated fadeInRight',
@@ -166,6 +184,7 @@ export default Ember.Controller.extend({
             var session = this.get("model.session");
             var accessToken = session.AccessToken;
             var isNoPurviewOperation = false;
+            var hasStopVmHostname = "";
 
             Object.keys(rowList).forEach(function (key) {
                 var re = /^[0-9]*]*$/;
@@ -183,6 +202,9 @@ export default Ember.Controller.extend({
                                     isNoPurviewOperation = true;
                                 }
                             }
+                        }
+                        if(row.RunStatus === "stop"){
+                            hasStopVmHostname += row.Hostname+",";
                         }
                     }
                 }
@@ -207,6 +229,20 @@ export default Ember.Controller.extend({
                 Ember.$.notify({
                                 title: "<strong>操作失败:</strong>",
                                 message: "您无权操作其他人的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
+            if(hasStopVmHostname !== ""){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "虚拟机(主机名:"+hasStopVmHostname.substring(0,hasStopVmHostname.length - 1)+")已停止!",
                             }, {
                                 animate: {
                                     enter: 'animated fadeInRight',

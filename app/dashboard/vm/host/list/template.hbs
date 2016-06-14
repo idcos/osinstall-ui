@@ -26,6 +26,16 @@
 
 				{{#if isShowMultiSearchBlock}}
 				<tr>
+					<td width="15%" align="right">是否可用</td>
+					<td width="85%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择"
+ content=model.isAvailableData value=form.IsAvailable optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
 					<td width="15%" align="right">PXE模板</td>
 					<td width="85%">
 						<div class="col-md-5">
