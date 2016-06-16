@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
                 self.set("model.vmInfoMessage",null);
                 if(data.Status==="success"){
                     Ember.$.notify({
-                    	message: "保存成功!"
+                    	message: "操作成功!"
                     }, {
                     	animate: {
                     		enter: 'animated fadeInRight',
@@ -37,7 +37,7 @@ export default Ember.Controller.extend({
                     }, 1000);
                 } else {
                     Ember.$.notify({
-                    	title: "<strong>保存失败:</strong>",
+                    	title: "<strong>操作失败:</strong>",
                     	message: data.Message
                     }, {
                     	animate: {
@@ -56,21 +56,10 @@ export default Ember.Controller.extend({
             self.get("dhcpSubnetSrv").save(form).then(function(data) {
                 self.set("model.dhcpMessage",null);
                 if(data.Status === "success"){
-                    /*
-                    Ember.$.notify({
-                        message: "保存成功!"
-                    }, {
-                        animate: {
-                            enter: 'animated fadeInRight',
-                            exit: 'animated fadeOutRight'
-                        },
-                        type: 'success'
-                    });
-                    */
                     self.send("skipStep1Action");
                 } else {
                     Ember.$.notify({
-                        title: "<strong>保存失败:</strong>",
+                        title: "<strong>操作失败:</strong>",
                         message: data.Message
                     }, {
                         animate: {

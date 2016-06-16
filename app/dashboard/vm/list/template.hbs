@@ -142,9 +142,7 @@
 						{{/link-to}}
 					</td>
 					<td>
-						{{#if (eq "running" item.RunStatus)}}
-							<a href="/novnc/vnc_auto.html?token={{str-replace-risk item.Hostname}}" target="_blank">控制台</a>
-						{{/if}}
+						<a href="/novnc/vnc_auto.html?token={{str-replace-risk item.Hostname}}" target="_blank">控制台</a>
 					</td>
 				</tr>
 				{{/each}}

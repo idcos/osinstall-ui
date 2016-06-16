@@ -10,7 +10,7 @@ export default Ember.Route.extend(breadCrumbMixin,{
 	model: function(params) {
         return Ember.RSVP.hash({
         	sn:params.deviceId,
-			info:this.get('deviceLogSrv').list(params.deviceId,params.type,"id ASC",0).then(function(data){return data.Content;}),
+			info:this.get('deviceLogSrv').list(params.deviceId,params.type,"id DESC",0).then(function(data){return data.Content;}),
 		});
     },
 
