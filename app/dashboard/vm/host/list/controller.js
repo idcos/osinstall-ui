@@ -52,5 +52,35 @@ export default Ember.Controller.extend({
                 self.set('pageCount',pageCount);
             });
 		},
+		updateVmHostResourceAction:function(){
+			var self = this;
+			self.set("model.messageUpdateVmHost","<img src='image/loading.gif' />更新中,请稍候");
+			self.get("vmHostSrv").updateVmHostResource().then(function(data) {
+				self.set("model.messageUpdateVmHost",null);
+                if(data.Status === "success"){
+                    Ember.$.notify({
+                            message: "操作成功!"
+                        }, {
+                        	animate: {
+                        		enter: 'animated fadeInRight',
+                        		exit: 'animated fadeOutRight'
+                        	},
+                        	type: 'success'
+                        });
+                    self.send("pageChanged",self.get("page"));
+                } else {
+                    	Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: data.Message,
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                }
+            });
+		},
 	}
 });

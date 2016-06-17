@@ -21,6 +21,7 @@ export default Ember.Route.extend(breadCrumbMixin,{
             statusData:[{ID:"pre_install",Name:"等待安装"},{ID:"installing",Name:"正在安装"},{ID:"success",Name:"安装成功"},{ID:"failure",Name:"安装失败"}],
 			isAvailableData:[{ID:"Yes",Name:"可用"},{ID:"No",Name:"不可用"}],
 		    session:this.get("userSrv").getLocalSession(),
+            messageUpdateVmHost:null,
         });
     },
 

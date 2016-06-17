@@ -42,4 +42,14 @@ export default Ember.Service.extend({
 			'data': JSON.stringify(data),
         });
     },
+
+    updateVmHostResource : function() {
+        var url = "/api/osinstall/v1/vm/host/collectAndUpdate";
+        //发送ajax请求
+        return ajax({
+            'method': 'GET',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+        });
+    },
 });
