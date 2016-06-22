@@ -249,6 +249,21 @@
 				</tr>
 
 				<tr>
+					<td class="active" align="right"><label>设备类型</label></td>
+					<td>
+						<div class="col-md-10">
+							{{#if (not-eq "Yes" item.IsVm)}}
+								物理机
+							{{/if}}
+
+							{{#if (eq "Yes" item.IsVm)}}
+								虚拟机
+							{{/if}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
 					<td class="active" align="right"><label>添加时间</label></td>
 					<td>
 						<div class="col-md-5">
@@ -265,7 +280,6 @@
 						</div>
 					</td>
 				</tr>
-
 			</tbody>
 		</table>
 

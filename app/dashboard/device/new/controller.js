@@ -126,6 +126,7 @@ export default Ember.Controller.extend({
 
         function eachFunction(row){ 
             var isError = false;
+            set(row,"IsVm",null);
             for(var j=0;j<rows.length;j++){
               if(i !== j && row.Sn === rows[j].Sn){
                 set(row,"messageSn","<span class='text-danger'>SN有重复!</span>");
@@ -138,6 +139,10 @@ export default Ember.Controller.extend({
                     set(row,"messageSn","<span class='text-danger'>"+data.Message+"</span>");
                   }else if(data.Status === "success"){
                     set(row,"messageSn","<span class='text-success'>SN填写正确!</span>");
+                  }
+
+                  if(!Ember.isEmpty(data.Content.IsVm)){
+                    set(row,"IsVm",data.Content.IsVm);
                   }
               });
             }

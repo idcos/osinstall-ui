@@ -74,7 +74,8 @@
 						</div>
 					</td>
 				</tr>
-
+				
+				{{#if (not-eq "Yes" item.IsVm)}}
 				<tr>
 					<td align="right"><label>管理IP</label></td>
 					<td>
@@ -96,6 +97,7 @@
 						</div>
 					</td>
 				</tr>
+				{{/if}}
 				
 
 				<tr>
@@ -112,7 +114,8 @@
 						</div>
 					</td>
 				</tr>
-
+				
+				{{#if (not-eq "Yes" item.IsVm)}}
 				<tr>
 					<td align="right"><label>硬件配置模板</label></td>
 					<td>
@@ -127,6 +130,7 @@
 						</div>
 					</td>
 				</tr>
+				{{/if}}
 
 				<tr>
 					<td align="right"><label class="required">系统安装模板</label></td>
@@ -142,7 +146,8 @@
 						</div>
 					</td>
 				</tr>
-
+				
+				{{#if (not-eq "Yes" item.IsVm)}}
 				<tr>
 					<td align="right"><label class="required">位置</label></td>
 					<td>
@@ -168,7 +173,7 @@
 						</div>
 					</td>
 				</tr>
-				
+
 				<!--
 				<tr>
 					<td align="right"><label>装机完执行脚本</label></td>
@@ -212,6 +217,8 @@ IP:<{ip}>
 						</div>
 					</td>
 				</tr>
+				{{/if}}
+
 				{{/if}}
 				
 
