@@ -7,6 +7,20 @@ export default Ember.Controller.extend({
 		loginAction: function() {
 			var self = this;
         	var form = this.get("model.info");
+            if(!self.get("userSrv").isLocalStorageSupported()){
+                Ember.$.notify({
+                        title: "<strong>登录失败:</strong>",
+                        message: "当前浏览器不支持local storage，请禁用隐身模式或使用最新版Chrome浏览器!"
+                    }, {
+                        animate: {
+                            enter: 'animated fadeInRight',
+                            exit: 'animated fadeOutRight'
+                        },
+                        type: 'danger'
+                    });
+                return ;
+            }
+
         	self.get("userSrv").login(form).then(function(data) {
                 if(data.Status==="success"){
                     self.get("userSrv").createLocalSession(data.Content);

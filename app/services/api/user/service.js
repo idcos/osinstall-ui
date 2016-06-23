@@ -210,5 +210,16 @@ export default Ember.Service.extend({
 			'data': JSON.stringify(data),
         });
     },
-
+    
+    isLocalStorageSupported : function() {
+        var testKey = 'test',
+        storage = window.sessionStorage;
+        try {
+            storage.setItem(testKey, 'testValue');
+            storage.removeItem(testKey);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    },
 });
