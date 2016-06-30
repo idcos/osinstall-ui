@@ -34,7 +34,7 @@ export default Ember.Controller.extend({
 			this.send("pageChanged",this.get("page"));
 		},
         searchAction:function(){
-            this.send("pageChanged",this.get("page"));
+            this.send("pageChanged",1);
         },
 		pageChanged:function(page){
 			var self = this;

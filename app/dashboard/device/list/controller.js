@@ -138,7 +138,7 @@ export default Ember.Controller.extend({
 		},
 		searchAction:function(){
             //console.log(this.get("form"));
-			this.send("pageChanged",this.get("page"));
+			this.send("pageChanged",1);
 		},
         pageSizeChanged:function(pageSize){
             this.set("pageSize",pageSize);

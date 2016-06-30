@@ -34,6 +34,19 @@ export default Ember.Controller.extend({
                     }
                     window.sessionStorage.setItem("osinstallIsShowVmFunction","No");
                     self.get('platformConfigSrv').getByName("IsShowVmFunction").then(function(response){
+                        if(response.Status !== "success"){
+                            Ember.$.notify({
+                                title: "<strong>登录失败:</strong>",
+                                message: response.Message
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                            return ;
+                        }
                         if(Ember.isEmpty(response.Content) || Ember.isEmpty(response.Content.Content)){
                             self.transitionToRoute('dashboard.guide');
                         }else{
