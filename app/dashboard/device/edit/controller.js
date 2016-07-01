@@ -99,6 +99,30 @@ export default Ember.Controller.extend({
         }
   }.observes("rows.@each.ManageIp"),
 
+  snChanged: function() {
+        var self = this;
+        var rows = this.get('rows');
+
+        function eachFunction(row){ 
+            var isError = false;
+            set(row,"IsVm",null);
+            if(isError === false){
+              self.get('deviceSrv').validateSn(row.Sn).then(function(data){
+                  if(!Ember.isEmpty(data.Content.IsVm)){
+                    set(row,"IsVm",data.Content.IsVm);
+                  }
+              });
+            }
+        }
+
+        for (var i=0;i<rows.length;i++) {
+          var row = rows[i];
+          if(!Ember.isEmpty(row.Sn)){
+            eachFunction(row);
+          }
+        }
+  }.observes("rows.@each.Sn"),
+
 	actions:{
 		saveAction:function(){
 			var self = this;

@@ -75,7 +75,7 @@ export default Ember.Controller.extend({
             this.send("pageChanged",this.get("page"));
         },
         searchAction:function(){
-            this.send("pageChanged",this.get("page"));
+            this.send("pageChanged",1);
         },
         pageSizeChanged:function(pageSize){
             this.set("pageSize",pageSize);

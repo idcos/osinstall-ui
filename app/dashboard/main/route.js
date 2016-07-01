@@ -4,11 +4,12 @@ export default Ember.Route.extend({
 	deviceSrv: Ember.inject.service('api/device/service'),
 	model: function(params) {
         return Ember.RSVP.hash({
-			report:this.get('deviceSrv').getInstallReport().then(function(data){return data;}),
+			//report:this.get('deviceSrv').getInstallReport().then(function(data){return data;}),
 		});
     },
 
     setupController: function(controller, model) {
+        /*
     	var companyData = [];
     	var osData = [];
     	if(model.report.Status === "success"){
@@ -38,5 +39,6 @@ export default Ember.Route.extend({
         model.companyData = JSON.stringify(companyData);
         model.osData = JSON.stringify(osData);
         controller.set("model",model);
+        */
     }
 });

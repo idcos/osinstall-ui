@@ -126,6 +126,7 @@ export default Ember.Controller.extend({
 
         function eachFunction(row){ 
             var isError = false;
+            set(row,"IsVm",null);
             for(var j=0;j<rows.length;j++){
               if(i !== j && row.Sn === rows[j].Sn){
                 set(row,"messageSn","<span class='text-danger'>SN有重复!</span>");
@@ -139,6 +140,10 @@ export default Ember.Controller.extend({
                   }else if(data.Status === "success"){
                     set(row,"messageSn","<span class='text-success'>SN填写正确!</span>");
                   }
+
+                  if(!Ember.isEmpty(data.Content.IsVm)){
+                    set(row,"IsVm",data.Content.IsVm);
+                  }
               });
             }
         }
@@ -148,7 +153,7 @@ export default Ember.Controller.extend({
           if(!Ember.isEmpty(row.Sn)){
             eachFunction(row);
           }else{
-              set(row,"messageSn","<span class='text-muted'>请填写真实的序列号</span>");
+              set(row,"messageSn","<span class='text-danger'>请填写真实的序列号，没有SN则无法进行装机</span>");
           }
         }
   }.observes("rows.@each.Sn"),

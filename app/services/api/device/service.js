@@ -131,6 +131,17 @@ export default Ember.Service.extend({
         });
     },
 
+    getBySn : function(sn) {
+        var url = "/api/osinstall/v1/device/getDeviceBySn?sn="+sn;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'GET',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+        });
+    },
+
     /*
     * 获取操作系统具体信息
     */
