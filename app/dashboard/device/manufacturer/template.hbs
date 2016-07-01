@@ -28,16 +28,32 @@
 					</td>
 				</tr>
 
-				<!--
+				
 				<tr>
-					<td class="active" align="right"><label>IP</label></td>
+					<td class="active" align="right"><label>BootOS IP</label></td>
 					<td>
 						<div class="col-md-5">
-							{{item.Ip}}
+							{{#if (eq "installing" device.Status)}}
+								{{#if (lte 0 device.InstallProgress)}}
+									{{#if (gt 0.6 device.InstallProgress)}}
+										{{item.Ip}}
+									{{/if}}
+								{{/if}}
+							{{/if}}
+							
+							{{#if (eq "pre_install" device.Status)}}
+								{{#if (lte 0 device.InstallProgress)}}
+									{{#if (gt 0.6 device.InstallProgress)}}
+										{{item.Ip}}
+									{{/if}}
+								{{/if}}
+							{{/if}}
+							 (临时IP，仅在进入BootOS时有效)
 						</div>
 					</td>
 				</tr>
-
+				
+				<!--
 				<tr>
 					<td class="active" align="right"><label>Mac</label></td>
 					<td>
@@ -72,6 +88,15 @@
 						            </tbody>
 					            </table>
 							{{/if}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>网卡硬件信息</label></td>
+					<td>
+						<div class="col-md-12">
+							{{html-safe item.NicDevice}}
 						</div>
 					</td>
 				</tr>
@@ -209,8 +234,8 @@
 				<tr>
 					<td class="active" align="right"><label>Raid</label></td>
 					<td>
-						<div class="col-md-10">
-							{{item.Raid}}
+						<div class="col-md-12">
+							{{html-safe item.Raid}}
 						</div>
 					</td>
 				</tr>
@@ -220,6 +245,21 @@
 					<td>
 						<div class="col-md-10">
 							{{item.Oob}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right"><label>设备类型</label></td>
+					<td>
+						<div class="col-md-10">
+							{{#if (not-eq "Yes" item.IsVm)}}
+								物理机
+							{{/if}}
+
+							{{#if (eq "Yes" item.IsVm)}}
+								虚拟机
+							{{/if}}
 						</div>
 					</td>
 				</tr>

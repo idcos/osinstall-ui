@@ -184,24 +184,30 @@
             </tbody>
         </table>
         	<div class="row padding0">
-					<div class="col-sm-7">
-			       		<button {{action "exportAction" "select"}} type="button" class="btn btn-primary btn-sm">导出选中</button>
+					<div class="col-sm-6">
+			       		<button {{action "exportAction" "select"}} type="button" class="btn btn-default btn-sm">导出选中</button>
 			       		&nbsp;&nbsp;
-			       		<button {{action "exportAction" "all"}} type="button" class="btn btn-primary btn-sm">导出全部</button>
+			       		<button {{action "exportAction" "all"}} type="button" class="btn btn-default btn-sm">导出全部</button>
 			       		&nbsp;&nbsp;
 			       		{{#if (eq "Administrator" model.session.Role)}}
-			       		<button {{action "showAssignUserModalAction"}} type="button" class="btn btn-primary btn-sm">分配管理人</button>
+			       		<button {{action "showAssignUserModalAction"}} type="button" class="btn btn-default btn-sm">分配管理人</button>
 			       		&nbsp;&nbsp;
 			       		{{/if}}
+			       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
 					</div>
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						{{#if (not-eq 1 pageCount)}}
-							{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+							{{#common/io-pagination count=pageCount current=page pageSize=pageSize change='pageChanged' pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
 						{{/if}}
 					</div>
 				</div>
 				<div class="row" style="margin-left: 5px;margin-top: 10px;">
-					注:您可将此设备信息导出、编辑完后，使用【录入新设备】->【批量录入】功能导入到设备列表
+					<b>温馨提示:</b> <br>
+					<span style="font-size: 13px;">
+					1.客户机加电、进入BootOS后，设备信息就会采集、推送到此页面 <br>
+					2.您可将设备信息导出、编辑完后，使用【录入新设备】->【批量录入】功能导入到设备列表 <br>
+					3.设备录入到设备列表后，就不再显示在此页面
+					</span>
 				</div>
     </div>
 </div>

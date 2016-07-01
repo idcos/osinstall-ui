@@ -11,6 +11,10 @@
   <li class="next {{if isLastDisabled 'disabled'}}">
     <a href="{{nextUrl}}" {{action 'next'}}>{{paginationNext}}</a>
   </li>
+  <li style="margin-left:5px;">
+    {{view "select" class="form-control paginationPageSizeSelect" prompt="每页显示"
+ content=pageSizeData value=pageSize optionValuePath="content.key" optionLabelPath="content.key" }}
+  </li>
 {{else}}
   <li class="{{if pagerSpread 'previous'}} {{if isFirstDisabled 'disabled'}}">
     <a href="{{previousUrl}}" {{action 'previous'}}>{{pagerPrevious}}</a>

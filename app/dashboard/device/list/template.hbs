@@ -107,12 +107,14 @@
                 	<th>{{input type="checkbox" checked=selectAll}}</th>
                     <th>SN</th>
 					<th>主机名</th>
-					<th>批次号</th>
-					<th>IP</th>
-					<th>操作系统</th>
-					<th>硬件配置模板</th>
-					<th>系统安装模板</th>
-					<th>状态</th>
+					{{!-- <th>批次号</th> --}}
+					<th>应用IP</th>
+					<th>BootOS IP</th>
+					<th>带外IP</th>
+					<th>PXE模板</th>
+					<th>硬件模板</th>
+					<th>系统模板</th>
+					<th width="8%">状态</th>
 					{{#if isShowInstallInfoCol}}
 					<th width="8%">安装进度</th>
 					<th>安装日志</th>
@@ -131,27 +133,45 @@
                 	<td>{{input type="checkbox" checked=item.checked}}</td>
 					<td>{{#link-to "dashboard.device.detail" item.ID}}{{item.Sn}}{{/link-to}}</td>
 					<td>{{#link-to "dashboard.device.detail" item.ID}}{{item.Hostname}}{{/link-to}}</td>
-					<td><a href="javascript:void(0);" {{action "searchBatchNumberAction" item.BatchNumber}}>{{item.BatchNumber}}</a></td>
+					{{!-- <td><a href="javascript:void(0);" {{action "searchBatchNumberAction" item.BatchNumber}}>{{item.BatchNumber}}</a></td> --}}
 					<td>{{#link-to "dashboard.network.detail" item.NetworkID}}{{item.Ip}}{{/link-to}}</td>
+					<td>
+					{{#if (eq "installing" item.Status)}}
+						{{#if (lte 0 item.InstallProgress)}}
+							{{#if (gt 0.6 item.InstallProgress)}}
+								{{item.BootosIp}}
+							{{/if}}
+						{{/if}}
+					{{/if}}
+
+					{{#if (eq "pre_install" item.Status)}}
+						{{#if (lte 0 item.InstallProgress)}}
+							{{#if (gt 0.6 item.InstallProgress)}}
+								{{item.BootosIp}}
+							{{/if}}
+						{{/if}}
+					{{/if}}
+					</td>
+					<td>{{item.OobIp}}</td>
 					<td>{{#link-to "dashboard.os.detail" item.OsID}}{{item.OsName}}{{/link-to}}</td>
 					<td>{{#link-to "dashboard.hardware.detail" item.HardwareID}}{{item.HardwareName}}{{/link-to}}</td>
 					<td>{{#link-to "dashboard.systemTpl.detail" item.SystemID}}{{item.SystemName}}{{/link-to}}</td>
 					<td>
 						{{#link-to "dashboard.log.detail" item.ID "install"}}
 						{{#if (eq "pre_install" item.Status)}}
-							<span class="text-muted font-size-14">等待安装</span>
+							<span class="text-muted">等待安装</span>
 						{{/if}}
 
 						{{#if (eq "installing" item.Status)}}
-							<span class="text-info font-size-14">正在安装</span>
+							<span class="text-info">正在安装</span>
 						{{/if}}
 
 						{{#if (eq "success" item.Status)}}
-							<span class="text-success font-size-14">安装成功</span>
+							<span class="text-success">安装成功</span>
 						{{/if}}
 
 						{{#if (eq "failure" item.Status)}}
-							<span class="text-danger font-size-14">安装失败</span>
+							<span class="text-danger">安装失败</span>
 						{{/if}}
 						{{/link-to}}
 					</td>
@@ -189,14 +209,16 @@
 					<div class="col-sm-6">
 			       		<button {{action "reInstallAction"}} type="button" class="btn btn-default btn-sm">重新安装</button> &nbsp;&nbsp;
 			       		<button {{action "cancelInstallAction"}} type="button" class="btn btn-default btn-sm">取消安装</button> &nbsp;&nbsp;
-						
+
+						<button {{action "exportAction"}} type="button" class="btn btn-default btn-sm">导出</button> &nbsp;&nbsp;
+
 			       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
 					</div>
+					
 					<div class="col-sm-6">
 						{{#if (not-eq 1 pageCount)}}
-							{{#common/io-pagination count=pageCount current=page change='pageChanged'}}{{/common/io-pagination}}
+							{{#common/io-pagination count=pageCount current=page pageSize=pageSize change='pageChanged' pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
 						{{/if}}
-						
 					</div>
 				</div>
     </div>

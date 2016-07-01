@@ -74,7 +74,8 @@
 						</div>
 					</td>
 				</tr>
-
+				
+				{{#if (not-eq "Yes" item.IsVm)}}
 				<tr>
 					<td align="right"><label>管理IP</label></td>
 					<td>
@@ -96,13 +97,14 @@
 						</div>
 					</td>
 				</tr>
+				{{/if}}
 				
 
 				<tr>
-					<td align="right"><label class="required">操作系统</label></td>
+					<td align="right"><label class="required">PXE模板</label></td>
 					<td>
 						<div class="col-md-5">
-							{{view "select" required=true class="form-control" prompt="请选择操作系统"
+							{{view "select" required=true class="form-control" prompt="请选择PXE模板"
  content=model.osConfigData value=item.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
 						</div>
 						<div class="col-md-7" style="margin-top: 5px;">
@@ -112,7 +114,8 @@
 						</div>
 					</td>
 				</tr>
-
+				
+				{{#if (not-eq "Yes" item.IsVm)}}
 				<tr>
 					<td align="right"><label>硬件配置模板</label></td>
 					<td>
@@ -122,11 +125,12 @@
 						</div>
 						<div class="col-md-7" style="margin-top: 5px;">
 							<span class="text-muted">
-								请提前在【硬件配置模板管理】里录入数据，未选则略过安装此项
+								未选则略过安装此项。安装虚拟机请不要选择此项
 							</span>
 						</div>
 					</td>
 				</tr>
+				{{/if}}
 
 				<tr>
 					<td align="right"><label class="required">系统安装模板</label></td>
@@ -142,7 +146,8 @@
 						</div>
 					</td>
 				</tr>
-
+				
+				{{#if (not-eq "Yes" item.IsVm)}}
 				<tr>
 					<td align="right"><label class="required">位置</label></td>
 					<td>
@@ -168,7 +173,7 @@
 						</div>
 					</td>
 				</tr>
-				
+
 				<!--
 				<tr>
 					<td align="right"><label>装机完执行脚本</label></td>
@@ -192,17 +197,30 @@ IP:<{ip}>
 						</div>
 					</td>
 				</tr>
+				-->
 				
-				<tr style="display: none">
+				{{#if (eq "Yes" model.session.IsShowVmFunction)}}
+				<tr>
 					<td align="right"><label class="required">是否支持安装虚拟机</label></td>
 					<td>
 						<div class="col-md-5">
 							{{view "select" required=true class="form-control" prompt="请选择"
  content=model.whetherData value=item.IsSupportVm optionValuePath="content.id" optionLabelPath="content.name" }}
 						</div>
+						<div class="col-md-7" style="margin-top: 5px;">
+							<span class="text-muted">
+								要成为可用的宿主机需满足以下条件：
+								1.BIOS VT必须打开；
+								2.使用单独的LVM分区；
+								3.SSH能连接上
+							</span>
+						</div>
 					</td>
 				</tr>
-				-->
+				{{/if}}
+
+				{{/if}}
+				
 
 			</tbody>
 		</table>

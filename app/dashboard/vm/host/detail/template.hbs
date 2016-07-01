@@ -1,0 +1,65 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="active" align="right" width="20%"><label>SN</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{#link-to "dashboard.device.detail" model.deviceInfo.ID}}{{model.deviceInfo.Sn}}{{/link-to}}</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="active" align="right" width="20%"><label>主机名</label></td>
+					<td width="80%">
+						<div class="col-md-5">{{#link-to "dashboard.device.detail" model.deviceInfo.ID}}{{model.deviceInfo.Hostname}}{{/link-to}}</div>
+					</td>
+				</tr>
+				
+
+				<tr>
+					<td class="active" align="right"><label>资源使用情况</label></td>
+					<td>
+						<div class="col-md-8">
+								<table class="table table-hover no-light-title">
+						        	<thead>
+							       		<tr>
+							            	<th width="25%">类型</th>
+							            	<th width="25%">总量</th>
+							                <th width="25%">已用</th>
+							                <th width="25%">可用</th>
+							            </tr>
+						            </thead>
+						            <tbody>
+										<tr>
+											<td>CPU</td>
+											<td>{{model.vmHostInfo.CpuSum}}</td>
+											<td>{{model.vmHostInfo.CpuUsed}}</td>
+											<td>{{model.vmHostInfo.CpuAvailable}}</td>
+										</tr>
+										<tr>
+											<td>内存</td>
+											<td>{{divide model.vmHostInfo.MemorySum 1024}}G</td>
+											<td>{{divide model.vmHostInfo.MemoryUsed 1024}}G</td>
+											<td>{{divide model.vmHostInfo.MemoryAvailable 1024}}G</td>
+										</tr>
+										<tr>
+											<td>磁盘</td>
+											<td>{{model.vmHostInfo.DiskSum}}G</td>
+											<td>{{model.vmHostInfo.DiskUsed}}G</td>
+											<td>{{model.vmHostInfo.DiskAvailable}}G</td>
+										</tr>
+						            </tbody>
+					            </table>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="text-center">
+			<button type="button" class="btn btn-default" onclick="javascript:history.go(-1);">返回</button>
+		</div>
+
+    </div>
+</div>

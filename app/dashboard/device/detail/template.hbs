@@ -67,7 +67,7 @@
 
 
 				<tr>
-					<td class="active" align="right"><label>操作系统</label></td>
+					<td class="active" align="right"><label>PXE模板</label></td>
 					<td>
 						<div class="col-md-5">
 							{{item.OsName}}
@@ -112,6 +112,21 @@
 				</tr>
 
 				<tr>
+					<td class="active" align="right"><label>是否支持安装虚拟机</label></td>
+					<td>
+						<div class="col-md-5">
+							{{#if (eq "Yes" item.IsSupportVm)}}
+								是
+							{{/if}}
+
+							{{#if (not-eq "Yes" item.IsSupportVm)}}
+								否
+							{{/if}}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
 					<td class="active" align="right"><label>状态</label></td>
 					<td>
 						<div class="col-md-5">
@@ -120,15 +135,15 @@
 							{{/if}}
 
 							{{#if (eq "installing" item.Status)}}
-								<span class="text-info font-size-14">正在安装</span>
+								<span class="text-info">正在安装</span>
 							{{/if}}
 
 							{{#if (eq "success" item.Status)}}
-								<span class="text-success font-size-14">安装成功</span>
+								<span class="text-success">安装成功</span>
 							{{/if}}
 
 							{{#if (eq "failure" item.Status)}}
-								<span class="text-danger font-size-14">安装失败</span>
+								<span class="text-danger">安装失败</span>
 							{{/if}}
 						</div>
 					</td>

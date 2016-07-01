@@ -7,137 +7,86 @@ const {
 
 export default Ember.Controller.extend({
 	vmInstallSrv: Ember.inject.service('api/vmInstall/service'),
-	deviceSrv: Ember.inject.service('api/device/service'),
+    deviceSrv: Ember.inject.service('api/device/service'),
+	networkSrv: Ember.inject.service('api/network/service'),
 	searchForm:{Status:"success",Keyword:null},
 	selectAllDevice:true,
 	isShowVmBlock:false,
     isShowMultiSearchBlock:false,
 
-	selectAllDeviceChange: function() {
-            var self = this;
-            var selectAll = this.get('selectAllDevice');
-            var rowList = this.get("deviceList");
-            Object.keys(rowList).forEach(function (key) {
-                var re = /^[0-9]*]*$/;
-                if(re.test(key)){
-                    var row = rowList[key];
-                    set(row,"checked",selectAll); 
+    ipChanged: function() {
+        var self = this;
+        var row = this.get('model.vmInfo');
+
+        set(row,"isShowNetworkInfo",false);
+        set(row,"Network",null);
+        set(row,"NetworkID",null);
+
+        var regexp =  /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+        if(regexp.test(row.Ip)){
+            self.get('networkSrv').validateIp(row.Ip).then(function(data){
+                if(data.Status === "failure"){
+                    set(row,"messageIp","<span class='text-danger'>"+data.Message+"</span>");
+                }else if(data.Status === "success"){
+                    set(row,"isShowNetworkInfo",true);
+                    set(row,"Network",data.Content.Network);
+                    set(row,"NetworkID",data.Content.ID);
+                    set(row,"messageIp","<span class='text-success'>IP填写正确!</span>");
                 }
             });
-        }.observes("selectAllDevice"),
+        }else{
+            set(row,"messageIp","<span class='text-danger'>IP格式不正确!</span>");
+        }
+
+  }.observes("model.vmInfo.Ip"),
 
 	actions:{
-        showMultiSearchBlockAction:function(){
-            set(this,'isShowMultiSearchBlock',true);
-        },
-        hideMultiSearchBlockAction:function(){
-            set(this,'isShowMultiSearchBlock',false);
-        },
-		showVmBlockAction: function(){
-			var self = this;
-            var rowList = self.get("deviceList");
-
-            if(!Ember.isEmpty(rowList)){
-                var ids = [];
-                Object.keys(rowList).forEach(function (key) {
-                    var re = /^[0-9]*]*$/;
-                    if(re.test(key)){
-                        var row = rowList[key];
-                        if(row.checked === true){
-                            var currentData = {};
-                            currentData.ID = parseInt(row.ID);
-                            ids.pushObject(currentData);
-                        }
-                    }
-                });
-            }else{
-                Ember.$.notify({
-                                title: "<strong>操作失败:</strong>",
-                                message: "请先搜索并选中要操作的设备!",
-                            }, {
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight'
-                                },
-                                type: 'danger'
-                            });
-                return ;
-            }
-
-            if(ids.length === 0){
-                Ember.$.notify({
-                                title: "<strong>操作失败:</strong>",
-                                message: "请先选中要操作的设备!",
-                            }, {
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight'
-                                },
-                                type: 'danger'
-                            });
-                return ;
-            }
-            self.set('isShowVmBlock', true);
-		},
-		searchDeviceAction: function(){
-			var self = this;
-			var form = self.get("searchForm");
-			self.set('deviceList',null);
-			self.set('searchDeviceMessage',null);
-			self.set('isShowVmBlock', false);
-			this.get("deviceSrv").list(100,0,form).then(function(data){
-                if(data.Content.recordCount <= 0){
-                	self.set('searchDeviceMessage', "<span class='text-danger'>未搜索到相关物理机!</span>");
-                }else{
-                	var rows = [];
-                	var selectAll = self.get("selectAllDevice");
-                	for(var i=0;i<data.Content.list.length;i++){
-                		var row = data.Content.list[i];
-                		row.checked = selectAll;
-                		rows.pushObject(row);
-                	}
-                	//console.log(rows);
-                	self.set('deviceList', rows);
-                }
-            });
-		},
-		saveBatchVmInstallAction: function(){
+        assignIPAction:function(){
             var self = this;
-            var rowList = self.get("deviceList");
-            var ids = [];
-            Object.keys(rowList).forEach(function (key) {
-                var re = /^[0-9]*]*$/;
-                if(re.test(key)){
-                    var row = rowList[key];
-                    if(row.checked === true){
-                        var currentData = {};
-                        currentData.ID = parseInt(row.ID);
-                        ids.pushObject(currentData);
-                    }
-                }
-            });
-
-            if(ids.length === 0){
+            var networkId = self.get("model.deviceInfo.NetworkID");
+            if(Ember.isEmpty(networkId)){
                 Ember.$.notify({
-                                title: "<strong>操作失败:</strong>",
-                                message: "请先选中要操作的设备!",
-                            }, {
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight'
-                                },
-                                type: 'danger'
-                            });
+                                    title: "<strong>操作失败:</strong>",
+                                    message: "没有可用的宿主机资源!",
+                                }, {
+                                    animate: {
+                                        enter: 'animated fadeInRight',
+                                        exit: 'animated fadeOutRight'
+                                    },
+                                    type: 'danger'
+                                });
                 return ;
             }
-
-            var batchVmInfo = self.get("model.batchVmInfo");
-            self.set("model.batchVmInfo.Message",null);
-            if(Ember.isEmpty(batchVmInfo.VmNumber) 
-                || Ember.isEmpty(batchVmInfo.OsID) 
-                || Ember.isEmpty(batchVmInfo.CpuCoresNumber)
-                || Ember.isEmpty(batchVmInfo.MemoryCurrent)
-                || Ember.isEmpty(batchVmInfo.DiskSize)
+            this.get("networkSrv").getNotUsedIPListByNetworkId(networkId).then(function(response){
+                if(response.Status === "success" && response.Content.length > 0){
+                    self.set("model.vmInfo.Ip",response.Content[0].Ip);
+                }else{
+                    Ember.$.notify({
+                                    title: "<strong>操作失败:</strong>",
+                                    message: "没有可用的IP!",
+                                }, {
+                                    animate: {
+                                        enter: 'animated fadeInRight',
+                                        exit: 'animated fadeOutRight'
+                                    },
+                                    type: 'danger'
+                                });
+                }
+            });
+        },
+		
+		saveVmAction: function(){
+            var self = this;
+            var vmInfo = self.get("model.vmInfo");
+            var model = self.get("model");
+            self.set("model.vmInfo.Message","<span class='text-success'>数据正在处理中,请稍候...</span>");
+            if(Ember.isEmpty(vmInfo.Hostname) 
+                || Ember.isEmpty(vmInfo.Mac) 
+                || Ember.isEmpty(vmInfo.Ip) 
+                || Ember.isEmpty(vmInfo.OsID) 
+                || Ember.isEmpty(vmInfo.CpuCoresNumber)
+                || Ember.isEmpty(vmInfo.MemoryCurrent)
+                || Ember.isEmpty(vmInfo.DiskSize)
             ){
                 Ember.$.notify({
                                 title: "<strong>操作失败:</strong>",
@@ -151,19 +100,25 @@ export default Ember.Controller.extend({
                             });
                 return ;
             }
-            var info = {};
-            info.Devices = ids;
-            info.VmNumber = parseInt(batchVmInfo.VmNumber);
-            info.OsID = parseInt(batchVmInfo.OsID);
-            info.CpuCoresNumber = parseInt(batchVmInfo.CpuCoresNumber);
-            info.MemoryCurrent = parseInt(batchVmInfo.MemoryCurrent);
-            info.DiskSize = parseInt(batchVmInfo.DiskSize);
-
-            self.get("vmInstallSrv").create(info).then(function(data) {
-                if(data.Status==="success"){
-                    //self.set("model.batchVmInfo.Message","<span class='text-success'>操作成功!</span>");
+            var form = {};
+            form.Sn = vmInfo.Sn;
+            form.Hostname = vmInfo.Hostname;
+            form.Ip = vmInfo.Ip;
+            form.Mac = vmInfo.Mac;
+            form.OsID = parseInt(vmInfo.OsID);
+            form.SystemID = parseInt(vmInfo.SystemID);
+            form.NetworkID = parseInt(vmInfo.NetworkID);
+            form.CpuCoresNumber = parseInt(vmInfo.CpuCoresNumber);
+            form.MemoryCurrent = parseInt(vmInfo.MemoryCurrent);
+            form.DiskSize = parseInt(vmInfo.DiskSize);
+            form.AccessToken = model.session.AccessToken
+            self.get("vmInstallSrv").create(form).then(function(data) {
+                self.set("model.vmInfo.Message",null);
+                if(data.Status === "success"){
+                    //self.set("model.vmInfo.Message","<span class='text-success'>操作成功!</span>");
                     Ember.$.notify({
-                        	message: "操作成功!"
+                            title: "",
+                            message: data.Message,
                         }, {
                         	animate: {
                         		enter: 'animated fadeInRight',
@@ -173,7 +128,7 @@ export default Ember.Controller.extend({
                         });
                     self.transitionToRoute('dashboard.vm.list','all');
                 } else {
-                    //self.set("model.batchVmInfo.Message","<span class='text-danger'>"+data.Message+"</span>");
+                    //self.set("model.vmInfo.Message","<span class='text-danger'>"+data.Message+"</span>");
                     	Ember.$.notify({
                                 title: "<strong>操作失败:</strong>",
                                 message: data.Message,

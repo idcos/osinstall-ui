@@ -3,7 +3,7 @@ import Ember from 'ember';
 import breadCrumbMixin from '../../../mixins/bread-crumb-mixin';
 export default Ember.Route.extend(breadCrumbMixin,{
     breadCrumb: {
-        title: "操作系统管理",
+        title: "PXE模板管理",
         isShow:true,
     },
 	osConfigSrv: Ember.inject.service('api/os-config/service'),

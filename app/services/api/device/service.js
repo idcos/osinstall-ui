@@ -131,6 +131,17 @@ export default Ember.Service.extend({
         });
     },
 
+    getBySn : function(sn) {
+        var url = "/api/osinstall/v1/device/getDeviceBySn?sn="+sn;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'GET',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+        });
+    },
+
     /*
     * 获取操作系统具体信息
     */
@@ -202,6 +213,18 @@ export default Ember.Service.extend({
 			'url': url,
 			'data': JSON.stringify(data),
         });
+    },
+
+    /*
+    * 导出
+    */
+    export : function(param) {
+        var url = "/api/osinstall/v1/device/export";
+		if(!Ember.isEmpty(param)){
+        	url += param;
+        }
+		location.href = url;
+		return ;
     },
 
     /*
@@ -307,6 +330,24 @@ export default Ember.Service.extend({
 
     batchAssignScanDeviceUser : function(form) {
         var url = "/api/osinstall/v1/device/scan/batchAssignOwner";
+		//生成发请求数据对象
+		var data = {};
+		data = form;
+
+		//发送ajax请求
+        return ajax({
+			'method': 'POST',
+			'contentType': "application/json; charset=utf-8",
+			'url': url,
+			'data': JSON.stringify(data),
+        });
+    },
+
+    /*
+    * 批量删除
+    */
+    batchDeleteScanDevice : function(form) {
+        var url = "/api/osinstall/v1/device/scan/batchDelete";
 		//生成发请求数据对象
 		var data = {};
 		data = form;

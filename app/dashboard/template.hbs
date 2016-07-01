@@ -2,7 +2,7 @@
     <div class="navbar-header navbar-brand">
         {{#link-to "dashboard.main"}}
             <img src="./image/login/logocloudboot.png" width="163" height="47" alt="CloudBoot 云启装机平台"/>
-            <small>V1.2.1</small>
+            <small>V1.3</small>
         {{/link-to}}
     </div>
 
@@ -63,6 +63,21 @@
 	                 
 	            </ul>
 	        </li>
+            
+            {{#if (eq "Yes" model.session.IsShowVmFunction)}}
+            <li>
+                <a href="javascript:void(0);">
+                    <i class="io-fa icon-vm"></i>
+                    <label>虚拟机管理</label>
+                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+                </a>
+                <ul class="nav nav-sub">
+                    <li> {{#link-to "dashboard.vm.host.list" "all"  }}宿主机列表{{/link-to}} </li>
+                    <li> {{#link-to "dashboard.vm.list" "all" }}虚拟机列表{{/link-to}} </li>
+                    {{!-- <li> {{#link-to "dashboard.vm.new"  }}申请虚拟机{{/link-to}} </li> --}}
+                </ul>
+            </li>
+            {{/if}}
 
             {{#if (eq "Administrator" model.session.Role)}}
             <li class="">
@@ -89,7 +104,7 @@
                 </a>
                 <ul class="nav nav-sub">
                     <li>
-                        {{#link-to "dashboard.os.list"  }}操作系统管理{{/link-to}}
+                        {{#link-to "dashboard.os.list"  }}PXE模板管理{{/link-to}}
                     </li>
                     <li>
                         {{#link-to "dashboard.systemTpl.list"  }}系统模板管理{{/link-to}}
@@ -103,18 +118,6 @@
             {{/if}}
             
             <!--
-            <li style="display: none">
-                <a href="javascript:void(0);">
-                    <i class="io-fa icon-server"></i>
-                    <label>虚拟机管理</label>
-                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-                </a>
-                <ul class="nav nav-sub">
-                    <li> {{#link-to "dashboard.vm.list" "all"  }}虚拟机列表{{/link-to}} </li>
-                    <li> {{#link-to "dashboard.vm.new"  }}申请虚拟机{{/link-to}} </li>
-                </ul>
-            </li>
-            
             {{#if (eq "Administrator" model.session.Role)}}
             <li class="">
                 <a href="javascript:void(0);">
@@ -157,6 +160,9 @@
                     {{/if}}
                     <li>
                         {{#link-to "dashboard.user.my"}}个人信息管理{{/link-to}}
+                    </li>
+                    <li>
+                        {{#link-to "dashboard.guide"}}系统设置{{/link-to}}
                     </li>
                 </ul>
             </li>

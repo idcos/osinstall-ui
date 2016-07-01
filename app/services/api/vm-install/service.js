@@ -75,7 +75,7 @@ export default Ember.Service.extend({
 
 
     create : function(form) {
-        var url = "/api/osinstall/v1/vm/create";
+        var url = "/api/osinstall/v1/vm/add";
         //生成发请求数据对象
         var data = {};
         data = form;
@@ -116,6 +116,51 @@ export default Ember.Service.extend({
         //生成发请求数据对象
         var data = {};
         data.ID = parseInt(id);
+
+        //发送ajax请求
+        return ajax({
+            'method': 'POST',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+            'data': JSON.stringify(data),
+        });
+    },
+
+    batchStart : function(form) {
+        var url = "/api/osinstall/v1/vm/batchStart";
+        //生成发请求数据对象
+        var data = {};
+        data = form;
+
+        //发送ajax请求
+        return ajax({
+            'method': 'POST',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+            'data': JSON.stringify(data),
+        });
+    },
+
+    batchStop : function(form) {
+        var url = "/api/osinstall/v1/vm/batchStop";
+        //生成发请求数据对象
+        var data = {};
+        data = form;
+
+        //发送ajax请求
+        return ajax({
+            'method': 'POST',
+            'contentType': "application/json; charset=utf-8",
+            'url': url,
+            'data': JSON.stringify(data),
+        });
+    },
+
+    batchReStart : function(form) {
+        var url = "/api/osinstall/v1/vm/batchReStart";
+        //生成发请求数据对象
+        var data = {};
+        data = form;
 
         //发送ajax请求
         return ajax({

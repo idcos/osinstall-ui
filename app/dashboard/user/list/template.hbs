@@ -36,7 +36,7 @@
 					<td>{{item.PhoneNumber}}</td>
                     <td>
                         {{#if (eq "Administrator" item.Role)}}
-                            <span class="text-danger font-size-14">超级管理员</span>
+                            <span class="text-danger">超级管理员</span>
                         {{/if}}
 
                         {{#if (eq "User" item.Role)}}
@@ -45,11 +45,11 @@
                     </td>
 					<td>
 						{{#if (eq "Enable" item.Status)}}
-							<span class="text-success font-size-14">正常</span>
+							<span class="text-success">正常</span>
 						{{/if}}
 
 						{{#if (eq "Disable" item.Status)}}
-							<span class="text-danger font-size-14">锁定</span>
+							<span class="text-danger">锁定</span>
 						{{/if}}
 					</td>
 					<td>

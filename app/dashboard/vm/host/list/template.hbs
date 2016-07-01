@@ -1,0 +1,198 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+		<div style="margin-bottom: 10px;">
+			{{#common/io-form-validator submitForm="searchAction"}}
+			<form class="form-horizontal">
+			<table class="table no-border">
+			<tbody>
+				<tr>
+					<td width="15%" align="right">搜索</td>
+					<td width="85%">
+						<div class="block">
+							<div class="col-md-6">
+							{{textarea placeholder="可输入批次号、SN、主机名、IP等进行查询
+多条信息间可通过换行、逗号、分号分隔" value=form.Keyword rows="4" class="form-control input-md"}}
+							</div>
+							<div class="col-md-4">
+								<button type="submit" class="btn btn-primary">搜 索</button>
+								{{#if (eq false isShowMultiSearchBlock)}}
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a {{action "showMultiSearchBlockAction"}} href="javascript::void(0);">展开更多条件</a>
+								{{/if}}
+							</div>
+							<div class="col-md-2">
+								{{#if (eq null model.messageUpdateVmHost)}}
+								<button {{action "updateVmHostResourceAction"}} type="button" class="btn btn-primary btn-xs">更新宿主机信息</button>
+								{{/if}}
+
+								{{#if (not-eq null model.messageUpdateVmHost)}}
+									<span style="font-size: 12px;">
+									{{html-safe model.messageUpdateVmHost}}
+									</span>
+								{{/if}}
+							</div>
+						</div>
+					</td>
+				</tr>
+
+				{{#if isShowMultiSearchBlock}}
+				<tr>
+					<td width="15%" align="right">是否可用</td>
+					<td width="85%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择"
+ content=model.isAvailableData value=form.IsAvailable optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="15%" align="right">PXE模板</td>
+					<td width="85%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择操作系统"
+ content=model.osConfigData value=form.OsID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="15%" align="right">硬件配置模板</td>
+					<td width="85%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择硬件配置模板"
+ content=model.hardwareData value=form.HardwareID optionValuePath="content.ID" optionLabelPath="content.ModelName" }}
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="15%" align="right">系统安装模板</td>
+					<td width="85%">
+						<div class="col-md-5">
+							{{view "select" class="form-control" prompt="请选择系统安装模板" content=model.systemConfigData value=form.SystemID optionValuePath="content.ID" optionLabelPath="content.Name" }}
+						</div>
+							{{#if (eq true isShowMultiSearchBlock)}}
+							<div class="col-md-2">
+								<a {{action "hideMultiSearchBlockAction"}} href="javascript::void(0);">收起</a>
+							</div>
+							{{/if}}
+					</td>
+				</tr>
+				{{/if}}
+			</tbody>
+			</table>
+			</form>
+			{{/common/io-form-validator}}
+		</div>
+	
+        <table class="table big table-hover">
+            <thead>
+                <tr>
+                	{{!-- <th>{{input type="checkbox" checked=selectAll}}</th> --}}
+                    <th width="11%">SN</th>
+					<th width="12%">主机名</th>
+					<th width="10%">应用IP</th>
+					<th width="15%">系统模板</th>
+					<th width="11%">CPU使用率</th>
+					<th width="11%">内存使用率</th>
+					<th width="11%">磁盘使用率</th>
+					<th width="8%">状态</th>
+					<th width="11%">虚拟机</th>
+                </tr>
+            </thead>
+            <tbody>
+            	{{#each rowList as |item index|}}
+                <tr>
+                	{{!-- <td>{{input type="checkbox" checked=item.checked}}</td> --}}
+					<td>{{#link-to "dashboard.vm.host.detail" item.Sn}}{{item.Sn}}{{/link-to}}</td>
+					<td>{{#link-to "dashboard.vm.host.detail" item.Sn}}{{item.Hostname}}{{/link-to}}</td>
+					<td>{{#link-to "dashboard.network.detail" item.NetworkID}}{{item.Ip}}{{/link-to}}</td>
+					<td>{{#link-to "dashboard.systemTpl.detail" item.SystemID}}{{item.SystemName}}{{/link-to}}</td>
+					<td>
+						{{#link-to "dashboard.vm.host.detail" item.Sn}}
+						<div class="progress progress-striped active" title="使用比率" style="height: 17px;margin-bottom:5px;">
+							<div title="使用比率" class="progress-bar {{get-color-by-relative-value item.CpuUsed item.CpuSum}}" role="progressbar" 
+							      aria-valuemin="0" aria-valuemax="100" 
+							      style="width: {{get-percentage-by-relative-value item.CpuUsed item.CpuSum}};">
+								<span class="sr-only">使用比率：{{get-percentage-by-relative-value item.CpuUsed item.CpuSum}}</span>
+							</div>
+						</div>
+						{{/link-to}}
+						<div>{{item.CpuUsed}}/{{item.CpuSum}}</div>
+					</td>
+					<td>
+						{{#link-to "dashboard.vm.host.detail" item.Sn}}
+						<div class="progress progress-striped active" title="使用比率" style="height: 17px;margin-bottom:5px;">
+							<div title="使用比率" class="progress-bar {{get-color-by-relative-value item.MemoryUsed item.MemorySum}}" role="progressbar" 
+							      aria-valuemin="0" aria-valuemax="100" 
+							      style="width: {{get-percentage-by-relative-value item.MemoryUsed item.MemorySum}};">
+								<span class="sr-only">使用比率：{{get-percentage-by-relative-value item.MemoryUsed item.MemorySum}}</span>
+							</div>
+						</div>
+						{{/link-to}}
+						<div>{{divide item.MemoryUsed 1024}}/{{divide item.MemorySum 1024}}G</div>
+					</td>
+					<td>
+						{{#link-to "dashboard.vm.host.detail" item.Sn}}
+						<div class="progress progress-striped active" title="使用比率" style="height: 17px;margin-bottom:5px;">
+							<div title="使用比率" class="progress-bar {{get-color-by-relative-value item.DiskUsed item.DiskSum}}" role="progressbar" 
+							      aria-valuemin="0" aria-valuemax="100" 
+							      style="width: {{get-percentage-by-relative-value item.DiskUsed item.DiskSum}};">
+								<span class="sr-only">使用比率：{{get-percentage-by-relative-value item.DiskUsed item.DiskSum}}</span>
+							</div>
+						</div>
+						{{/link-to}}
+						<div>{{item.DiskUsed}}/{{item.DiskSum}}G</div>
+					</td>
+					<td>
+						{{#if (eq "pre_install" item.Status)}}
+							<span class="text-muted">等待安装</span>
+						{{/if}}
+
+						{{#if (eq "installing" item.Status)}}
+							<span class="text-info">正在安装</span>
+						{{/if}}
+
+						{{#if (eq "success" item.Status)}}
+							{{#if (eq "Yes" item.IsAvailable)}}
+								<span class="text-success">正常</span>
+							{{/if}}
+
+							{{#if (eq "No" item.IsAvailable)}}
+								{{#link-to "dashboard.vm.host.log" item.DeviceID "virtualization"}}
+								<span class="text-danger">不可用</span>
+								{{/link-to}}
+							{{/if}}
+							
+						{{/if}}
+
+						{{#if (eq "failure" item.Status)}}
+							<span class="text-danger">安装失败</span>
+						{{/if}}
+					</td>
+					<td>
+						{{#if (eq "success" item.Status)}}
+							{{#if (eq "Yes" item.IsAvailable)}}
+								{{#link-to "dashboard.vm.new" item.DeviceID}}创建{{/link-to}} |
+							{{/if}}
+						{{/if}}
+						{{#link-to "dashboard.vm.list" item.DeviceID}}管理({{item.VmNum}}){{/link-to}}
+					</td>
+				</tr>
+				{{/each}}
+            </tbody>
+        </table>
+        	<div class="row padding0">
+					{{!-- <div class="col-sm-6">
+						<button {{action "exportAction"}} type="button" class="btn btn-default btn-sm">导出</button> &nbsp;&nbsp;
+					</div> --}}
+					
+					<div class="col-sm-6">
+						{{#if (not-eq 1 pageCount)}}
+							{{#common/io-pagination count=pageCount current=page pageSize=pageSize change='pageChanged' pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
+						{{/if}}
+					</div>
+				</div>
+    </div>
+</div>

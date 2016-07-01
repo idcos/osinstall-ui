@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
 	hardwareSrv: Ember.inject.service('api/hardware/service'),
 	page:1,
 	pageCount:1,
-	pageSize:10,
+	pageSize:20,
     Company:null,
     Product:null,
     ModelName:null,
@@ -54,7 +54,7 @@ export default Ember.Controller.extend({
 			this.send("pageChanged",this.get("page"));
 		},
         searchAction:function(){
-            this.send("pageChanged",this.get("page"));
+            this.send("pageChanged",1);
         },
 		pageChanged:function(page){
 			var self = this;

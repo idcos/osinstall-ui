@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
 	userSrv: Ember.inject.service('api/user/service'),
 	page:1,
 	pageCount:1,
-	pageSize:7,
+	pageSize:20,
 	form:{Status:null,Keyword:null},
     selectAll:false,//是否全选
     isShowMultiSearchBlock:false, //是否显示复杂查询区块
@@ -75,6 +75,10 @@ export default Ember.Controller.extend({
             this.send("pageChanged",this.get("page"));
         },
         searchAction:function(){
+            this.send("pageChanged",1);
+        },
+        pageSizeChanged:function(pageSize){
+            this.set("pageSize",pageSize);
             this.send("pageChanged",this.get("page"));
         },
         pageChanged:function(page){
@@ -218,6 +222,91 @@ export default Ember.Controller.extend({
         },
         toggleModal: function() {
           this.toggleProperty('model.isShowAssignUserModal');
+        },
+        batchDeleteAction:function(){
+            var self = this;
+            var rowList = self.get("rowList");
+            var datas = [];
+
+            var session = this.get("model.session");
+            var isNoPurviewOperation = false;
+
+            var accessToken = session.AccessToken;
+            Object.keys(rowList).forEach(function (key) {
+                var re = /^[0-9]*]*$/;
+                if(re.test(key)){
+                    var row = rowList[key];
+                    if(row.checked === true){
+                        var currentData = {};
+                        currentData.ID = row.ID;
+                        currentData.AccessToken = accessToken;
+                        datas.pushObject(currentData);
+
+                        if(!Ember.isEmpty(session)){
+                            if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                                if(!Ember.isEmpty(session.ID) && row.UserID !== session.ID){
+                                    isNoPurviewOperation = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            if(datas.length === 0){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "请先选中要删除的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
+            if(isNoPurviewOperation === true){
+                Ember.$.notify({
+                                title: "<strong>操作失败:</strong>",
+                                message: "您无权操作其他人的设备!",
+                            }, {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+                                type: 'danger'
+                            });
+                return ;
+            }
+
+            if(confirm("确定删除吗?")){
+                self.get("deviceSrv").batchDeleteScanDevice(datas).then(function(data) {
+                    if(data.Status === "success"){
+                        Ember.$.notify({
+                            message: "操作成功!"
+                        }, {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            type: 'success'
+                        });
+                        self.send("pageChanged",self.get("page"));
+                    } else {
+                        Ember.$.notify({
+                            title: "<strong>保存失败:</strong>",
+                            message: data.Message
+                        }, {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            type: 'danger'
+                        });
+                    }
+                });
+            }
         },
         exportAction:function(value){
             var self = this;

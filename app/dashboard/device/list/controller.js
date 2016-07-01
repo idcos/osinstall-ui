@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
     userSrv: Ember.inject.service('api/user/service'),
 	page:1,
 	pageCount:1,
-	pageSize:7,
+	pageSize:20,
 	form:{Status:null,OsID:null,HardwareID:null,SystemID:null,Keyword:null,BatchNumber:null},
 	isShowMultiSearchBlock:false, //是否显示复杂查询区块
 	isShowInstallInfoCol:false,
@@ -138,8 +138,12 @@ export default Ember.Controller.extend({
 		},
 		searchAction:function(){
             //console.log(this.get("form"));
-			this.send("pageChanged",this.get("page"));
+			this.send("pageChanged",1);
 		},
+        pageSizeChanged:function(pageSize){
+            this.set("pageSize",pageSize);
+            this.send("pageChanged",this.get("page"));
+        },
 		pageChanged:function(page){
 			var self = this;
 			this.set("page",page);
@@ -151,6 +155,15 @@ export default Ember.Controller.extend({
 				self.set('isShowInstallInfoCol',false);
 			}
 
+            if(!Ember.isEmpty(this.get("model.status")) && this.get("model.status") !== "all"){
+                var session = this.get("model.session");
+                if(!Ember.isEmpty(session)){
+                    if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                        form.UserID = session.ID;
+                    }
+                }
+            }
+
 			this.get("deviceSrv").list(pageSize,(page-1)*pageSize,form).then(function(data){
                 self.set('rowList', data.Content.list);
                 var pageCount = Math.ceil(data.Content.recordCount/pageSize);
@@ -160,6 +173,44 @@ export default Ember.Controller.extend({
                 self.set('pageCount',pageCount);
             });
 		},
+
+        exportAction:function(){
+            var self = this;
+            var form = this.get("form");
+            var url = "?method=get";
+            if(!Ember.isEmpty(this.get("model.status")) && this.get("model.status") !== "all"){
+                var session = this.get("model.session");
+                if(!Ember.isEmpty(session)){
+                    if(!Ember.isEmpty(session.Role) && session.Role != "Administrator"){
+                        form.UserID = session.ID;
+                        url += "&UserID="+form.UserID;
+                    }
+                }
+            }
+
+            if(!Ember.isEmpty(form.Keyword)){
+                url += "&Keyword="+form.Keyword;
+            }
+            if(!Ember.isEmpty(form.OsID)){
+                url += "&OsID="+form.OsID;
+            }
+            if(!Ember.isEmpty(form.HardwareID)){
+                url += "&HardwareID="+form.HardwareID;
+            }
+            if(!Ember.isEmpty(form.SystemID)){
+                url += "&SystemID="+form.SystemID;
+            }
+            if(!Ember.isEmpty(form.Status)){
+                url += "&Status="+form.Status;
+            }
+            if(!Ember.isEmpty(form.BatchNumber)){
+                url += "&BatchNumber="+form.BatchNumber;
+            }
+            this.get("deviceSrv").export(url);
+        },
+
+
+
         reInstallAction:function(){
             var self = this;
             var rowList = self.get("rowList");
@@ -225,7 +276,6 @@ export default Ember.Controller.extend({
                 return ;
             }
             
-
             if(isHasSuccessDevice === true){
                 Ember.$.notify({
                                 title: "<strong>操作失败:</strong>",
@@ -239,8 +289,6 @@ export default Ember.Controller.extend({
                             });
                 return ;
             }
-
-            
 
 
             self.get("deviceSrv").batchReInstall(datas).then(function(data) {
@@ -257,7 +305,7 @@ export default Ember.Controller.extend({
                         self.send("pageChanged",self.get("page"));
                     } else {
                         Ember.$.notify({
-                            title: "<strong>保存失败:</strong>",
+                            title: "<strong>操作失败:</strong>",
                             message: data.Message
                         }, {
                             animate: {
@@ -340,7 +388,7 @@ export default Ember.Controller.extend({
                         self.send("pageChanged",self.get("page"));
                     } else {
                         Ember.$.notify({
-                            title: "<strong>保存失败:</strong>",
+                            title: "<strong>操作失败:</strong>",
                             message: data.Message
                         }, {
                             animate: {
@@ -425,7 +473,7 @@ export default Ember.Controller.extend({
                         self.send("pageChanged",self.get("page"));
                     } else {
                         Ember.$.notify({
-                            title: "<strong>保存失败:</strong>",
+                            title: "<strong>操作失败:</strong>",
                             message: data.Message
                         }, {
                             animate: {
@@ -458,7 +506,7 @@ export default Ember.Controller.extend({
                         self.send("pageChanged",self.get("page"));
                     } else {
                         Ember.$.notify({
-                        	title: "<strong>保存失败:</strong>",
+                        	title: "<strong>操作失败:</strong>",
                         	message: data.Message
                         }, {
                         	animate: {
