@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import encodeUrl from 'ui/utils/encode-url';
 const {
   get,
   set,
@@ -187,9 +188,8 @@ export default Ember.Controller.extend({
                     }
                 }
             }
-
             if(!Ember.isEmpty(form.Keyword)){
-                url += "&Keyword="+form.Keyword;
+                url += "&Keyword="+encodeUrl(form.Keyword);
             }
             if(!Ember.isEmpty(form.OsID)){
                 url += "&OsID="+form.OsID;

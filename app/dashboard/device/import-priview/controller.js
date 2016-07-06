@@ -10,6 +10,10 @@ export default Ember.Controller.extend({
 		queryAction:function(){
 			this.send("pageChanged",this.get("page"));
 		},
+        pageSizeChanged:function(pageSize){
+            this.set("pageSize",pageSize);
+            this.send("pageChanged",this.get("page"));
+        },
 		pageChanged:function(page){
 			var self = this;
 			this.set("page",page);
