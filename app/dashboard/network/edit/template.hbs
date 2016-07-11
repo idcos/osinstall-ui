@@ -14,7 +14,9 @@
 					<td align="right" width="20%"><label class="required" for="Network">网段/掩码</label></td>
 					<td width="80%">
 						<div class="col-md-5">{{input id="Network" value=model.info.Network required=true type="text" class="form-control input-md"}}</div>
-						<span class="help-block with-errors">格式如:192.168.0.1/24</span>
+						<div class="col-md-7" style="margin-top: 3px;">
+							{{html-safe model.noticeMessage}}
+						</div>
 					</td>
 				</tr>
 
