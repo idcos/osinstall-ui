@@ -14,6 +14,7 @@ export default Ember.Route.extend(breadCrumbMixin,{
     },
 
     setupController: function(controller, model) {
+        model.noticeMessage = '<span class="text-muted">格式如:192.168.0.1/24</span>';
     	controller.set("model",model);
     }
 });

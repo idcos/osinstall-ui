@@ -11,11 +11,16 @@ export default Ember.Controller.extend({
 
     networkChange: function() {
         var self = this;
+        set(self,"model.noticeMessage",'<span class="text-muted">格式如:192.168.0.1/24</span>');
         var network = this.get('model.info.Network');
         if(!Ember.isEmpty(network)){
             self.get("networkSrv").getCidrInfoByNetwork(network).then(function(data) {
                 if(data.Status==="success"){
                     set(self,"model.info.Netmask",data.Content.Mask);
+                    var ipNum = parseInt(data.Content.IPNum);
+                    if(ipNum > 254){
+                        set(self,"model.noticeMessage","<span class='text-danger'>该网段对应有 "+ipNum+" 个IP，IP段入库需要较长时间，建议填写小的网段!</span>");
+                    }
                 }
             });
             set(this,"isShowNetmask",true);
