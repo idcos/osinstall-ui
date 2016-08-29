@@ -486,38 +486,5 @@ export default Ember.Controller.extend({
                 });
             }
         },
-
-		
-		deleteAction: function(id) {
-            if(confirm("确认删除吗？")){
-    			var self = this;
-            	self.get("deviceSrv").deleteRowById(id).then(function(data) {
-                    if(data.Status==="success"){
-                        Ember.$.notify({
-                        	message: "删除成功!"
-                        }, {
-                        	animate: {
-                        		enter: 'animated fadeInRight',
-                        		exit: 'animated fadeOutRight'
-                        	},
-                        	type: 'success'
-                        });
-                        //self.transitionToRoute('dashboard.os.list');
-                        self.send("pageChanged",self.get("page"));
-                    } else {
-                        Ember.$.notify({
-                        	title: "<strong>操作失败:</strong>",
-                        	message: data.Message
-                        }, {
-                        	animate: {
-                        		enter: 'animated fadeInRight',
-                        		exit: 'animated fadeOutRight'
-                        	},
-                        	type: 'danger'
-                        });
-                    }
-                });
-            }
-        },
 	}
 });
