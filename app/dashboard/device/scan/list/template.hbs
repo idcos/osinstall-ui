@@ -1,13 +1,6 @@
 <div class="panel panel-default">
-	
-    {{!-- <div class="panel-heading">
-        <ol class="breadcrumb" style="margin-bottom:0px;margin-top:0px;padding:0px 0px;">
-        	<li>装机管理</li>
-            <li class="active">发现新设备</li>
-        </ol>
-    </div> --}}
-    
-    <div class="panel-body">
+  <div class="panel-body">
+  	{{!-- Searchbox --}}
 		<div style="margin-bottom: 10px;">
 			{{#common/io-form-validator submitForm="searchAction"}}
 			<form class="form-horizontal">
@@ -18,8 +11,7 @@
 					<td width="85%">
 						<div class="block">
 							<div class="col-md-6">
-							{{textarea placeholder="可输入SN、厂商、产品名称、型号、DHCP IP等查询
-多条信息间可通过换行、逗号、分号分隔" value=form.Keyword rows="4" class="form-control input-md"}}
+							{{textarea placeholder="可输入SN、厂商、产品名称、型号、DHCP IP等查询多条信息间可通过换行、逗号、分号分隔" value=form.Keyword rows="4" class="form-control input-md"}}
 							</div>
 							<div class="col-md-6">
 								<button type="submit" class="btn btn-primary">搜 索</button>
@@ -38,8 +30,7 @@
 					<td width="15%" align="right">厂商</td>
 					<td width="85%">
 						<div class="col-md-3">
-							{{view "select" class="form-control" prompt="请选择"
- content=model.companyData value=form.Company optionValuePath="content.Company" optionLabelPath="content.Company" }}
+							{{view "select" class="form-control" prompt="请选择" content=model.companyData value=form.Company optionValuePath="content.Company" optionLabelPath="content.Company" }}
 						</div>
 					</td>
 				</tr>
@@ -49,8 +40,7 @@
 					<td width="15%" align="right">产品名</td>
 					<td width="85%">
 						<div class="col-md-3">
-							{{view "select" class="form-control" prompt="请选择"
- content=model.productData value=form.Product optionValuePath="content.Product" optionLabelPath="content.Product" }}
+							{{view "select" class="form-control" prompt="请选择"content=model.productData value=form.Product optionValuePath="content.Product" optionLabelPath="content.Product" }}
 						</div>
 					</td>
 				</tr>
@@ -61,8 +51,7 @@
 					<td width="15%" align="right">型号</td>
 					<td width="85%">
 						<div class="col-md-3">
-							{{view "select" class="form-control" prompt="请选择"
- content=model.modelNameData value=form.ModelName optionValuePath="content.ModelName" optionLabelPath="content.ModelName" }}
+							{{view "select" class="form-control" prompt="请选择"content=model.modelNameData value=form.ModelName optionValuePath="content.ModelName" optionLabelPath="content.ModelName" }}
 						</div>
 					</td>
 				</tr>
@@ -72,8 +61,7 @@
 					<td width="15%" align="right">CPU</td>
 					<td width="85%">
 						<div class="col-md-2">
-							{{view "select" class="form-control" prompt="请选择"
- content=model.calculateRule value=form.CpuRule optionValuePath="content.id" optionLabelPath="content.name" }}
+							{{view "select" class="form-control" prompt="请选择"content=model.calculateRule value=form.CpuRule optionValuePath="content.id" optionLabelPath="content.name" }}
 						</div>
 						<div class="col-md-2" style="padding-right: 0px;">
 							{{input type="number" value=form.Cpu placeholder="CPU核数" class="form-control input-md"}}
@@ -85,8 +73,7 @@
 					<td width="15%" align="right">内存</td>
 					<td width="85%">
 						<div class="col-md-2">
-							{{view "select" class="form-control" prompt="请选择"
- content=model.calculateRule value=form.MemoryRule optionValuePath="content.id" optionLabelPath="content.name" }}
+							{{view "select" class="form-control" prompt="请选择"content=model.calculateRule value=form.MemoryRule optionValuePath="content.id" optionLabelPath="content.name" }}
 						</div>
 						<div class="col-md-2" style="padding-right: 0px;">
 							{{input type="number" value=form.Memory placeholder="内存大小" class="form-control input-md"}}
@@ -101,8 +88,7 @@
 					<td width="15%" align="right">磁盘</td>
 					<td width="85%">
 						<div class="col-md-2">
-							{{view "select" class="form-control" prompt="请选择"
- content=model.calculateRule value=form.DiskRule optionValuePath="content.id" optionLabelPath="content.name" }}
+							{{view "select" class="form-control" prompt="请选择"content=model.calculateRule value=form.DiskRule optionValuePath="content.id" optionLabelPath="content.name" }}
 						</div>
 						<div class="col-md-2" style="padding-right: 0px;">
 							{{input type="number" value=form.Disk placeholder="磁盘大小" class="form-control input-md"}}
@@ -127,91 +113,166 @@
 			{{/common/io-form-validator}}
 		</div>
 
-		
-        <table class="table big table-hover">
-            <thead>
-                <tr>
-                	<th>{{input type="checkbox" checked=selectAll}}</th>
-                    <th>SN</th>
-					<th>厂商</th>
-					<th>型号</th>
-					<th>CPU</th>
-					<th>内存</th>
-					<th>磁盘</th>
-					<th>DHCP IP</th>
-					<th>OOB IP</th>
-					<th>管理人</th>
-					<th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-            {{#each rowList as |item index|}}
-				<tr>
-                	<td>{{input type="checkbox" checked=item.checked}}</td>
-					<td>{{item.Sn}}</td>
-					<td>{{item.Company}}</td>
-					<td>{{item.ModelName}}</td>
-					<td>
-						{{#if item.CpuSum}}
-							{{item.CpuSum}}核
-						{{/if}}
-					</td>
-					<td>
-						{{#if item.MemorySum}}
-							{{item.MemorySum}}M
-						{{/if}}
-					</td>
-					<td>
-						{{#if item.DiskSum}}
-							{{item.DiskSum}}G
-						{{/if}}
-					</td>
-					<td>
-						{{#if item.NicIp}}
-							{{#each item.NicIp as |item2 index2|}}
-								{{#if (not-eq 0 index2)}}
-									<br />
-								{{/if}}
-								{{item2.Ip}}
-							{{/each}}
-						{{/if}}
-					</td>
-					<td>{{item.Oob}}</td>
-					<td>{{item.OwnerName}}</td>
-					<td>{{#link-to "dashboard.device.scan.detail" item.ID}}详情{{/link-to}}</td>
-				</tr>
-			{{/each}}
-            </tbody>
-        </table>
-        	<div class="row padding0">
-					<div class="col-sm-6">
-			       		<button {{action "exportAction" "select"}} type="button" class="btn btn-default btn-sm">导出选中</button>
-			       		&nbsp;&nbsp;
-			       		<button {{action "exportAction" "all"}} type="button" class="btn btn-default btn-sm">导出全部</button>
-			       		&nbsp;&nbsp;
-			       		{{#if (eq "Administrator" model.session.Role)}}
-			       		<button {{action "showAssignUserModalAction"}} type="button" class="btn btn-default btn-sm">分配管理人</button>
-			       		&nbsp;&nbsp;
-			       		{{/if}}
-			       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
-					</div>
-					<div class="col-sm-6">
-						{{#if (not-eq 1 pageCount)}}
-							{{#common/io-pagination count=pageCount current=page pageSize=pageSize change='pageChanged' pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
-						{{/if}}
-					</div>
-				</div>
-				<div class="row" style="margin-left: 5px;margin-top: 10px;">
-					<b>温馨提示:</b> <br>
-					<span style="font-size: 13px;">
-					1.客户机加电、进入BootOS后，设备信息就会采集、推送到此页面 <br>
-					2.您可将设备信息导出、编辑完后，使用【录入新设备】->【批量录入】功能导入到设备列表 <br>
-					3.设备录入到设备列表后，就不再显示在此页面
-					</span>
-				</div>
-    </div>
-</div>
+		{{!-- Control Buttons --}}
+		<div class="row" style="padding-bottom:8px;">
+			<div class="col-sm-8">
+				<button 
+					{{action "toggleModalIpmi" "batchPowerOnAction"}} 
+					disabled={{model.isButtonLock}}
+					title="{{model.buttonLockNoticeInfo}}" 
+					type="button" class="btn btn-default btn-sm">
+					开机
+				</button> &nbsp;
 
+				<button 
+					{{action "toggleModalIpmi" "batchStartFromPxeAction"}}
+					disabled={{model.isButtonLock}}
+					title="{{model.buttonLockNoticeInfo}}" 
+					type="button" 
+					class="btn btn-default btn-sm">
+					从PXE启动
+				</button> &nbsp;
+
+		   	<button 
+		   		{{action "toggleModalIpmi" "batchPowerOffAction"}} 
+		   		disabled={{model.isButtonLock}} 
+		   		title="{{model.buttonLockNoticeInfo}}" 
+		   		type="button" 
+		   		class="btn btn-default btn-sm">
+		   		关机
+		   	</button> &nbsp;
+
+		   	<button 
+		   		{{action "toggleModalIpmi" "batchReStartAction"}} 
+		   		disabled={{model.isButtonLock}} 
+		   		title="{{model.buttonLockNoticeInfo}}" 
+		   		type="button" 
+		   		class="btn btn-default btn-sm">
+					重启
+		   	</button>
+			</div>
+		</div>
+
+		{{!-- Table Content --}}
+    <table class="table big table-hover">
+		  <thead>
+		    <tr>
+		      <th>
+		        {{input type="checkbox" checked=selectAll}}
+		      </th>
+		      <th>
+		        SN
+		      </th>
+		      <th>
+		        厂商
+		      </th>
+		      <th>
+		        型号
+		      </th>
+		      <th>
+		        CPU
+		      </th>
+		      <th>
+		        内存
+		      </th>
+		      <th>
+		        磁盘
+		      </th>
+		      <th>
+		        DHCP IP
+		      </th>
+		      <th>
+		        OOB IP
+		      </th>
+		      <th>
+		        管理人
+		      </th>
+		      <th>
+		        操作
+		      </th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    {{#each rowList as |item index|}}
+		    <tr>
+		      <td>
+		        {{input type="checkbox" checked=item.checked}}
+		      </td>
+		      <td>
+		        {{item.Sn}}
+		      </td>
+		      <td>
+		        {{item.Company}}
+		      </td>
+		      <td>
+		        {{item.ModelName}}
+		      </td>
+		      <td>
+		        {{#if item.CpuSum}}
+									{{item.CpuSum}}核
+								{{/if}}
+		      </td>
+		      <td>
+		        {{#if item.MemorySum}}
+									{{item.MemorySum}}M
+								{{/if}}
+		      </td>
+		      <td>
+		        {{#if item.DiskSum}}
+									{{item.DiskSum}}G
+								{{/if}}
+		      </td>
+		      <td>
+		        {{#if item.NicIp}}
+									{{#each item.NicIp as |item2 index2|}}
+										{{#if (not-eq 0 index2)}}
+		        <br/>
+		        {{/if}}
+										{{item2.Ip}}
+									{{/each}}
+								{{/if}}
+		      </td>
+		      <td>
+		        {{item.Oob}}
+		      </td>
+		      <td>
+		        {{item.OwnerName}}
+		      </td>
+		      <td>
+		        {{#link-to "dashboard.device.scan.detail" item.ID}}详情{{/link-to}}
+		      </td>
+		    </tr>
+		    {{/each}}
+		  </tbody>
+		</table>
+    <div class="row padding0">
+			<div class="col-sm-6">
+	       		<button {{action "exportAction" "select"}} type="button" class="btn btn-default btn-sm">导出选中</button>
+	       		&nbsp;&nbsp;
+	       		<button {{action "exportAction" "all"}} type="button" class="btn btn-default btn-sm">导出全部</button>
+	       		&nbsp;&nbsp;
+	       		{{#if (eq "Administrator" model.session.Role)}}
+	       		<button {{action "showAssignUserModalAction"}} type="button" class="btn btn-default btn-sm">分配管理人</button>
+	       		&nbsp;&nbsp;
+	       		{{/if}}
+	       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
+			</div>
+			<div class="col-sm-6">
+				{{#if (not-eq 1 pageCount)}}
+					{{#common/io-pagination count=pageCount current=page pageSize=pageSize change='pageChanged' pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
+				{{/if}}
+			</div>
+		</div>
+		<div class="row" style="margin-left: 5px;margin-top: 10px;">
+			<b>温馨提示:</b> <br>
+			<span style="font-size: 13px;">
+			1.客户机加电、进入BootOS后，设备信息就会采集、推送到此页面 <br>
+			2.您可将设备信息导出、编辑完后，使用【录入新设备】->【批量录入】功能导入到设备列表 <br>
+			3.设备录入到设备列表后，就不再显示在此页面
+			</span>
+		</div>
+  </div>
+</div>
 
 {{#common/io-modal show=model.isShowAssignUserModal close="toggleModal"}}
 {{#common/io-form-validator submitForm="assignSelectDevicesUserAction"}}
@@ -241,6 +302,119 @@
         </div>
       </div>
       
+    </div>
+  </div>
+</div>
+</form>
+{{/common/io-form-validator}}
+{{/common/io-modal}}
+
+
+{{#common/io-modal show=model.isShowModalIpmi close="closeToggleModalIpmi"}}
+{{#common/io-form-validator submitForm=model.ipmi.ActionName}}
+<form class="form-horizontal">
+<div class="modal fade" data-backdrop="static">
+  <div class="modal-dialog" style="width:600px;height:600px;">
+    <div class="modal-content">
+      <div class="modal-header">
+			<button type="button" class="close" {{action "closeToggleModalIpmi"}}>×</button>
+				<h4 class="modal-title">
+					{{translate "app.route.deviceList.ipmiModal.title"}}
+				</h4>
+			</div>
+      <div style="margin-left: 13px; margin-top: 10px; margin-bottom: 10px; height: 380px;">
+      	{{#if model.ipmi.Sn}}
+      	<div class="row" style="padding-top: 10px;">
+      		<div class="col-sm-2"></div>
+	        <div class="col-sm-2" style="padding:0;">
+	        	<div class="pull-right">SN：</div>
+	        </div>
+	        <div class="col-sm-4">
+	        	{{model.ipmi.Sn}}
+	        </div>
+        </div>
+        {{/if}}
+        {{#if model.ipmi.Hostname}}
+        <div class="row" style="padding-top: 20px;">
+      		<div class="col-sm-2"></div>
+	        <div class="col-sm-2" style="padding:0;">
+	        	<div class="pull-right">{{translate "app.route.deviceList.th.hostName"}}：</div>
+	       	</div>
+	        <div class="col-sm-4">
+	        	{{model.ipmi.Hostname}}
+	        </div>
+        </div>
+        {{/if}}
+        {{#if model.ipmi.DeviceIp}}
+        <div class="row" style="padding-top: 20px;">
+      		<div class="col-sm-2"></div>
+	        <div class="col-sm-2" style="padding:0;">
+	        	<div class="pull-right">{{translate "app.route.deviceList.th.AppIp"}}：</div>
+	       	</div>
+	        <div class="col-sm-4">
+	        	{{model.ipmi.DeviceIp}}
+	        </div>
+        </div>
+        {{/if}}
+        {{#if model.ipmi.OobIp}}
+        <div class="row" style="padding-top: 20px;">
+      		<div class="col-sm-2"></div>
+	        <div class="col-sm-2" style="padding:0;">
+	        	<div class="pull-right">OOB IP：</div>
+	       	</div>
+	        <div class="col-sm-4">
+	        	{{model.ipmi.OobIp}}
+	        </div>
+        </div>
+        {{/if}}
+      	<div class="row" style="padding-top: 30px;">
+      		<div class="col-sm-2"></div>
+	        <div class="col-sm-2" style="padding:0;">
+	        	<div class="pull-right">{{translate "username"}}：</div>
+	       	</div>
+	        <div class="col-sm-4">
+	        	{{input required=true value=model.ipmi.User type="text" class="form-control input-md"}}
+	        </div>
+        </div>
+        <div class="row" style="padding-top: 20px;">
+        	<div class="col-sm-2"></div>
+	        <div class="col-sm-2" style="padding:0;">
+	        	<div class="pull-right">{{translate "password"}}：</div>
+	       	</div>
+	        <div class="col-sm-4">
+	        	{{input type="password" value=model.ipmi.Password required=true class="form-control input-md"}}
+	        </div>
+        </div>
+        <div class="row" style="padding-top: 30px;">
+        	<div class="col-sm-4"></div>
+	        <div class="col-sm-8">
+	        	<button type="submit" class="btn btn-primary">
+	        	{{#if (eq "batchPowerOnAction" model.ipmi.ActionName)}}
+	        		{{translate "powerOn"}}
+	        	{{else if (eq "batchPowerOffAction" model.ipmi.ActionName)}}
+	        		{{translate "powerOff"}}
+	        	{{else if (eq "batchReStartAction" model.ipmi.ActionName)}}
+	        		{{translate "reboot"}}
+	        	{{else if (eq "batchStartFromPxeAction" model.ipmi.ActionName)}}
+	        		{{translate "app.route.deviceList.bootFromPxe"}}
+	        	{{/if}}
+	        	</button>
+      			&nbsp;&nbsp;
+        		<a class="btn btn-default" {{action "closeToggleModalIpmi"}}  data-dismiss="modal">
+        			{{translate "cancel"}}
+        		</a>
+	        </div>
+        </div>
+        {{#if model.ipmi.Message}}
+        <div class="row" style="padding-top: 15px;">
+        	<div class="col-sm-2"></div>
+	        <div class="col-sm-2"></div>
+	        <div class="col-sm-8">
+	        	{{html-safe model.ipmi.Message}}
+	        </div>
+        </div>
+        {{/if}}
+      </div>
     </div>
   </div>
 </div>

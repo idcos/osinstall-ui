@@ -127,7 +127,7 @@ export default Ember.Controller.extend({
               if (!Ember.isEmpty(row.ManageIp)) {
                 oobIp = row.ManageIp;
               } else {
-                oobIp = row.Oob;
+                oobIp = row.OobIp;
               }
             } else {
               oobIp = row.OobIp;
