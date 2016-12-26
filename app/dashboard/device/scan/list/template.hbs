@@ -246,18 +246,27 @@
 		  </tbody>
 		</table>
     <div class="row padding0">
-			<div class="col-sm-6">
-	       		<button {{action "exportAction" "select"}} type="button" class="btn btn-default btn-sm">导出选中</button>
-	       		&nbsp;&nbsp;
-	       		<button {{action "exportAction" "all"}} type="button" class="btn btn-default btn-sm">导出全部</button>
-	       		&nbsp;&nbsp;
-	       		{{#if (eq "Administrator" model.session.Role)}}
-	       		<button {{action "showAssignUserModalAction"}} type="button" class="btn btn-default btn-sm">分配管理人</button>
-	       		&nbsp;&nbsp;
-	       		{{/if}}
-	       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
+			<div class="col-sm-8">
+					{{log selectedRows}}
+					{{#if (not-eq 0 selectedRows.length)}}
+						<button 
+							{{action "newDevices"}}
+							type="button" 
+							class="btn btn-primary btn-sm">
+							录入新设备
+						</button>
+					{{/if}}
+       		<button {{action "exportAction" "select"}} type="button" class="btn btn-default btn-sm">导出选中</button>
+       		&nbsp;&nbsp;
+       		<button {{action "exportAction" "all"}} type="button" class="btn btn-default btn-sm">导出全部</button>
+       		&nbsp;&nbsp;
+       		{{#if (eq "Administrator" model.session.Role)}}
+       		<button {{action "showAssignUserModalAction"}} type="button" class="btn btn-default btn-sm">分配管理人</button>
+       		&nbsp;&nbsp;
+       		{{/if}}
+       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-4">
 				{{#if (not-eq 1 pageCount)}}
 					{{#common/io-pagination count=pageCount current=page pageSize=pageSize change='pageChanged' pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
 				{{/if}}

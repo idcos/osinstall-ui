@@ -22,6 +22,12 @@ export default Ember.Controller.extend({
   },
   selectAll: false, //是否全选
   isShowMultiSearchBlock: false, //是否显示复杂查询区块
+  selectedRows: Ember.computed("rowList.@each.checked", "rowList.length", function() {
+    const rowList = this.get("rowList") || [];
+    return rowList.filter(it => {
+      return it.checked
+    })
+  }),
   selectAllChange: function() {
     var self = this;
     var selectAll = this.get('selectAll');
@@ -551,6 +557,16 @@ export default Ember.Controller.extend({
           }
         });
       }
+    },
+    newDevices: function() {
+      const rows = this.get('selectedRows');
+      if (rows.length <= 0) {
+        alert("请选择设备！");
+        return
+      }
+      this.transitionToRoute("dashboard.device.new").then((newRoute) => {
+        newRoute.controller.set("rows", rows);
+      })
     }
   }
 });
