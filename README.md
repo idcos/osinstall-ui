@@ -12,12 +12,13 @@ You will need the following things properly installed on your computer.
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
+* [yarn](http://yarnpkg.com)
 
 ## Installation
 
 * `git clone <repository-url>` this repository
 * change into the new directory
-* `npm install`
+* `yarn install`
 * `bower install`
 
 ## Running / Development
