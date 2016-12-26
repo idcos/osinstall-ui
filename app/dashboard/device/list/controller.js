@@ -31,6 +31,12 @@ export default Ember.Controller.extend({
   autoRefresh: true, //是否自动刷新
   autoRefreshTimer: null,
   autoRefreshTime: 20000,
+  selectedRows: Ember.computed("rowList.@each.checked", "rowList.length", function() {
+    const rowList = this.get("rowList") || [];
+    return rowList.filter(it => {
+      return it.checked
+    })
+  }),
   ipChanged: function() {
     var self = this;
     var rows = this.get('model.vmInfo.Host');
@@ -245,7 +251,15 @@ export default Ember.Controller.extend({
           }
         }
       }
-      this.get("deviceSrv").list(pageSize, (page - 1) * pageSize, form).then(function(data) {
+      const selectedRows = this.get('selectedRows');
+      this.get("deviceSrv").list(pageSize, (page - 1) * pageSize, form).then((data) => {
+        data.Content.list.forEach(it => {
+          selectedRows.forEach(row => {
+            if (it.ID === row.ID && row.checked) {
+              it.checked = true
+            }
+          })
+        });
         self.set('rowList', data.Content.list);
         var pageCount = Math.ceil(data.Content.recordCount / pageSize);
         if (pageCount <= 0) {

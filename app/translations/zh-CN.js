@@ -163,7 +163,7 @@ export default {
    * confirm
    */
   "confirm.delete": "确认删除吗？",
-  "confirm.powerOn": "确定关机吗?",
+  "confirm.powerOn": "确定开机吗?",
   /**
    * network 
    */
