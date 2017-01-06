@@ -116,40 +116,7 @@
 		{{!-- Control Buttons --}}
 		<div class="row" style="padding-bottom:8px;">
 			<div class="col-sm-8">
-				<button 
-					{{action "toggleModalIpmi" "batchPowerOnAction"}} 
-					disabled={{model.isButtonLock}}
-					title="{{model.buttonLockNoticeInfo}}" 
-					type="button" class="btn btn-default btn-sm">
-					开机
-				</button> &nbsp;
-
-				<button 
-					{{action "toggleModalIpmi" "batchStartFromPxeAction"}}
-					disabled={{model.isButtonLock}}
-					title="{{model.buttonLockNoticeInfo}}" 
-					type="button" 
-					class="btn btn-default btn-sm">
-					从PXE启动
-				</button> &nbsp;
-
-		   	<button 
-		   		{{action "toggleModalIpmi" "batchPowerOffAction"}} 
-		   		disabled={{model.isButtonLock}} 
-		   		title="{{model.buttonLockNoticeInfo}}" 
-		   		type="button" 
-		   		class="btn btn-default btn-sm">
-		   		关机
-		   	</button> &nbsp;
-
-		   	<button 
-		   		{{action "toggleModalIpmi" "batchReStartAction"}} 
-		   		disabled={{model.isButtonLock}} 
-		   		title="{{model.buttonLockNoticeInfo}}" 
-		   		type="button" 
-		   		class="btn btn-default btn-sm">
-					重启
-		   	</button>
+				
 			</div>
 		</div>
 
@@ -248,35 +215,86 @@
     <div class="row padding0">
 			<div class="col-sm-8">
 					{{log selectedRows}}
-					{{#if (not-eq 0 selectedRows.length)}}
+				<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button> &nbsp;&nbsp;
+				<button 
+					{{action "toggleModalIpmi" "batchPowerOnAction"}} 
+					disabled={{model.isButtonLock}}
+					title="{{model.buttonLockNoticeInfo}}" 
+					type="button" class="btn btn-default btn-sm">
+					开机
+				</button> &nbsp;&nbsp;
+
+				<button 
+					{{action "toggleModalIpmi" "batchStartFromPxeAction"}}
+					disabled={{model.isButtonLock}}
+					title="{{model.buttonLockNoticeInfo}}" 
+					type="button" 
+					class="btn btn-default btn-sm">
+					从PXE启动
+				</button> &nbsp;&nbsp;
+
+		   	<button 
+		   		{{action "toggleModalIpmi" "batchPowerOffAction"}} 
+		   		disabled={{model.isButtonLock}} 
+		   		title="{{model.buttonLockNoticeInfo}}" 
+		   		type="button" 
+		   		class="btn btn-default btn-sm">
+		   		关机
+		   	</button> &nbsp;&nbsp;
+
+		   	<button 
+		   		{{action "toggleModalIpmi" "batchReStartAction"}} 
+		   		disabled={{model.isButtonLock}} 
+		   		title="{{model.buttonLockNoticeInfo}}" 
+		   		type="button" 
+		   		class="btn btn-default btn-sm">
+					重启
+		   	</button> &nbsp;&nbsp;
+
+		   	{{#if (not-eq 0 selectedRows.length)}}
 						<button 
 							{{action "newDevices"}}
 							type="button" 
 							class="btn btn-primary btn-sm">
 							录入新设备
 						</button>
-					{{/if}}
-       		<button {{action "exportAction" "select"}} type="button" class="btn btn-default btn-sm">导出选中</button>
-       		&nbsp;&nbsp;
-       		<button {{action "exportAction" "all"}} type="button" class="btn btn-default btn-sm">导出全部</button>
-       		&nbsp;&nbsp;
-       		{{#if (eq "Administrator" model.session.Role)}}
-       		<button {{action "showAssignUserModalAction"}} type="button" class="btn btn-default btn-sm">分配管理人</button>
-       		&nbsp;&nbsp;
-       		{{/if}}
-       		<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
+			{{/if}}
+       		
 			</div>
 			<div class="col-sm-4">
-				{{#if (not-eq 1 pageCount)}}
-					{{#common/io-pagination count=pageCount current=page pageSize=pageSize change='pageChanged' pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
-				{{/if}}
+				<div class="pull-right">
+					<button {{action "exportAction" "select"}} type="button" class="btn btn-default btn-sm">导出选中</button>
+		       		&nbsp;&nbsp;
+		       		<button {{action "exportAction" "all"}} type="button" class="btn btn-default btn-sm">导出全部</button>
+		       		&nbsp;&nbsp;
+		       		{{#if (eq "Administrator" model.session.Role)}}
+		       		<button {{action "showAssignUserModalAction"}} type="button" class="btn btn-default btn-sm">分配管理人</button>
+		       		{{/if}}
+       			</div>
 			</div>
 		</div>
-		<div class="row" style="margin-left: 5px;margin-top: 10px;">
+		<div>
+						<div class="text-center">
+							<div class="row">
+									总台数 <b>{{recordCount}}</b> 台  &nbsp;&nbsp;&nbsp;&nbsp;
+									选中 <b>{{model.selectCount}}</b> 台  &nbsp;&nbsp;&nbsp;&nbsp;
+									总页数 <b>{{pageCount}}</b> 页 &nbsp;&nbsp;&nbsp;&nbsp;
+									{{#common/io-pagination count=pageCount current=page pageSize=pageSize change='pageChanged' pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
+							</div>
+						</div>
+			</div>
+			<div class="row" style="margin-left:5px;">
+			{{#if model.NoDataKeywordMessage}}
+				这些关键字没有匹配到设备：{{model.NoDataKeywordMessage}}
+			{{/if}}
+			</div>
+
+		<div class="row" style="margin-left: 5px;margin-top: 15px;">
 			<b>温馨提示:</b> <br>
 			<span style="font-size: 13px;">
 			1.客户机加电、进入BootOS后，设备信息就会采集、推送到此页面 <br>
-			2.您可将设备信息导出、编辑完后，使用【录入新设备】->【批量录入】功能导入到设备列表 <br>
+			2.您可直接选中设备，点击【录入新设备】按钮，填写装机参数 <br>
+			2.您也可将设备信息导出、编辑完后，使用【录入新设备】->【批量录入】功能导入到设备列表 <br>
 			3.设备录入到设备列表后，就不再显示在此页面
 			</span>
 		</div>

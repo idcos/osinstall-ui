@@ -60,6 +60,7 @@ export default Ember.Route.extend(breadCrumbMixin, {
           return data.Content.list;
         }
       }),
+      selectCount:0,
     });
   },
   setupController: function(controller, model) {
@@ -69,7 +70,8 @@ export default Ember.Route.extend(breadCrumbMixin, {
       OsID: null,
       HardwareID: null,
       SystemID: null,
-      Keyword: null
+      Keyword: null,
+      IsShowActiveDevice: "Yes"
     };
     controller.send("queryAction", form);
     controller.send("queryCompanyAction");

@@ -80,6 +80,27 @@ export default Ember.Controller.extend({
       }
     }
   }.observes("model.vmInfo.Host.@each.Ip"),
+
+  updateSelectCount:function(){
+            var self = this;
+            var rowList = self.get("rowList");
+            var num = 0;
+            if(!Ember.isEmpty(rowList)){
+                for(var i=0;i<rowList.length;i++){
+                    var row = rowList[i];
+                    if(row.checked === true){
+                        num++;
+                    }
+                }
+            }
+            self.set("model.selectCount",num);
+    },
+    checkboxCheckedChanged: function() {
+        var self = this;
+        self.updateSelectCount();
+        clearInterval(self.get('autoRefreshTimer'));
+    }.observes("rowList.@each.checked"),
+
   autoRefreshChange: function() {
     var self = this;
     var autoRefresh = this.get('autoRefresh');
@@ -253,19 +274,26 @@ export default Ember.Controller.extend({
       }
       const selectedRows = this.get('selectedRows');
       this.get("deviceSrv").list(pageSize, (page - 1) * pageSize, form).then((data) => {
-        data.Content.list.forEach(it => {
-          selectedRows.forEach(row => {
-            if (it.ID === row.ID && row.checked) {
-              it.checked = true
-            }
-          })
-        });
+        if(!Ember.isEmpty(data.Content.list)){
+          data.Content.list.forEach(it => {
+            selectedRows.forEach(row => {
+              if (it.ID === row.ID && row.checked) {
+                it.checked = true
+              }
+            })
+          });
+        }
         self.set('rowList', data.Content.list);
         var pageCount = Math.ceil(data.Content.recordCount / pageSize);
         if (pageCount <= 0) {
           pageCount = 1;
         }
         self.set('pageCount', pageCount);
+        self.set('recordCount',data.Content.recordCount);
+        self.set('model.NoDataKeywordMessage',null);
+        if(!Ember.isEmpty(data.Content.NoDataKeyword)){
+          self.set('model.NoDataKeywordMessage',data.Content.NoDataKeyword.join(","));
+        }
       });
     },
     exportAction: function() {

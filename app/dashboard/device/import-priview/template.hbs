@@ -9,33 +9,39 @@
         <table class="table big">
             <thead>
                 <tr>
+                	<th width="4%">
+                	{{input type="checkbox" checked=model.selectAll}}
+                	</th>
                     <th width="8%">SN</th>
 					<th width="12%">主机名</th>
 					<th width="10%">应用IP</th>
-					<th width="10%">掩码</th>
-					<th width="10%">网关</th>
+					{{!-- <th width="10%">掩码</th>
+					<th width="10%">网关</th> --}}
 					<th width="10%">操作系统</th>
 					<th width="12%">硬件配置模板</th>
 					<th width="10%">系统模板</th>
-					{{#if (eq "failure" status)}}
-					<th width="14%">错误提示</th>
-					{{/if}}
+					<th width="14%">提示</th>
                 </tr>
             </thead>
             <tbody>
-            	{{#each rowList as |item index|}}
+            	{{#each model.rowList as |item index|}}
                 <tr>
+                	<td>
+					{{#if (eq "Error" item.ImportStatus)}}
+						{{input type="checkbox" disabled="disabled"}}
+                	{{else}}
+                		{{input type="checkbox" checked=item.checked}}
+                	{{/if}}
+                	</td>
                 	<td>{{item.Sn}}</td>
 					<td>{{item.Hostname}}</td>
 					<td>{{item.Ip}}</td>
-					<td>{{item.Netmask}}</td>
-					<td>{{item.Gateway}}</td>
+					{{!-- <td>{{item.Netmask}}</td>
+					<td>{{item.Gateway}}</td> --}}
 					<td>{{item.OsName}}</td>
 					<td>{{item.HardwareName}}</td>
 					<td>{{item.SystemName}}</td>
-					{{#if (eq "failure" status)}}
 					<td class="text-danger">{{html-safe item.Content}}</td>
-					{{/if}}
 				</tr>
 				{{/each}}
             </tbody>
@@ -43,16 +49,22 @@
 	
 				<div class="row padding0">
 					<div class="col-sm-6">
-						{{#if (eq "success" status)}}
+						{{!-- {{#if (eq "success" status)}}
 					    	<button type="button" {{action "importAction"}} class="btn btn-primary btn-sm">确认提交</button>
 				       	{{/if}}
 
 				       	&nbsp;&nbsp;
 				       	{{#link-to "dashboard.device.import"}}
 				       		<button type="button" class="btn btn-primary btn-sm">重新导入</button>
-				       	{{/link-to}}
+				       	{{/link-to}} --}}
+				       	{{#link-to "dashboard.device.import"}}<button type="button" class="btn btn-default btn-sm">重新导入</button>{{/link-to}}
+				       	&nbsp;&nbsp;
+				       	<button type="button" {{action "importAction"}} class="btn btn-primary btn-sm">导入选中的设备</button>
 					</div>
 					<div class="col-sm-6">
+						总台数 <b>{{model.recordCount}}</b> 台  &nbsp;&nbsp;&nbsp;&nbsp;
+						选中 <b>{{model.selectCount}}</b> 台  &nbsp;&nbsp;&nbsp;&nbsp;
+						总页数 <b>{{model.pageCount}}</b> 页 &nbsp;&nbsp;&nbsp;&nbsp;
 						{{#common/io-pagination count=pageCount current=page change='pageChanged' pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
 					</div>
 				</div>

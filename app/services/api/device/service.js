@@ -362,11 +362,11 @@ export default Ember.Service.extend({
         });
     },
 
-    importDevice : function(filename) {
+    importDevice : function(form) {
         var url = "/api/osinstall/v1/device/importDevice";
 		//生成发请求数据对象
 		var data = {};
-		data.Filename = filename;
+		data = form;
 
 		//发送ajax请求
         return ajax({

@@ -24,6 +24,7 @@ export default Ember.Controller.extend({
   isShowMultiSearchBlock: false, //是否显示复杂查询区块
   selectedRows: Ember.computed("rowList.@each.checked", "rowList.length", function() {
     const rowList = this.get("rowList") || [];
+    this.updateSelectCount();
     return rowList.filter(it => {
       return it.checked
     })
@@ -39,7 +40,22 @@ export default Ember.Controller.extend({
         set(row, "checked", selectAll);
       }
     });
+    self.updateSelectCount();
   }.observes("selectAll"),
+  updateSelectCount:function(){
+            var self = this;
+            var rowList = self.get("rowList");
+            var num = 0;
+            if(!Ember.isEmpty(rowList)){
+              for(var i=0;i<rowList.length;i++){
+                  var row = rowList[i];
+                  if(row.checked === true){
+                      num++;
+                  }
+              }
+            }
+            self.set("model.selectCount",num);
+    },
   CompanyChange: function() {
     var self = this;
     var company = this.get('form.Company');
@@ -225,7 +241,12 @@ export default Ember.Controller.extend({
         if (pageCount <= 0) {
           pageCount = 1;
         }
-        self.set('pageCount', pageCount);
+        self.set('pageCount',pageCount);
+        self.set('recordCount',data.Content.recordCount);
+        self.set('model.NoDataKeywordMessage',null);
+        if(!Ember.isEmpty(data.Content.NoDataKeyword)){
+          self.set('model.NoDataKeywordMessage',data.Content.NoDataKeyword.join(","));
+        }
       });
     },
     queryCompanyAction: function() {
