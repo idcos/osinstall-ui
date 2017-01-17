@@ -13,7 +13,7 @@ export default Ember.Route.extend(breadCrumbMixin,{
         }else{
             return Ember.RSVP.hash({
                 id:params.id,
-                companyData:[{name:"Dell"},{name:"惠普"},{name:"IBM"},{name:"联想"},{name:"华为"},{name:"浪潮"},{name:"H3C"},{name:"宝德"}],
+                companyData:[{name:"Dell",id:"dell"},{name:"惠普",id:"hp"},{name:"IBM",id:"ibm"},{name:"联想",id:"lenovo"},{name:"华为",id:"huawei"},{name:"浪潮",id:"inspur"},{name:"H3C",id:"h3c"}],
                 info:this.get('hardwareSrv').get(params.id).then(function(data){return data.Content;}),
             });
         }

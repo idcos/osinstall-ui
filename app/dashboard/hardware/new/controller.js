@@ -82,6 +82,16 @@ export default Ember.Controller.extend({
             var self = this;
             var result = [];
             var tpl = self.get("model.info.FormatTpl");
+            var info = self.get("model.info");
+            var companyData = self.get("model.companyData");
+            var companyName = info.Company;
+            var company = "";
+            for(var i=0;i<companyData.length;i++){
+                if(companyData[i].name === info.Company){
+                    company = companyData[i].id.toLowerCase();
+                }
+            }
+            var oobTpl = self.get("hardwareSrv").getOobUsernamePasswordConfigTpl(company);
             for(var i=0;i<tpl.length;i++) {
                 var result2 = {};
                 result2.Name = tpl[i].name;
@@ -90,6 +100,15 @@ export default Ember.Controller.extend({
                     var row = tpl[i].data;
                     for(var j=0;j<row.length;j++) {
                         var row2 = row[j];
+                        if(result2.Name === "OOB"){
+                            if(row2.name === "用户名"){
+                                oobTpl = oobTpl.replace(/<{OobUsername}>/,row2.input);
+                                continue
+                            }else if(row2.name === "密码"){
+                                oobTpl = oobTpl.replace(/<{OobPassword}>/,row2.input);
+                                set(row2,"default",oobTpl);
+                            }
+                        }
                         delete row2.value;
 
                         var result3 = {};

@@ -7,6 +7,11 @@ import Ember from 'ember';
 var ajax = Ember.$.ajax;
 
 export default Ember.Service.extend({
+	getOobUsernamePasswordConfigTpl: function(company) {
+	    var str = "/opt/yunji/osinstall/<{Company}>/oob.sh -u <{OobUsername}> -p <{OobPassword}>";
+	    str = str.replace(/<{Company}>/, company);
+	    return str;
+	},
     /*
     * 新增
     */
