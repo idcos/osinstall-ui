@@ -29,14 +29,14 @@ export default Ember.Route.extend(breadCrumbMixin,{
              }
              if(data.Count > 0 && data.OsReport.length > 0){
                 str += "\n\n操作系统:\n";
-                for(var i=0;i<data.OsReport.length;i++){
+                for(let i=0;i<data.OsReport.length;i++){
                     str += data.OsReport[i].OsName + ' ' + data.OsReport[i].Count + "台/次\n";
                 }
              }
 
              if(data.Count > 0 && data.HardwareReport.length > 0){
                 str += "\n\n硬件配置模板:\n";
-                for(var i=0;i<data.HardwareReport.length;i++){
+                for(let i=0;i<data.HardwareReport.length;i++){
                     if(Ember.isEmpty(data.HardwareReport[i].HardwareName)){
                         data.HardwareReport[i].HardwareName = '无模板信息';
                     }

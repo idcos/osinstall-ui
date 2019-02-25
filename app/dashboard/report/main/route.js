@@ -32,8 +32,8 @@ export default Ember.Route.extend(breadCrumbMixin,{
              }
 
              if(!Ember.isEmpty(data.OsReport)){
-	             for(var i=0;i<data.OsReport.length;i++){
-	             	var row = {};
+	             for(let i=0;i<data.OsReport.length;i++){
+	             	let row = {};
 	             	row.value = data.OsReport[i].Count;
 	             	row.name = data.OsReport[i].OsName+"("+data.OsReport[i].Count+")";
 	             	osData.pushObject(row);

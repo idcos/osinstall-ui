@@ -10,23 +10,11 @@ export default Ember.Route.extend(breadCrumbMixin, {
     Status: "Enable"
   },
   model: function() {
+    console.log("model function")
     return Ember.RSVP.hash({
       isShowModalIpmi: false,
       isShowIpmiConsoleModal: false,
       selectUserID: null,
-      calculateRule: [{
-        id: ">",
-        name: ">"
-      }, {
-        id: "=",
-        name: "="
-      }, {
-        id: "<",
-        name: "<"
-      }, {
-        id: "!=",
-        name: "!="
-      }],
       ipmi: {
         Sn: null,
         User: "",
@@ -51,7 +39,6 @@ export default Ember.Route.extend(breadCrumbMixin, {
         id: "!=",
         name: "不等于"
       }],
-      selectUserID: null,
       isShowAssignUserModal: false,
       userData: this.get('userSrv').list(10000, 0, {
         Status: "Enable"
@@ -60,10 +47,11 @@ export default Ember.Route.extend(breadCrumbMixin, {
           return data.Content.list;
         }
       }),
-      selectCount:0,
+      selectCount: 0,
     });
   },
   setupController: function(controller, model) {
+    console.log("setupController")
     controller.set("model", model);
     var form = {
       Status: status,

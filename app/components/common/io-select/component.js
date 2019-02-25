@@ -6,7 +6,7 @@ export default Ember.Select.extend({
     this._super();
     var callback = this.get('onChange');
     if (callback) {
-      Em.run.later(function () {
+      Ember.run.later(function () {
         self.get('controller').send(callback);
       });
     }

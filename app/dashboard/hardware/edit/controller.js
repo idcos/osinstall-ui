@@ -94,7 +94,7 @@ export default Ember.Controller.extend({
             for(var i=0;i<tpl.length;i++) {
                 var result2 = {};
                 result2.Name = tpl[i].name;
-                var data = [];
+                let data = [];
                 if(tpl[i].data !== null && !Ember.isEmpty(tpl[i].data)){
                     var row = tpl[i].data;
                     for(var j=0;j<row.length;j++) {

@@ -142,7 +142,7 @@ export default Ember.Controller.extend({
                         var list = response.Content;
                         var newIP = null;
                         if(!Ember.isEmpty(list) && list.length > 0){
-                            var host = self.get("model.vmInfo.Host");
+                            let host = self.get("model.vmInfo.Host");
                             for(var i=0;i<list.length;i++){
                                 var isUsed = false;
                                 if(!Ember.isEmpty(host) && host.length > 0){
@@ -152,13 +152,14 @@ export default Ember.Controller.extend({
                                         }
                                     }
                                 }
+                                
                                 if(isUsed === false){
                                     newIP = list[i].Ip;
                                     break;
                                 }
                             }
                         }
-                        var host = [{Hostname:"",Ip:newIP,Mac:self.get("model.newMacAddress"),OsID:null,DeviceId:data.Content.list[0].ID}];
+                        let host = [{Hostname:"",Ip:newIP,Mac:self.get("model.newMacAddress"),OsID:null,DeviceId:data.Content.list[0].ID}];
                         self.set("model.vmInfo.Host",host);
                     });
                 	
@@ -264,7 +265,7 @@ export default Ember.Controller.extend({
                             }
                         }
 
-                        for(var i=0;i<data.length;i++){
+                        for(let i=0;i<data.length;i++){
                             newData.pushObject(data[i]);
                             if(i === key){
                                 var row = {};

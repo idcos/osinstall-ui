@@ -13,7 +13,6 @@ export default Ember.Route.extend(breadCrumbMixin,{
             selectCount:0,
             rowList:[],
             recordCount:0,
-            pageCount:0,
             page:1,
             pageCount:1,
             pageSize:500,

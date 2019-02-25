@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
                         for(var j=0;j<row.length;j++) {
                             var row2 = row[j];
                             if(row2.type === "input"){
-                                var value = row2.tpl.replace(/<{##}>/,row2.input);
+                                let value = row2.tpl.replace(/<{##}>/,row2.input);
                                 set(row2,"default",value);
                             }
                         }
@@ -92,10 +92,10 @@ export default Ember.Controller.extend({
                 }
             }
             var oobTpl = self.get("hardwareSrv").getOobUsernamePasswordConfigTpl(company);
-            for(var i=0;i<tpl.length;i++) {
+            for(let i=0;i<tpl.length;i++) {
                 var result2 = {};
                 result2.Name = tpl[i].name;
-                var data = [];
+                let data = [];
                 if(tpl[i].data !== null && !Ember.isEmpty(tpl[i].data)){
                     var row = tpl[i].data;
                     for(var j=0;j<row.length;j++) {

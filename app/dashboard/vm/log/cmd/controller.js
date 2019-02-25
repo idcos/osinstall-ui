@@ -1,4 +1,9 @@
 import Ember from 'ember';
+const {
+	get,
+	set,
+	computed
+} = Ember;
 
 export default Ember.Controller.extend({
 	deviceLogSrv: Ember.inject.service('api/vm-device-log/service'),
