@@ -1,0 +1,100 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        {{!-- Searchbox --}}
+        <div style="margin-bottom: 10px;">
+            <form class="form-horizontal">
+                <table class="table no-border">
+                    <tbody>
+                        <tr>
+                            <td width="15%" align="right">搜索</td>
+                            <td width="85%">
+                                <div class="block">
+                                    <div class="col-sm-6">
+                                        {{input
+                                        placeholder="输入作业名称或作业批次"
+                                        value=model.keyword
+                                        class="form-control input-md"
+                                        }}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button type="submit" class="btn btn-primary" {{action "searchAction"}} >搜 索</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+
+        {{!-- Control Buttons --}}
+        <div class="row" style="padding-bottom:8px;">
+            <div class="col-sm-8">
+
+            </div>
+        </div>
+
+        {{!-- Table Content --}}
+        <table class="table big table-hover">
+            <thead>
+                <tr>
+                    {{!-- <th>
+                        {{input type="checkbox" checked=selectAll}}
+                    </th> --}}
+                    <th>作业批次</th>
+                    <th>作业名称</th>
+                    <th>执行通道</th>
+                    <th>执行用户</th>
+                    <th>执行脚本</th>
+                    <th>创建时间</th>
+                    <th>创建人</th>
+                    <th>作业状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each model.infos.list as |item index|}}
+                <tr>
+                    {{!-- <td>{{input type="checkbox" checked=item.checked}}</td> --}}
+                    <td>{{item.TaskNo}}</td>
+                    <td>{{item.TaskName}}</td>
+                    <td>{{item.TaskChannel}}</td>
+                    <td>{{item.RunAs}}</td>
+                    <td>{{item.Extend}}</td>
+                    <td>{{item.CreatedAt}}</td>
+                    <td>{{item.Creator}}</td>
+                    <td>
+                        {{#if (eq "done" item.TaskStatus)}}
+                        成功
+                        {{/if}}
+                        {{#if (or (eq "init" item.TaskStatus) (eq "" item.TaskStatus))}}
+                        执行中
+                        {{/if}}
+                        {{#if (eq "failure" item.TaskStatus)}}
+                        失败
+                        {{/if}}
+                    </td>
+                    <td>
+                        {{!-- <button {{action "viewResults" item}}>查看</button> --}}
+                        {{#link-to 'dashboard.task-result' item.TaskNo}}<button class="btn btn-primary btn-sm">查看</button>{{/link-to}}
+                        <button class="btn btn-danger btn-sm"  {{action "delTaskInfo" item.ID}}>删除</button>
+                        <button class="btn btn-info btn-sm"  {{action "reExecTask" item.ID}}>重新执行</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+    </div>
+    <div>
+        <div class="text-center">
+            <div class="row">
+                共有 <b>{{model.infos.recordCount}}</b> &nbsp;&nbsp;&nbsp;&nbsp;
+                {{!-- 选中 <b>{{model.selectCount}}</b> 台 &nbsp;&nbsp;&nbsp;&nbsp; --}}
+                总页数 <b>{{page-count model.infos.recordCount model.page.pageSize}}</b> 页 &nbsp;&nbsp;&nbsp;&nbsp;
+                {{#common/io-pagination count=model.page.count current=model.page.page pageSize=model.page.pageSize change='pageChanged'
+                pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,9 @@
-import Ember from 'ember';
-import breadCrumbMixin from '../../../mixins/bread-crumb-mixin';
+import Ember from 'ember'
+import breadCrumbMixin from '../../../mixins/bread-crumb-mixin'
 export default Ember.Route.extend(breadCrumbMixin, {
   breadCrumb: {
-    title: "设备列表",
-    isShow: true,
+    title: '设备列表',
+    isShow: true
   },
   deviceSrv: Ember.inject.service('api/device/service'),
   osConfigSrv: Ember.inject.service('api/os-config/service'),
@@ -11,154 +11,182 @@ export default Ember.Route.extend(breadCrumbMixin, {
   systemConfigSrv: Ember.inject.service('api/system-config/service'),
   vmInstallSrv: Ember.inject.service('api/vmInstall/service'),
   userSrv: Ember.inject.service('api/user/service'),
-  model: function(params) {
+  model: function (params) {
     return Ember.RSVP.hash({
       status: params.status,
       isShowModalIpmi: false,
       isShowIpmiConsoleModal: false,
+      taskModal: true,
       selectUserID: null,
+      task: {
+        TaskName: '',
+        TaskChannel: 'ssh',
+        Runas: 'root',
+        Hosts: '',
+        Script: '',
+        ScriptParam: '',
+        ScriptType: 'shell',
+        Timeout: 2
+      },
       calculateRule: [{
-        id: ">",
-        name: ">"
+        id: '>',
+        name: '>'
       }, {
-        id: "=",
-        name: "="
+        id: '=',
+        name: '='
       }, {
-        id: "<",
-        name: "<"
+        id: '<',
+        name: '<'
       }, {
-        id: "!=",
-        name: "!="
+        id: '!=',
+        name: '!='
       }],
       ipmi: {
         Sn: null,
-        User: "",
-        Password: "",
+        User: '',
+        Password: '',
         ConsoleUrl: null,
         OobIp: null,
         Hostname: null,
         DeviceIp: null,
-        ActionName: "",
-        Message: ""
+        ActionName: '',
+        Message: ''
       },
       statusData: [{
-        ID: "pre_install",
-        Name: "等待安装"
+        ID: 'pre_install',
+        Name: '等待安装'
       }, {
-        ID: "installing",
-        Name: "正在安装"
+        ID: 'installing',
+        Name: '正在安装'
       }, {
-        ID: "success",
-        Name: "安装成功"
+        ID: 'success',
+        Name: '安装成功'
       }, {
-        ID: "failure",
-        Name: "安装失败"
+        ID: 'failure',
+        Name: '安装失败'
       }],
       displayTypeData: [{
-        id: "serialPorts",
-        name: "串口"
+        id: 'serialPorts',
+        name: '串口'
       }, {
-        id: "vnc",
-        name: "VNC"
+        id: 'vnc',
+        name: 'VNC'
       }, {
-        id: "spice",
-        name: "Spice"
+        id: 'spice',
+        name: 'Spice'
       }],
       osData: [{
-        id: "centos_x86_6",
-        name: "centos_x86_6"
+        id: 'centos_x86_6',
+        name: 'centos_x86_6'
       }, {
-        id: "sles11sp4-x86_64",
-        name: "sles11sp4-x86_64"
+        id: 'sles11sp4-x86_64',
+        name: 'sles11sp4-x86_64'
       }],
       diskTypeData: [{
-        id: "raw",
-        name: "raw"
+        id: 'raw',
+        name: 'raw'
       }, {
-        id: "qcow2",
-        name: "qcow2"
+        id: 'qcow2',
+        name: 'qcow2'
       }, {
-        id: "lvm",
-        name: "lvm"
+        id: 'lvm',
+        name: 'lvm'
       }],
       diskBusTypeData: [{
-        id: "ide",
-        name: "IDE"
+        id: 'ide',
+        name: 'IDE'
       }, {
-        id: "virtio",
-        name: "Virtio"
+        id: 'virtio',
+        name: 'Virtio'
       }],
       diskCacheModeData: [{
-        id: "default",
-        name: "default"
+        id: 'default',
+        name: 'default'
       }, {
-        id: "none",
-        name: "none"
+        id: 'none',
+        name: 'none'
       }, {
-        id: "writeback",
-        name: "writeback"
+        id: 'writeback',
+        name: 'writeback'
       }, {
-        id: "writethrought",
-        name: "writethrought"
+        id: 'writethrought',
+        name: 'writethrought'
       }],
       diskIOModeData: [{
-        id: "default",
-        name: "default"
+        id: 'default',
+        name: 'default'
       }, {
-        id: "native",
-        name: "native"
+        id: 'native',
+        name: 'native'
       }, {
-        id: "threads",
-        name: "threads"
+        id: 'threads',
+        name: 'threads'
       }],
       networkTypeData: [{
-        id: "bridge",
-        name: "桥接"
+        id: 'bridge',
+        name: '桥接'
       }, {
-        id: "nat",
-        name: "NAT"
+        id: 'nat',
+        name: 'NAT'
       }],
       networkDeviceTypeData: [{
-        id: "e1000",
-        name: "e1000"
+        id: 'e1000',
+        name: 'e1000'
       }, {
-        id: "rtl8139",
-        name: "rtl8139"
+        id: 'rtl8139',
+        name: 'rtl8139'
       }, {
-        id: "virtio",
-        name: "virtio"
+        id: 'virtio',
+        name: 'virtio'
       }],
-      newMacAddress: this.get('vmInstallSrv').createNewMacAddress().then(function(data) {
-        return data.Content;
+      dictScriptType: [{
+        id: 'shell',
+        name: 'shell'
+      }, {
+        id: 'python',
+        name: 'python'
+      }, {
+        id: 'bat',
+        name: 'bat'
+      }],
+      dictTaskChannel: [{
+        id: 'ssh',
+        name: 'ssh'
+      }, {
+        id: 'salt',
+        name: 'salt'
+      }],
+      newMacAddress: this.get('vmInstallSrv').createNewMacAddress().then(function (data) {
+        return data.Content
       }),
-      session: this.get("userSrv").getLocalSession(),
-      osConfigData: this.get('osConfigSrv').list(10000, 0).then(function(data) {
-        return data.Content.list;
+      session: this.get('userSrv').getLocalSession(),
+      osConfigData: this.get('osConfigSrv').list(10000, 0).then(function (data) {
+        return data.Content.list
       }),
-      hardwareData: this.get('hardwareSrv').list(10000, 0).then(function(data) {
-        return data.Content.list;
+      hardwareData: this.get('hardwareSrv').list(10000, 0).then(function (data) {
+        return data.Content.list
       }),
-      systemConfigData: this.get('systemConfigSrv').list(10000, 0).then(function(data) {
-        return data.Content.list;
+      systemConfigData: this.get('systemConfigSrv').list(10000, 0).then(function (data) {
+        return data.Content.list
       }),
       userData: this.get('userSrv').list(10000, 0, {
-        Status: "Enable"
-      }).then(function(data) {
+        Status: 'Enable'
+      }).then(function (data) {
         if (!Ember.isEmpty(data.Content) && !Ember.isEmpty(data.Content.list)) {
-          return data.Content.list;
+          return data.Content.list
         }
-      }),
-    });
+      })
+    })
   },
-  setupController: function(controller, model) {
+  setupController: function (controller, model) {
     var vmInfo = {
       Host: [{
-        Hostname: "",
-        Ip: "",
+        Hostname: '',
+        Ip: '',
         Mac: model.newMacAddress,
-        Os: ""
+        Os: ''
       }],
-      DisplayType: "serialPorts",
+      DisplayType: 'serialPorts',
       Cpu: {
         CoresNumber: 1,
         isShowCpuMore: false,
@@ -169,7 +197,7 @@ export default Ember.Route.extend(breadCrumbMixin, {
         TopCores: 1,
         TopThreads: 1,
         isShowCpuPinningBlock: false,
-        Pinning: ""
+        Pinning: ''
       },
       Memory: {
         Current: 1024,
@@ -178,48 +206,50 @@ export default Ember.Route.extend(breadCrumbMixin, {
         Ksm: false
       },
       Disk: {
-        Type: "raw",
+        Type: 'raw',
         Size: 60,
         isShowDiskMore: false,
-        BusType: "virtio",
-        CacheMode: "writeback",
-        IOMode: "default"
+        BusType: 'virtio',
+        CacheMode: 'writeback',
+        IOMode: 'default'
       },
       Network: {
-        Type: "bridge",
-        DeviceType: "virtio"
+        Type: 'bridge',
+        DeviceType: 'virtio'
       },
       Display: {
-        Type: "serialPorts",
-        Password: "",
+        Type: 'serialPorts',
+        Password: '',
         UpdatePassword: false
       }
     }
-    model.vmInfo = model.vmInfoTpl = vmInfo;
+    model.vmInfo = model.vmInfoTpl = vmInfo
     var batchVmInfo = {
       VmNumber: 1,
       OsID: null,
       isShowMore: false,
       CpuCoresNumber: 1,
       MemoryCurrent: 1024,
-      DiskSize: 60,
-    };
-    model.batchVmInfo = model.batchVmInfoTpl = batchVmInfo;
-    controller.set("model", model);
-    var status = model.status === "all" ? null : model.status;
+      DiskSize: 60
+    }
+    model.batchVmInfo = model.batchVmInfoTpl = batchVmInfo
+    controller.set('model', model)
+    var status = model.status === 'all' ? null : model.status
     var form = {
       Status: status,
       OsID: null,
       HardwareID: null,
       SystemID: null,
       Keyword: null
-    };
-    controller.send("queryAction", form);
+    }
+    controller.send('queryAction', form)
   },
-  deactivate: function() {
-    clearInterval(this.get('controller').get('autoRefreshTimer'));
-    this.get('controller').set("autoRefreshTimer", null);
-    this.get('controller').set("isShowingModal", false);
-    this.get('controller').set("isShowingModal2", false);
+  deactivate: function () {
+    clearInterval(this.get('controller').get('autoRefreshTimer'))
+    this.get('controller').set('autoRefreshTimer', null)
+    this.get('controller').set('isShowingModal', false)
+    this.get('controller').set('isShowingModal2', false)
+    this.get('controller').set('scriptModal', false)
+    this.get('controller').set('FileModal', false)
   }
-});
+})

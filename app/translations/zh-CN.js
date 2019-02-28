@@ -373,6 +373,9 @@ export default {
   "app.route.deviceList.ipmiModal.gotoConsole": '进入终端控制台',
   "app.route.deviceList.ipmiModal.consoleNote": '如果Console页面窗口无法弹出',
   "app.route.deviceList.ipmiModal.clickHereNote": '请点击这里打开',
+  // script modal
+  'app.route.deviceList.scriptModal.title': '脚本执行',
+  'app.route.deviceList.fileModal.title': '文件下发',
   // operates
   "app.route.deviceList.operate.powerOnSuccessNote": '操作成功，设备已开机！',
   "app.route.deviceList.operate.confirmBootFromPXE": '确定重PXE启动吗?',

@@ -1,8 +1,8 @@
 <div {{bind-attr class=":navbar-static-top :navbar-inverse :page-nav for_iframe:hidden"}} id="topDiv">
     <div class="navbar-header navbar-brand">
         {{#link-to "dashboard.main"}}
-            <img src="./image/login/logocloudboot.png" width="163" height="47" alt="CloudBoot 云启装机平台"/>
-            <small>V1.4</small>
+        <img src="./image/login/logocloudboot.png" width="163" height="47" alt="CloudBoot 云启装机平台" />
+        <small>V1.4</small>
         {{/link-to}}
     </div>
 
@@ -27,9 +27,9 @@
 </div>
 
 <div {{bind-attr class=":section :page-body :block :align-items-stretch for_iframe:top0"}} id="middleDiv">
-	<nav class="page-body-nav block shrink content">
-		{{#common/io-sidebar}}
-	    <ul class="nav">
+    <nav class="page-body-nav block shrink content">
+        {{#common/io-sidebar}}
+        <ul class="nav">
             <li class="active">
                 <a href="javascript:void(0);">
                     <i class="io-fa icon-resourcepooling"></i>
@@ -37,33 +37,33 @@
                     <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
                 </a>
                 <ul class="nav nav-sub">
-                    <li> {{#link-to "dashboard.device.scan.list"  }}发现新设备{{/link-to}} </li>
+                    <li> {{#link-to "dashboard.device.scan.list" }}发现新设备{{/link-to}} </li>
                 </ul>
             </li>
-	        <li class="active">
-	            <a href="javascript:void(0);">
-	            	<i class="io-fa icon-server"></i>
-	                <label>物理机管理</label>
-	                <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-	            </a>
-	            <ul class="nav nav-sub">
-	                <li> {{#link-to "dashboard.device.list" "all"  }}设备列表{{/link-to}} </li>
-	                <li> {{#link-to "dashboard.device.new"  }}录入新设备{{/link-to}} </li>
-	                <li> {{#link-to "dashboard.device.list" "installing"  }}正在安装的设备
-					{{#if (not-eq 0 model.installingDeviceNum)}}
-	                (<span class="orange">{{model.installingDeviceNum}}</span>)
-					{{/if}}
-	                {{/link-to}}
-	                </li>
-	                <li> {{#link-to "dashboard.device.list" "failure"  }}安装失败的设备
-	                {{#if (not-eq 0 model.failureDeviceNum)}}(<span class="red">{{model.failureDeviceNum}}</span>)
-					{{/if}}
-	                {{/link-to}}
-	                 </li>
-	                 
-	            </ul>
-	        </li>
-            
+            <li class="active">
+                <a href="javascript:void(0);">
+                    <i class="io-fa icon-server"></i>
+                    <label>物理机管理</label>
+                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
+                </a>
+                <ul class="nav nav-sub">
+                    <li> {{#link-to "dashboard.device.list" "all" }}设备列表{{/link-to}} </li>
+                    <li> {{#link-to "dashboard.device.new" }}录入新设备{{/link-to}} </li>
+                    <li> {{#link-to "dashboard.device.list" "installing" }}正在安装的设备
+                        {{#if (not-eq 0 model.installingDeviceNum)}}
+                        (<span class="orange">{{model.installingDeviceNum}}</span>)
+                        {{/if}}
+                        {{/link-to}}
+                    </li>
+                    <li> {{#link-to "dashboard.device.list" "failure" }}安装失败的设备
+                        {{#if (not-eq 0 model.failureDeviceNum)}}(<span class="red">{{model.failureDeviceNum}}</span>)
+                        {{/if}}
+                        {{/link-to}}
+                    </li>
+
+                </ul>
+            </li>
+
             {{#if (eq "Yes" model.session.IsShowVmFunction)}}
             <li>
                 <a href="javascript:void(0);">
@@ -72,9 +72,9 @@
                     <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
                 </a>
                 <ul class="nav nav-sub">
-                    <li> {{#link-to "dashboard.vm.host.list" "all"  }}宿主机列表{{/link-to}} </li>
+                    <li> {{#link-to "dashboard.vm.host.list" "all" }}宿主机列表{{/link-to}} </li>
                     <li> {{#link-to "dashboard.vm.list" "all" }}虚拟机列表{{/link-to}} </li>
-                    {{!-- <li> {{#link-to "dashboard.vm.new"  }}申请虚拟机{{/link-to}} </li> --}}
+                    {{!-- <li> {{#link-to "dashboard.vm.new" }}申请虚拟机{{/link-to}} </li> --}}
                 </ul>
             </li>
             {{/if}}
@@ -88,10 +88,10 @@
                 </a>
                 <ul class="nav nav-sub">
                     <li>
-                       {{#link-to "dashboard.network.list"  }}应用网段管理{{/link-to}}
+                        {{#link-to "dashboard.network.list" }}应用网段管理{{/link-to}}
                     </li>
                     <li>
-                       {{#link-to "dashboard.manageNetwork.list"  }}管理网段管理{{/link-to}}
+                        {{#link-to "dashboard.manageNetwork.list" }}管理网段管理{{/link-to}}
                     </li>
                 </ul>
             </li>
@@ -104,35 +104,41 @@
                 </a>
                 <ul class="nav nav-sub">
                     <li>
-                        {{#link-to "dashboard.os.list"  }}PXE模板管理{{/link-to}}
+                        {{#link-to "dashboard.os.list" }}PXE模板管理{{/link-to}}
                     </li>
                     <li>
-                        {{#link-to "dashboard.systemTpl.list"  }}系统模板管理{{/link-to}}
+                        {{#link-to "dashboard.systemTpl.list" }}系统模板管理{{/link-to}}
                     </li>
-                    <li> {{#link-to "dashboard.hardware.list"  }}硬件配置模板管理{{/link-to}} </li>
+                    <li> {{#link-to "dashboard.hardware.list" }}硬件配置模板管理{{/link-to}} </li>
                     <li>
-                        {{#link-to "dashboard.location.list" 0  }}位置管理{{/link-to}}
+                        {{#link-to "dashboard.location.list" 0 }}位置管理{{/link-to}}
                     </li>
                 </ul>
             </li>
             {{/if}}
-            
-            <!--
+
             {{#if (eq "Administrator" model.session.Role)}}
             <li class="">
                 <a href="javascript:void(0);">
-                    <i class="io-fa icon-brand"></i>
-                    <label>厂商及型号</label>
+                    <i class="io-fa icon-networksegment"></i>
+                    <label>网段管理</label>
                     <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
                 </a>
                 <ul class="nav nav-sub">
-                    <li>  {{#link-to "dashboard.company.hardware.list"  }}设备型号管理{{/link-to}} </li>
-                    
+                    <li>
+                        {{#link-to "dashboard.network.list" }}应用网段管理{{/link-to}}
+                    </li>
+                    <li>
+                        {{#link-to "dashboard.manageNetwork.list" }}管理网段管理{{/link-to}}
+                    </li>
                 </ul>
             </li>
-            {{/if}} 
-            -->     
-            
+
+            <li class="">
+                {{#link-to "dashboard.task-info" }}<i class="io-fa icon-template"></i><label>作业管理</label>{{/link-to}}
+            </li>
+            {{/if}}
+
             <li class="">
                 <a href="javascript:void(0);">
                     <i class="io-fa icon-statistics"></i>
@@ -155,7 +161,7 @@
                 <ul class="nav nav-sub">
                     {{#if (eq "Administrator" model.session.Role)}}
                     <li>
-                       {{#link-to "dashboard.user.list"}}用户管理{{/link-to}}
+                        {{#link-to "dashboard.user.list"}}用户管理{{/link-to}}
                     </li>
                     {{/if}}
                     <li>
@@ -166,7 +172,7 @@
                     </li>
                 </ul>
             </li>
-            
+
         </ul>
         {{/common/io-sidebar}}
     </nav>

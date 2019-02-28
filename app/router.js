@@ -220,6 +220,10 @@ Router.map(function() {
       });
     });
     this.route('guide');
+    this.route('task-info');
+    this.route('task-result',{
+      path:'task-result/:taskNo'
+    });
   });
   this.route('login');
 });
