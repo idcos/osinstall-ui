@@ -6,11 +6,34 @@ export default Ember.Controller.extend({
   taskInfoSrv: Ember.inject.service('api/task-info/service'),
 
   actions: {
+    pageChanged: function (page) {
+      let model = this.get('model')
+      Ember.set(model, 'page.page', page)
+      this.send('queryAction', {
+        limit: model.page.pageSize,
+        offset: (model.page.page - 1) * model.page.pageSize,
+        param: {
+          'keyword': model.keyword
+        }
+      })
+    },
+    pageSizeChanged: function (pageSize) {
+      let model = this.get('model')
+      Ember.set(model, 'page.pageSize', pageSize)
+      Ember.set(model, 'page.page', 1)
+      this.send('queryAction', {
+        limit: model.page.pageSize,
+        offset: (model.page.page - 1) * model.page.pageSize,
+        param: {
+          'keyword': model.keyword
+        }
+      })
+    },
     searchAction: function () {
       let model = this.get('model')
       this.send('queryAction', {
-        limit: 0,
-        offset: 10,
+        limit: model.page.pageSize,
+        offset: (model.page.page - 1) * model.page.pageSize,
         param: {
           'keyword': model.keyword
         }
@@ -20,12 +43,13 @@ export default Ember.Controller.extend({
       let model = this.get('model')
       this.get('taskInfoSrv').list(item.limit, item.offset, item.param).then(res => {
         Ember.set(model, 'infos', res.Content)
+        Ember.set(model, 'page.count', Math.ceil(res.Content.recordCount / model.page.pageSize))
       })
     },
 
-    viewResults: function (item) {
+    viewResults: function (taskID) {
       let param = {
-        'taskNo': item.taskNo
+        'taskID': taskID
       }
       this.transitionToRoute('dashboard.task-result', param)
     },
@@ -69,36 +93,36 @@ export default Ember.Controller.extend({
     },
 
     reExecTask: function (item) {
-        console.log(item)
-    //   let self = this,
-    //     model = this.get('model'),
-    //     taskInfoSrv = this.get('taskInfoSrv')
+      console.log(item)
+      //   let self = this,
+      //     model = this.get('model'),
+      //     taskInfoSrv = this.get('taskInfoSrv')
 
-    //   let sns = []
-    //   model.selectedDevices.forEach(item => {
-    //     sns.push(item.Sn)
-    //   })
+      //   let sns = []
+      //   model.selectedDevices.forEach(item => {
+      //     sns.push(item.Sn)
+      //   })
 
-    //   // TODO 此处需要添加脚本
-    //   let extend = {
-    //     'SrcFile': item.SrcFile,
-    //     'DestFile': item.DestFile,
-    //     'ScriptType': 'shell',
-    //     'Script': item.Script,
-    //     'ScriptParam': item.ScriptParam
-    //   }
+      //   // TODO 此处需要添加脚本
+      //   let extend = {
+      //     'SrcFile': item.SrcFile,
+      //     'DestFile': item.DestFile,
+      //     'ScriptType': 'shell',
+      //     'Script': item.Script,
+      //     'ScriptParam': item.ScriptParam
+      //   }
 
-    //   let submitObj = {
-    //     'TaskName': item.TaskName,
-    //     'TaskChannel': item.TaskChannel,
-    //     'TaskType': taskType,
-    //     'Runas': item.Runas,
-    //     'Timeout': parseInt(item.Timeout, 10),
-    //     'SNs': sns,
-    //     'Password': item.Password,
-    //     'AccessToken': '',
-    //     'Extend': extend
-    //   }
+      //   let submitObj = {
+      //     'TaskName': item.TaskName,
+      //     'TaskChannel': item.TaskChannel,
+      //     'TaskType': taskType,
+      //     'Runas': item.Runas,
+      //     'Timeout': parseInt(item.Timeout, 10),
+      //     'SNs': sns,
+      //     'Password': item.Password,
+      //     'AccessToken': '',
+      //     'Extend': extend
+      //   }
 
     //   taskInfoSrv.create(submitObj).then(item => {
     //     if (item.Status == 'success') {

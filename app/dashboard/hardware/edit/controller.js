@@ -91,7 +91,7 @@ export default Ember.Controller.extend({
                 }
             }
             var oobTpl = self.get("hardwareSrv").getOobUsernamePasswordConfigTpl(company);
-            for(var i=0;i<tpl.length;i++) {
+            for(let i=0;i<tpl.length;i++) {
                 var result2 = {};
                 result2.Name = tpl[i].name;
                 let data = [];

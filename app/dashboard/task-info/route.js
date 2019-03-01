@@ -7,7 +7,7 @@ export default Ember.Route.extend(breadCrumbMixin, {
   },
   deviceSrv: Ember.inject.service('api/task-info/service'),
   userSrv: Ember.inject.service('api/user/service'),
-  model: function (params) {
+  model: function () {
     return Ember.RSVP.hash({
       userData: this.get('userSrv').list(10000, 0, {
         Status: 'Enable'
@@ -25,8 +25,8 @@ export default Ember.Route.extend(breadCrumbMixin, {
   },
   setupController: function (controller, model) {
     let item = {
-      limit: model.page.page - 1,
-      offset: model.page.pageSize,
+      limit: model.page.pageSize,
+      offset: (model.page.page - 1) * model.page.pageSize,
       param: {}
     }
     controller.set('model', model)

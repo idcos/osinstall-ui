@@ -11,13 +11,13 @@ export default Ember.Service.extend({
   /*
   * 获取列表
   */
-  list: function (limit, offset, taskNo) {
+  list: function (limit, offset, taskID) {
     var url = '/api/osinstall/v1/task/result/list'
     // 生成发请求数据对象
     var data = {}
     data.Limit = limit
     data.Offset = offset  
-    data.TaskNo = taskNo
+    data.TaskID = taskID
     // 发送ajax请求
     return ajax({
       'method': 'POST',

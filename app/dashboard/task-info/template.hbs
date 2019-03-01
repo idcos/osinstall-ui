@@ -17,7 +17,7 @@
                                         }}
                                     </div>
                                     <div class="col-sm-6">
-                                        <button type="submit" class="btn btn-primary" {{action "searchAction"}} >搜 索</button>
+                                        <button type="submit" class="btn btn-primary" {{action "searchAction"}}>搜 索</button>
                                     </div>
                                 </div>
                             </td>
@@ -44,6 +44,7 @@
                     <th>作业批次</th>
                     <th>作业名称</th>
                     <th>执行通道</th>
+                    <th>任务类型</th>
                     <th>执行用户</th>
                     <th>执行脚本</th>
                     <th>创建时间</th>
@@ -59,9 +60,17 @@
                     <td>{{item.TaskNo}}</td>
                     <td>{{item.TaskName}}</td>
                     <td>{{item.TaskChannel}}</td>
+                    <td>
+                        {{#if (eq "file" item.TaskType)}}
+                        文件下发
+                        {{/if}}
+                        {{#if (eq "script" item.TaskType)}}
+                        脚本执行
+                        {{/if}}
+                    </td>
                     <td>{{item.RunAs}}</td>
                     <td>{{item.Extend}}</td>
-                    <td>{{item.CreatedAt}}</td>
+                    <td>{{format-date item.CreatedAt "YYYY-MM-DD hh:mm:ss"}}</td>
                     <td>{{item.Creator}}</td>
                     <td>
                         {{#if (eq "done" item.TaskStatus)}}
@@ -76,9 +85,9 @@
                     </td>
                     <td>
                         {{!-- <button {{action "viewResults" item}}>查看</button> --}}
-                        {{#link-to 'dashboard.task-result' item.TaskNo}}<button class="btn btn-primary btn-sm">查看</button>{{/link-to}}
-                        <button class="btn btn-danger btn-sm"  {{action "delTaskInfo" item.ID}}>删除</button>
-                        <button class="btn btn-info btn-sm"  {{action "reExecTask" item.ID}}>重新执行</button>
+                        {{#link-to 'dashboard.task-result' item.ID}}<button class="btn btn-primary btn-sm">查看</button>{{/link-to}}
+                        <button class="btn btn-danger btn-sm" {{action "delTaskInfo" item.ID}}>删除</button>
+                        <button class="btn btn-info btn-sm" {{action "reExecTask" item.ID}}>重新执行</button>
                     </td>
                 </tr>
                 {{/each}}
@@ -91,8 +100,9 @@
             <div class="row">
                 共有 <b>{{model.infos.recordCount}}</b> &nbsp;&nbsp;&nbsp;&nbsp;
                 {{!-- 选中 <b>{{model.selectCount}}</b> 台 &nbsp;&nbsp;&nbsp;&nbsp; --}}
-                总页数 <b>{{page-count model.infos.recordCount model.page.pageSize}}</b> 页 &nbsp;&nbsp;&nbsp;&nbsp;
-                {{#common/io-pagination count=model.page.count current=model.page.page pageSize=model.page.pageSize change='pageChanged'
+                总页数 <b>{{model.page.count}}</b> 页 &nbsp;&nbsp;&nbsp;&nbsp;
+                {{#common/io-pagination count=model.page.count current=model.page.page pageSize=model.page.pageSize
+                change='pageChanged'
                 pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
             </div>
         </div>

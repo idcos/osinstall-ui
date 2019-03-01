@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   globals: {
       "Ember": true,
+      "moment": true,
       "swal": true,
       "go": true,
       "window": true,

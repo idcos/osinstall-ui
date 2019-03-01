@@ -222,7 +222,7 @@ Router.map(function() {
     this.route('guide');
     this.route('task-info');
     this.route('task-result',{
-      path:'task-result/:taskNo'
+      path:'task-result/:taskID'
     });
   });
   this.route('login');

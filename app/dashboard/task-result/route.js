@@ -9,7 +9,7 @@ export default Ember.Route.extend(breadCrumbMixin, {
   resultSrv: Ember.inject.service('api/task-result/service'),
   model: function (param) {
     let users = this.get('userSrv').list(10000, 0, {Status: 'Enable'})
-    let results = this.get('resultSrv').list(0, 10, param.taskNo)
+    let results = this.get('resultSrv').list(0, 10, parseInt(param.taskID))
 
     return Ember.RSVP.hash({
       userData: users.then(item => {
@@ -17,7 +17,7 @@ export default Ember.Route.extend(breadCrumbMixin, {
       }),
       results: results.then(item => {
         return item.Content
-      }),
+      })
     })
   },
   setupController: function (controller, model) {

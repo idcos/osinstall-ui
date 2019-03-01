@@ -55,11 +55,13 @@
                             <td>{{item.SN}}</td>
                             <td>{{item.HostName}}</td>
                             <td>{{item.IP}}</td>
-                            <td>{{item.StartTime}}</td>
+                            <td>{{format-date item.StartTime "YYYY-MM-DD hh:mm:ss"}}</td>
                             <td>{{item.TotalTime}}</td>
                             <td>
                                 {{#if (eq "success" item.Status)}}
                                 成功
+                                {{else if (eq "timeout" item.Status)}}
+                                超时
                                 {{else if (eq "failure" item.Status)}}
                                 失败
                                 {{else}}

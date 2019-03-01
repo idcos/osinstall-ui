@@ -48,6 +48,7 @@
                 </a>
                 <ul class="nav nav-sub">
                     <li> {{#link-to "dashboard.device.list" "all" }}设备列表{{/link-to}} </li>
+                    <li> {{#link-to "dashboard.task-info"}}作业管理{{/link-to}} </li>
                     <li> {{#link-to "dashboard.device.new" }}录入新设备{{/link-to}} </li>
                     <li> {{#link-to "dashboard.device.list" "installing" }}正在安装的设备
                         {{#if (not-eq 0 model.installingDeviceNum)}}
@@ -116,29 +117,6 @@
                 </ul>
             </li>
             {{/if}}
-
-            {{#if (eq "Administrator" model.session.Role)}}
-            <li class="">
-                <a href="javascript:void(0);">
-                    <i class="io-fa icon-networksegment"></i>
-                    <label>网段管理</label>
-                    <span class="pull-right toggle"> <i class="fa fa-caret-down"></i> </span>
-                </a>
-                <ul class="nav nav-sub">
-                    <li>
-                        {{#link-to "dashboard.network.list" }}应用网段管理{{/link-to}}
-                    </li>
-                    <li>
-                        {{#link-to "dashboard.manageNetwork.list" }}管理网段管理{{/link-to}}
-                    </li>
-                </ul>
-            </li>
-
-            <li class="">
-                {{#link-to "dashboard.task-info" }}<i class="io-fa icon-template"></i><label>作业管理</label>{{/link-to}}
-            </li>
-            {{/if}}
-
             <li class="">
                 <a href="javascript:void(0);">
                     <i class="io-fa icon-statistics"></i>
