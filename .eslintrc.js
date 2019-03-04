@@ -2,11 +2,9 @@ module.exports = {
   root: true,
   globals: {
       "Ember": true,
-      "moment": true,
       "swal": true,
       "go": true,
       "window": true,
-      "moment": true,
       "Promise": true,
       "Uint8Array": true,
       "JSONTree": true,

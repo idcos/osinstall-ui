@@ -87,7 +87,7 @@
                         {{!-- <button {{action "viewResults" item}}>查看</button> --}}
                         {{#link-to 'dashboard.task-result' item.ID}}<button class="btn btn-primary btn-sm">查看</button>{{/link-to}}
                         <button class="btn btn-danger btn-sm" {{action "delTaskInfo" item.ID}}>删除</button>
-                        <button class="btn btn-info btn-sm" {{action "reExecTask" item.ID}}>重新执行</button>
+                        {{!-- <button class="btn btn-info btn-sm" {{action "reExecTask" item.ID}}>重新执行</button> --}}
                     </td>
                 </tr>
                 {{/each}}

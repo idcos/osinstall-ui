@@ -13,6 +13,5 @@ module.exports = function (defaults) {
     }
   })
   app.import('bower_components/bowser/bowser.min.js')
-  app.import('node_modules/moment/moment.js')
   return app.toTree()
 }

@@ -1,35 +1,5 @@
 <div class="panel panel-default">
     <div class="panel-body">
-        {{!-- Searchbox --}}
-        {{!-- <div style="margin-bottom: 10px;">
-            {{#common/io-form-validator submitForm="searchAction"}}
-            <form class="form-horizontal">
-                <table class="table no-border">
-                    <tbody>
-                        <tr>
-                            <td width="15%" align="right">搜索</td>
-                            <td width="85%">
-                                <div class="block">
-                                    <div class="col-sm-6">
-                                        {{textarea
-                                        placeholder="输入查询条件"
-                                        value=form.Keyword
-                                        rows="4"
-                                        class="form-control input-md"
-                                        }}
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <button type="submit" class="btn btn-primary">搜 索</button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-            {{/common/io-form-validator}}
-        </div> --}}
-
         {{!-- Table Content --}}
         <div class="row">
             <div class="col-sm-7">
@@ -86,18 +56,5 @@
 
             </div>
         </div>
-
-
     </div>
-    {{!-- <div>
-        <div class="text-center">
-            <div class="row">
-                共有 <b>{{model.infos.recordCount}}</b> &nbsp;&nbsp;&nbsp;&nbsp;
-                选中 <b>{{model.selectCount}}</b> 台 &nbsp;&nbsp;&nbsp;&nbsp;
-                总页数 <b>{{pageCount}}</b> 页 &nbsp;&nbsp;&nbsp;&nbsp;
-                {{#common/io-pagination count=pageCount current=page pageSize=pageSize change='pageChanged'
-                pageSizeChange="pageSizeChanged"}}{{/common/io-pagination}}
-            </div>
-        </div>
-    </div> --}}
 </div>
