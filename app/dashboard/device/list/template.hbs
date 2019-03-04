@@ -24,7 +24,8 @@
 										{{input type="checkbox" checked=autoRefresh}}自动刷新
 										{{#if (eq false isShowMultiSearchBlock)}}
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<a {{action "showMultiSearchBlockAction"}} href="javascript::void(0);">展开更多条件</a>
+										<a {{action "showMultiSearchBlockAction"}}
+											href="javascript::void(0);">展开更多条件</a>
 										{{/if}}
 									</div>
 								</div>
@@ -201,8 +202,9 @@
 					<td>
 						{{#link-to "dashboard.log.detail" item.ID "install"}}
 						<div class="progress progress-striped active" title="{{item.InstallLog}}" style="height: 17px;">
-							<div title="{{item.InstallLog}}" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0"
-							 aria-valuemax="100" style="width: {{percentage item.InstallProgress}};">
+							<div title="{{item.InstallLog}}" class="progress-bar progress-bar-success"
+								role="progressbar" aria-valuemin="0" aria-valuemax="100"
+								style="width: {{percentage item.InstallProgress}};">
 								<span class="sr-only">{{item.InstallLog}}</span>
 							</div>
 						</div>
@@ -228,35 +230,38 @@
 		</table>
 		<div class="row padding0">
 			<div class="col-sm-9">
-				<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button> &nbsp;&nbsp;
-				<button {{action "reInstallAction"}} type="button" class="btn btn-default btn-sm">重新安装</button> &nbsp;&nbsp;
-				<button {{action "cancelInstallAction"}} type="button" class="btn btn-default btn-sm">取消安装</button> &nbsp;&nbsp;
+				<button {{action "batchDeleteAction"}} type="button" class="btn btn-danger btn-sm">删除</button>
+				&nbsp;&nbsp;
+				<button {{action "reInstallAction"}} type="button" class="btn btn-default btn-sm">重新安装</button>
+				&nbsp;&nbsp;
+				<button {{action "cancelInstallAction"}} type="button" class="btn btn-default btn-sm">取消安装</button>
+				&nbsp;&nbsp;
 
-				<button {{action "toggleModalIpmi" "batchPowerOnAction"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}"
-				 type="button" class="btn btn-default btn-sm">
+				<button {{action "toggleModalIpmi" "batchPowerOnAction"}} disabled={{model.isButtonLock}}
+					title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-default btn-sm">
 					开机
 				</button> &nbsp;&nbsp;
 
-				<button {{action "toggleModalIpmi" "batchStartFromPxeAction"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}"
-				 type="button" class="btn btn-default btn-sm">
+				<button {{action "toggleModalIpmi" "batchStartFromPxeAction"}} disabled={{model.isButtonLock}}
+					title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-default btn-sm">
 					从PXE启动
 				</button> &nbsp;&nbsp;
 
-				<button {{action "toggleModalIpmi" "batchPowerOffAction"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}"
-				 type="button" class="btn btn-default btn-sm">
+				<button {{action "toggleModalIpmi" "batchPowerOffAction"}} disabled={{model.isButtonLock}}
+					title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-default btn-sm">
 					关机
 				</button> &nbsp;&nbsp;
 
-				<button {{action "toggleModalIpmi" "batchReStartAction"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}"
-				 type="button" class="btn btn-default btn-sm">
+				<button {{action "toggleModalIpmi" "batchReStartAction"}} disabled={{model.isButtonLock}}
+					title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-default btn-sm">
 					重启
 				</button> &nbsp;&nbsp;
-				<button {{action "toggleModalScript"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}" type="button"
-				 class="btn btn-default btn-sm">
+				<button {{action "toggleModalScript"}} disabled={{model.isButtonLock}}
+					title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-default btn-sm">
 					脚本执行
 				</button> &nbsp;&nbsp;
-				<button {{action "toggleModalFile"}} disabled={{model.isButtonLock}} title="{{model.buttonLockNoticeInfo}}" type="button"
-				 class="btn btn-default btn-sm">
+				<button {{action "toggleModalFile"}} disabled={{model.isButtonLock}}
+					title="{{model.buttonLockNoticeInfo}}" type="button" class="btn btn-default btn-sm">
 					文件下发
 				</button> &nbsp;&nbsp;
 			</div>
@@ -398,7 +403,6 @@
 {{/common/io-form-validator}}
 {{/common/io-modal}}
 
-
 {{#common/io-modal show=model.scriptModal close="toggleModalScript"}}
 {{#common/io-form-validator submitForm="scriptTaskAction"}}
 <form class="form-horizontal">
@@ -413,47 +417,47 @@
 				</div>
 				<div class="modal-body" style="max-height:70rem">
 					<div class="row">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">作业名称：</div>
+							<div class="pull-right"><label class="required">作业名称：</label></div>
 						</div>
-						<div class="col-sm-4">
-							{{input required=true value=model.task.TaskName type="text" class="form-control input-md"}}
+						<div class="col-sm-6">
+							{{input required=true value=model.task.TaskName type="text" required=true class="form-control input-md"}}
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">执行通道：</div>
+							<div class="pull-right"><label class="required">执行通道：</label></div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							{{common/io-select class="form-control" prompt="请选择执行通道"
-							content= model.dictTaskChannel
+							content= model.dictTaskChannel required=true
 							value=model.task.TaskChannel optionValuePath="content.id"
 							optionLabelPath="content.name" }}
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">执行用户：</div>
+							<div class="pull-right"><label class="required">执行用户：</label></div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							{{input required=true value=model.task.Runas type="text" class="form-control input-md"}}
 						</div>
 					</div>
 
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">超时时间：</div>
+							<div class="pull-right"><label class="required">超时时间：</label></div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							{{input required=true value=model.task.Timeout type="number" class="form-control input-md"}}
 						</div>
 					</div>
 					<div class="row" style="padding-top: 30px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
 							<div class="pull-right">设备列表：</div>
 						</div>
@@ -485,48 +489,49 @@
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">密码：</div>
+							<div class="pull-right"><label class="required">密码：</label></div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							{{input required=true value=model.task.Password type="password" class="form-control input-md"}}
 						</div>
 					</div>
 					{{!-- <div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
 							<div class="pull-right">脚本类型：</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							{{common/io-radio required=true name=(str-concat index index2) value=model.task.ScriptType
 							checked=item2.default}}
 						</div>
 					</div> --}}
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">脚本内容：</div>
+							<div class="pull-right"><label class="required">脚本内容：</label></div>
 						</div>
 						<div class="col-sm-4 col-upload">
 							{{#common/io-file-upload upload="uploadScript" autoUpload=true showUploadButton=false
 							multiple=false}}{{/common/io-file-upload}}
-							{{textarea value=model.task.Script required=true class="form-control input-md"}}
+							{{textarea value=model.task.Script required=true class="form-control input-md" rows="10"}}
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
 							<div class="pull-right">脚本参数：</div>
 						</div>
-						<div class="col-sm-4">
-							{{textarea value=model.task.ScriptParam class="form-control input-md"}}
+						<div class="col-sm-4 col-upload">
+							{{textarea value=model.task.ScriptParam class="form-control input-md" }}
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">保存</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal" {{action "toggleModalScript"}}>取消</button>
+					<button type="submit" class="btn btn-primary">执行</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						{{action "toggleModalScript"}}>取消</button>
 				</div>
 			</div>
 		</div>
@@ -551,47 +556,47 @@
 				</div>
 				<div class="modal-body" style="max-height:70rem">
 					<div class="row">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">作业名称：</div>
+							<div class="pull-right"><label class="required">作业名称：</label></div>
 						</div>
-						<div class="col-sm-4">
-							{{input required=true value=model.task.TaskName type="text" class="form-control input-md"}}
+						<div class="col-sm-6">
+							{{input required=true value=model.task.TaskName required=true type="text" class="form-control input-md"}}
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">执行通道：</div>
+							<div class="pull-right"><label class="required">执行通道：</label></div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							{{common/io-select class="form-control" prompt="请选择执行通道"
-							content= model.dictTaskChannel
-							value=model.task.TaskChannel optionValuePath="content.id"
-							optionLabelPath="content.name" }}
+												content= model.dictTaskChannel required=true
+												value=model.task.TaskChannel optionValuePath="content.id"
+												optionLabelPath="content.name" }}
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">执行用户：</div>
+							<div class="pull-right"><label class="required">执行用户：</label></div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							{{input required=true value=model.task.Runas type="text" class="form-control input-md"}}
 						</div>
 					</div>
 
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">超时时间：</div>
+							<div class="pull-right"><label class="required">超时时间：</label></div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							{{input required=true value=model.task.Timeout type="number" class="form-control input-md"}}
 						</div>
 					</div>
 					<div class="row" style="padding-top: 30px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
 							<div class="pull-right">设备列表：</div>
 						</div>
@@ -623,25 +628,25 @@
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
-							<div class="pull-right">密码：</div>
+							<div class="pull-right"><label class="required">密码：</label></div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							{{input required=true value=model.task.Password type="password" class="form-control input-md"}}
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
 							<div class="pull-right">目标路径：</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							{{input type="text" value=model.task.DestFile required=true class="form-control input-md"}}
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-2"></div>
+						<div class="col-sm-1"></div>
 						<div class="col-sm-2" style="padding:0;">
 							<div class="pull-right">源文件：</div>
 						</div>
@@ -653,8 +658,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">保存</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal" {{action "toggleModalFile"}}>取消</button>
+					<button type="submit" class="btn btn-primary">下发</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						{{action "toggleModalFile"}}>取消</button>
 				</div>
 			</div>
 		</div>

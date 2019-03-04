@@ -52,3 +52,8 @@ Specify what it takes to deploy your app.
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
 
+
+## 版权
+
+Copyright 2019 Cloud J Tech, Inc and other contributors
+Licensed under the GPLv3

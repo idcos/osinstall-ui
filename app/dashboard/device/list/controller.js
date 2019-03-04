@@ -627,8 +627,23 @@ export default Ember.Controller.extend({
     },
     toggleModalScript: function () {
       let scriptModal = this.get('model.scriptModal')
+      let rowList = this.get('rowList')
+
+      if (rowList.length == 0) {
+        Ember.$.notify({
+          title: '<strong>操作失败:</strong>',
+          message: '请选择需要执行的主机'
+        }, {
+          animate: {
+            enter: 'animated fadeInRight',
+            exit: 'animated fadeOutRight'
+          },
+          type: 'danger'
+        })
+      }
       if (scriptModal != true) {
         let selectedDevices = []
+
         this.get('rowList').forEach(item => {
           if (item.checked) {
             selectedDevices.push(item)
@@ -654,6 +669,20 @@ export default Ember.Controller.extend({
     },
     toggleModalFile: function () {
       let fileModal = this.get('model.fileModal')
+      let rowList = this.get('rowList')
+
+      if (rowList.length == 0) {
+        Ember.$.notify({
+          title: '<strong>操作失败:</strong>',
+          message: '请选择需要执行的主机'
+        }, {
+          animate: {
+            enter: 'animated fadeInRight',
+            exit: 'animated fadeOutRight'
+          },
+          type: 'danger'
+        })
+      }
       if (fileModal != true) {
         let selectedDevices = []
         this.get('rowList').forEach(item => {

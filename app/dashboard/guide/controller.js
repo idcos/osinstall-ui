@@ -56,7 +56,7 @@ export default Ember.Controller.extend({
             self.get("dhcpSubnetSrv").save(form).then(function(data) {
                 self.set("model.dhcpMessage",null);
                 if(data.Status === "success"){
-                    self.send("skipStep1Action");
+                    // self.send("skipStep1Action");
                 } else {
                     Ember.$.notify({
                         title: "<strong>操作失败:</strong>",

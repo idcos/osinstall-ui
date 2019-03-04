@@ -32,7 +32,7 @@
                                 成功
                                 {{else if (eq "timeout" item.Status)}}
                                 超时
-                                {{else if (eq "failure" item.Status)}}
+                                {{else if (eq "fail" item.Status)}}
                                 失败
                                 {{else}}
                                 执行中
@@ -47,9 +47,6 @@
                 </table>
             </div>
             <div class="col-sm-5">
-                <div class="row">
-                    <label for="">执行结果</label>
-                </div>
                 <div class="row stdout">
                     {{textarea value=model.taskResults readonly='readonly' rows=10 cols=70}}
                 </div>

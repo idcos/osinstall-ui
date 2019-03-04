@@ -55,7 +55,8 @@ export default Ember.Controller.extend({
     },
 
     delTaskInfo: function (id) {
-      let self = this
+      let self = this,
+        model = this.get('model')
 
       if (confirm('确定删除吗?')) {
         this.get('taskInfoSrv').delete(id).then(function (data) {
@@ -70,8 +71,8 @@ export default Ember.Controller.extend({
               type: 'success'
             })
             self.send('queryAction', {
-              limit: 0,
-              offset: 10,
+              limit: model.page.pageSize,
+              offset: (model.page.page - 1) * model.page.pageSize,
               param: {
 
               }

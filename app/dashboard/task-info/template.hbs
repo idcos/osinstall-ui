@@ -74,13 +74,13 @@
                     <td>{{item.Creator}}</td>
                     <td>
                         {{#if (eq "done" item.TaskStatus)}}
-                        成功
+                        结束
                         {{/if}}
                         {{#if (or (eq "init" item.TaskStatus) (eq "" item.TaskStatus))}}
                         执行中
                         {{/if}}
-                        {{#if (eq "failure" item.TaskStatus)}}
-                        失败
+                        {{#if (eq "timeout" item.TaskStatus)}}
+                        超时
                         {{/if}}
                     </td>
                     <td>
