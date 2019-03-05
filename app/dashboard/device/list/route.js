@@ -26,7 +26,7 @@ export default Ember.Route.extend(breadCrumbMixin, {
         Script: '',
         ScriptParam: '',
         ScriptType: 'shell',
-        Timeout: 2
+        Timeout: 300
       },
       calculateRule: [{
         id: '>',
