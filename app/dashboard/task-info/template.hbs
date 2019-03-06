@@ -17,7 +17,8 @@
                                         }}
                                     </div>
                                     <div class="col-sm-6">
-                                        <button type="submit" class="btn btn-primary" {{action "searchAction"}}>搜 索</button>
+                                        <button type="submit" class="btn btn-primary" {{action "searchAction"}}>搜
+                                            索</button>
                                     </div>
                                 </div>
                             </td>
@@ -69,7 +70,7 @@
                         {{/if}}
                     </td>
                     <td>{{item.RunAs}}</td>
-                    <td style="word-break:break-all">{{item.Extend}}</td>
+                    <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" title={{item.Extend}}>{{item.Extend}}</td>
                     <td>{{format-date item.CreatedAt "YYYY-MM-DD hh:mm:ss"}}</td>
                     <td>{{item.Creator}}</td>
                     <td>
@@ -84,7 +85,8 @@
                         {{/if}}
                     </td>
                     <td>
-                        {{#link-to 'dashboard.task-result' item.ID}}<button class="btn btn-primary btn-sm">查看</button>{{/link-to}}
+                        {{#link-to 'dashboard.task-result' item.ID}}<button
+                            class="btn btn-primary btn-sm">查看</button>{{/link-to}}
                         <button class="btn btn-danger btn-sm" {{action "delTaskInfo" item.ID}}>删除</button>
                     </td>
                 </tr>
